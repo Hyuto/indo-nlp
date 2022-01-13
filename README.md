@@ -1,3 +1,3 @@
 # Indonesian NLP
 
-Indonesian NLP written on `Cython`
+Indonesian NLP written in `python`
