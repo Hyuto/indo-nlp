@@ -4,6 +4,10 @@ from IndoNLP._dict import CIL as _CIL
 # RE PATTERNS
 _CLEAN_HTML = re.compile("<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});")
 _CLEAN_CIL = re.compile("|".join([f"\\b{x}\\b" for x in _CIL.keys()]), re.IGNORECASE)
+_CLEAN_URL = re.compile(
+    r"(https?:\/\/)(\s)*(www\.)?(\s)*((\w|\s)+\.)*([\w\-\s]+\/)*([\w\-]+)((\?)?[\w\s]*=\s*[\w\%&]*)*",
+    re.IGNORECASE,
+)
 
 
 def clean_html(text: str) -> str:
@@ -16,6 +20,19 @@ def clean_html(text: str) -> str:
         str: cleaned text
     """
     clean = re.sub(_CLEAN_HTML, "", text)
+    return clean
+
+
+def clean_url(text: str) -> str:
+    """Cleaning URL from text.
+
+    Args:
+        text (str): text that have url on
+
+    Returns:
+        str: cleaned text
+    """
+    clean = re.sub(_CLEAN_URL, "", text)
     return clean
 
 
