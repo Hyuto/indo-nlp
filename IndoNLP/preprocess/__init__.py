@@ -1,5 +1,5 @@
 import re
-from IndoNLP._dict import CIL as _CIL
+from IndoNLP.preprocess.slang_data import SLANG_DATA as _CIL
 
 # RE PATTERNS
 _CLEAN_HTML = re.compile("<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});")

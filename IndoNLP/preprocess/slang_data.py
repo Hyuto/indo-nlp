@@ -1,8 +1,13 @@
-# Kamus Alay - Colloquial Indonesian Lexicon
-## Salsabila, Ali, Yosef, and Ade
-## https://github.com/nasalsabila/kamus-alay
+# -*- coding: utf-8 -*-
 
-CIL = {
+"""Data containing Indonesian slang words
+   based on: Kamus Alay - Colloquial Indonesian Lexicon by Salsabila, Ali, Yosef, and Ade
+   https://github.com/nasalsabila/kamus-alay
+"""
+
+__all__ = ['SLANG_DATA']
+
+SLANG_DATA = {
     "woww": "wow",
     "aminn": "amin",
     "met": "selamat",
