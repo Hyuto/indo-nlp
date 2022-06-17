@@ -1,17 +1,33 @@
 import re
-from IndoNLP.preprocess.slang_data import SLANG_DATA as _CIL
 
-# RE PATTERNS
-_CLEAN_HTML = re.compile("<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});")
-_CLEAN_CIL = re.compile("|".join([f"\\b{x}\\b" for x in _CIL.keys()]), re.IGNORECASE)
-_CLEAN_URL = re.compile(
-    r"(https?:\/\/)(\s)*(www\.)?(\s)*((\w|\s)+\.)*([\w\-\s]+\/)*([\w\-]+)((\?)?[\w\s]*=\s*[\w\%&]*)*",
-    re.IGNORECASE,
+from IndoNLP.preprocess.slang_data import SLANG_DATA
+from IndoNLP.preprocess.stopwords_data import STOPWORDS
+
+# TODO
+# 1. support case sensitive
+# 2. make pipeline
+# 3. vectorization
+
+# PATTERNS
+HTML_PATTERN = re.compile(r"<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});")
+URL_PATTERN = re.compile(
+    r"(https?:\/\/)(\s)*(www\.)?(\s)*((\w|\s)+\.)*"
+    + r"([\w\-\s]+\/)*([\w\-]+)((\?)?[\w\s]*=\s*[\w\%&]*)*",
+    flags=re.IGNORECASE,
 )
+SLANG_PATTERN = re.compile(
+    "(%s)" % "|".join(map(lambda x: rf"\b{x}\b", SLANG_DATA.keys())),
+    flags=re.IGNORECASE,
+)
+STOPWORDS_PATTERN = re.compile(
+    "(%s)" % "|".join(map(lambda x: rf"\b{x}\b", STOPWORDS)),
+    flags=re.IGNORECASE,
+)
+WE_PATTERN = re.compile(r"\b\w*([a-zA-Z])(\1{1,})\w*\b")
 
 
-def clean_html(text: str) -> str:
-    """Cleaning HTML tags from text.
+def remove_html(text: str) -> str:
+    """Remove HTML tags from text.
 
     Args:
         text (str): text that have html tags on
@@ -19,12 +35,11 @@ def clean_html(text: str) -> str:
     Returns:
         str: cleaned text
     """
-    clean = re.sub(_CLEAN_HTML, "", text)
-    return clean
+    return HTML_PATTERN.sub("", text)
 
 
-def clean_url(text: str) -> str:
-    """Cleaning URL from text.
+def remove_url(text: str) -> str:
+    """Remove URL from text.
 
     Args:
         text (str): text that have url on
@@ -32,22 +47,43 @@ def clean_url(text: str) -> str:
     Returns:
         str: cleaned text
     """
-    clean = re.sub(_CLEAN_URL, "", text)
-    return clean
+    return URL_PATTERN.sub("", text)
 
 
-def fix_slang(text: str) -> str:
-    """Fixing slang words in text.
-
-    Dictionary: Kamus Alay - Colloquial Indonesian Lexicon by Salsabila, Ali, Yosef, and Ade
-    https://github.com/nasalsabila/kamus-alay
+def remove_stopwords(text: str) -> str:
+    """Remove stopwords from text.
 
     Args:
-        text (str): text that have slang words on
+        text (str): text/sentence
 
     Returns:
-        str: Fixed text without slang words on
+        str: text after
     """
-    for x in set(_CLEAN_CIL.findall(text)):
-        text = re.sub(f"\\b{x}\\b", _CIL[x.lower()], text, flags=re.IGNORECASE)
-    return text
+    return STOPWORDS_PATTERN.sub("", text)
+
+
+def replace_slang(text: str) -> str:
+    """Replace slang words in sentence based on dictionary
+    source : https://stackoverflow.com/a/15175239
+
+    Args:
+        text (str): text/sentence
+
+    Returns:
+        str: text after
+    """
+    return SLANG_PATTERN.sub(lambda mo: SLANG_DATA[mo.string[mo.start() : mo.end()].lower()], text)
+
+
+def replace_word_elongation(text: str) -> str:
+    """Replace word elongation inside text
+
+    Args:
+        text (str): text/sentence
+
+    Returns:
+        str: text after
+    """
+    return WE_PATTERN.sub(
+        lambda mo: re.sub(r"(?i)([a-zA-Z])(\1{1,})", r"\1", mo.string[mo.start() : mo.end()]), text
+    )
