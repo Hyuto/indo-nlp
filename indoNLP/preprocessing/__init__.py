@@ -1,12 +1,20 @@
 import re
 
-from IndoNLP.preprocess.slang_data import SLANG_DATA
-from IndoNLP.preprocess.stopwords_data import STOPWORDS
+from indoNLP.preprocessing.slang_data import SLANG_DATA
+from indoNLP.preprocessing.stopwords_data import STOPWORDS
 
 # TODO
 # 1. support case sensitive
 # 2. make pipeline
 # 3. vectorization
+
+__all__ = [
+    "remove_html",
+    "remove_url",
+    "remove_stopwords",
+    "replace_slang",
+    "replace_word_elongation",
+]
 
 # PATTERNS
 HTML_PATTERN = re.compile(r"<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});")
