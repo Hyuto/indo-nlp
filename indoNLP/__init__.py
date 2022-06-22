@@ -1,5 +1,7 @@
 """ Indonesian NLP written in python """
 
+from indoNLP.preprocessing import *
+
 __all__ = ["preprocessing"]
 __version__ = "0.0.1"
 __author__ = "Wahyu Setianto"
