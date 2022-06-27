@@ -1,4 +1,5 @@
 import re
+from typing import Sequence, Callable, Any
 
 from indoNLP.preprocessing.slang_data import SLANG_DATA
 from indoNLP.preprocessing.stopwords_data import STOPWORDS
@@ -75,7 +76,7 @@ def remove_html(text: str) -> str:
     Returns:
         str: cleaned text
     """
-    return HTML_PATTERN.sub("", text)
+    return HTML_PATTERN.sub("", text).strip()
 
 
 def remove_url(text: str) -> str:
@@ -87,7 +88,7 @@ def remove_url(text: str) -> str:
     Returns:
         str: cleaned text
     """
-    return URL_PATTERN.sub("", text)
+    return URL_PATTERN.sub("", text).strip()
 
 
 def remove_stopwords(text: str) -> str:
@@ -99,12 +100,11 @@ def remove_stopwords(text: str) -> str:
     Returns:
         str: text after
     """
-    return STOPWORDS_PATTERN.sub("", text)
+    return STOPWORDS_PATTERN.sub("", text).strip()
 
 
 def replace_slang(text: str) -> str:
     """Replace slang words in sentence
-    source : https://stackoverflow.com/a/15175239
 
     Args:
         text (str): text/sentence
@@ -112,7 +112,10 @@ def replace_slang(text: str) -> str:
     Returns:
         str: text after
     """
-    return SLANG_PATTERN.sub(lambda mo: SLANG_DATA[mo.string[mo.start() : mo.end()].lower()], text)
+    # https://stackoverflow.com/a/15175239
+    return SLANG_PATTERN.sub(
+        lambda mo: SLANG_DATA[mo.string[mo.start() : mo.end()].lower()], text
+    ).strip()
 
 
 def replace_word_elongation(text: str) -> str:
@@ -126,4 +129,22 @@ def replace_word_elongation(text: str) -> str:
     """
     return WE_PATTERN.sub(
         lambda mo: re.sub(r"(?i)([a-zA-Z])(\1{1,})", r"\1", mo.string[mo.start() : mo.end()]), text
-    )
+    ).strip()
+
+
+def pipline(pipe: Sequence[Callable[[Any], Any]]) -> Callable[[Any], Any]:
+    """Pipelining multiple of functions
+
+    Args:
+        pipe (Sequence[Callable[[Any], Any]]): Sequence of functions
+
+    Returns:
+        Callable[[Any], Any]: Callable pipeline function
+    """
+    # https://stackoverflow.com/a/57763458
+    def _run(value: Any):
+        for step in pipe:
+            value = step(value)
+        return value
+
+    return _run

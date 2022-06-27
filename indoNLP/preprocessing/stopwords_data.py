@@ -4,7 +4,7 @@
 
 __all__ = ["STOPWORDS"]
 
-STOPWORDS = [
+STOPWORDS = {
     "ada",
     "adalah",
     "adanya",
@@ -763,4 +763,4 @@ STOPWORDS = [
     "yakin",
     "yakni",
     "yang",
-]
+}

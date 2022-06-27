@@ -1,4 +1,5 @@
 from indoNLP.preprocessing import *
+from indoNLP.preprocessing import pipline
 
 
 def test_remove_html():
@@ -12,14 +13,14 @@ def test_remove_url():
         remove_url("terlampir di website google (https://google.com)")
         == "terlampir di website google ()"
     )
-    assert remove_url("test google.co.id") == "test "
-    assert remove_url("google Indonesia www.google.co.id") == "google Indonesia "
-    assert remove_url("retrieved from https://gist.github.com/gruber/8891611") == "retrieved from "
-    assert remove_url("Contoh http://www.example.org/default.html?ct=32&op=92&item=98") == "Contoh "
+    assert remove_url("test google.co.id") == "test"
+    assert remove_url("google Indonesia www.google.co.id") == "google Indonesia"
+    assert remove_url("retrieved from https://gist.github.com/gruber/8891611") == "retrieved from"
+    assert remove_url("Contoh http://www.example.org/default.html?ct=32&op=92&item=98") == "Contoh"
 
 
 def test_remove_stopwords():
-    assert remove_stopwords("siapa yang suruh makan?!!") == "  suruh makan?!!"
+    assert remove_stopwords("siapa yang suruh makan?!!") == "suruh makan?!!"
 
 
 def test_replace_slang():
@@ -34,3 +35,9 @@ def test_replace_word_elongation():
     assert replace_word_elongation("kenapaaa?") == "kenapa?"
     assert replace_word_elongation("kenapaaaa?") == "kenapa?"
     assert replace_word_elongation("KENAPAAA?") == "KENAPA?"
+
+
+def test_pipeline():
+    pipe_1 = pipline([replace_word_elongation, replace_slang])
+
+    assert pipe_1("Knp emg gk mw makan kenapaaa???") == "kenapa memang enggak mau makan kenapa???"
