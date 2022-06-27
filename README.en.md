@@ -1,12 +1,12 @@
 # indoNLP
 
-Bahasa | [English](./README-EN.md)
+[Bahasa](./README.md) | English
 
-indoNLP adalah library python sederhana yang bertujuan untuk memudahkan proyek NLP anda.
+indoNLP is a simple python library to make your Indonesian NLP project easier.
 
 ## Installation
 
-indoNLP dapat diinstall dengan mudah dengan menggunakan `pip`:
+The easiest way to install indoNLP is using `pip`:
 
 ```bash
 pip install indoNLP
@@ -14,12 +14,12 @@ pip install indoNLP
 
 ## Preprocessing
 
-Modul `indoNLP.preprocessing` menyediakan beberapa fungsi umum untuk menyiapkan dan melakukan
-transformasi terhadap data teks mentah untuk digunakan pada konteks tertentu.
+The `indoNLP.preprocessing` module provides several common utility functions to transform and
+preparing raw text data for use in a specific context.
 
 1. `remove_html`
 
-   Menghapus html tag yang terdapat di dalam teks
+   Removing html tags inside text
 
    ```python
    >>> from indoNLP.preprocessing import remove_html
@@ -29,7 +29,7 @@ transformasi terhadap data teks mentah untuk digunakan pada konteks tertentu.
 
 2. `remove_url`
 
-   Menghapus url yang terdapat di dalam teks
+   Removing url inside text
 
    ```python
    >>> from indoNLP.preprocessing import remove_url
@@ -39,10 +39,8 @@ transformasi terhadap data teks mentah untuk digunakan pada konteks tertentu.
 
 3. `remove_stopwords`
 
-   > Stopwords merupakan kata yang diabaikan dalam pemrosesan dan biasanya disimpan di dalam stop lists. Stop list ini berisi daftar kata umum yang mempunyai fungsi tapi tidak mempunyai arti
-
-   Menghapus stopwords yang terdapat di dalam teks.
-   List stopwords bahasa Indonesia didapatkan dari https://stopwords.net/indonesian-id/
+   Removing Indonesian stopwords inside text.
+   Indonesian Block Word List retrived from https://stopwords.net/indonesian-id/
 
    ```python
    >>> from indoNLP.preprocessing import remove_stopwords
@@ -52,10 +50,10 @@ transformasi terhadap data teks mentah untuk digunakan pada konteks tertentu.
 
 4. `replace_slang`
 
-   Mengganti kata gaul (_slang_) menjadi kata formal tanpa mengubah makna dari kata tersebut.
-   List kata gaul (_slang words_) bahasa Indonesian didapatkan dari
+   Replace slang words to formal words.
+   Indonesian Slang Words List retrived from
    [Kamus Alay - Colloquial Indonesian Lexicon](https://github.com/nasalsabila/kamus-alay)
-   oleh Salsabila, Ali, Yosef, and Ade
+   by Salsabila, Ali, Yosef, and Ade
 
    ```python
    >>> from indoNLP.preprocessing import replace_slang
@@ -65,9 +63,9 @@ transformasi terhadap data teks mentah untuk digunakan pada konteks tertentu.
 
 5. `replace_word_elongation`
 
-   > Word elongation adalah tindakan untuk menambahkan huruf ke kata, biasanya di akhir kata
+   > Word Elongation is the act of adding extra letters to words, typically to the end of the word
 
-   Meghandle word elongation
+   Handling word elongation
 
    ```python
    >>> from indoNLP.preprocessing import replace_word_elongation
@@ -77,7 +75,7 @@ transformasi terhadap data teks mentah untuk digunakan pada konteks tertentu.
 
 **pipelining**
 
-Membuat pipeline dari sequance fungsi preprocessing
+Create pipeline from sequence of preprocessing functions
 
 ```python
 >>> from indoNLP.preprocessing import pipline, replace_word_elongation, replace_slang
