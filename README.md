@@ -1,6 +1,6 @@
 # indoNLP
 
-Bahasa | [English](./README-EN.md)
+Bahasa | [English](./README.en.md)
 
 indoNLP adalah library python sederhana yang bertujuan untuk memudahkan proyek NLP anda.
 
