@@ -1,5 +1,5 @@
 from indoNLP.preprocessing import *
-from indoNLP.preprocessing import pipline
+from indoNLP.preprocessing import pipeline
 
 
 def test_remove_html():
@@ -38,6 +38,6 @@ def test_replace_word_elongation():
 
 
 def test_pipeline():
-    pipe_1 = pipline([replace_word_elongation, replace_slang])
+    pipe_1 = pipeline([replace_word_elongation, replace_slang])
 
     assert pipe_1("Knp emg gk mw makan kenapaaa???") == "kenapa memang enggak mau makan kenapa???"

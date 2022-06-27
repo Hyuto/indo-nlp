@@ -16,6 +16,7 @@ __all__ = [
     "remove_stopwords",
     "replace_slang",
     "replace_word_elongation",
+    "pipeline",
     # dictionaries
     "SLANG_DATA",
     "STOPWORDS",
@@ -132,7 +133,7 @@ def replace_word_elongation(text: str) -> str:
     ).strip()
 
 
-def pipline(pipe: Sequence[Callable[[Any], Any]]) -> Callable[[Any], Any]:
+def pipeline(pipe: Sequence[Callable[[Any], Any]]) -> Callable[[Any], Any]:
     """Pipelining multiple of functions
 
     Args:

@@ -1,6 +1,6 @@
 # indoNLP
 
-Bahasa | [English](./README.en.md)
+Bahasa | [English](https://github.com/Hyuto/indo-nlp/blob/master/README.en.md)
 
 indoNLP adalah library python sederhana yang bertujuan untuk memudahkan proyek NLP anda.
 
@@ -80,8 +80,8 @@ transformasi terhadap data teks mentah untuk digunakan pada konteks tertentu.
 Membuat pipeline dari sequance fungsi preprocessing
 
 ```python
->>> from indoNLP.preprocessing import pipline, replace_word_elongation, replace_slang
->>> pipe = pipline([replace_word_elongation, replace_slang])
+>>> from indoNLP.preprocessing import pipeline, replace_word_elongation, replace_slang
+>>> pipe = pipeline([replace_word_elongation, replace_slang])
 >>> pipe("Knp emg gk mw makan kenapaaa???")
 >>> "kenapa memang enggak mau makan kenapa???"
 ```
