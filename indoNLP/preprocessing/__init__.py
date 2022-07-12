@@ -1,6 +1,7 @@
 import re
-from typing import Sequence, Callable, Any
+from typing import Any, Callable, Sequence, Tuple
 
+from indoNLP.preprocessing.emoji import *
 from indoNLP.preprocessing.slang_data import SLANG_DATA
 from indoNLP.preprocessing.stopwords_data import STOPWORDS
 
@@ -17,7 +18,11 @@ __all__ = [
     "replace_slang",
     "replace_word_elongation",
     "pipeline",
-    # dictionaries
+    "emoji_to_words",
+    "words_to_emoji",
+    # data
+    "EMOJI_DATA",
+    "WORDS_EMOJI_DATA",
     "SLANG_DATA",
     "STOPWORDS",
     # regex patterns
@@ -26,11 +31,16 @@ __all__ = [
     "SLANG_PATTERN",
     "STOPWORDS_PATTERN",
     "WE_PATTERN",
+    "EMOJI_PATTERN",
+    "EN_WORDS_EMOJI_PATTERN",
+    "ID_WORDS_EMOJI_PATTERN",
+    "ALIAS_WORDS_EMOJI_PATTERN",
 ]
 
-# PATTERNS
-HTML_PATTERN = re.compile(r"<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});")
-URL_PATTERN = re.compile(
+
+# patterns
+HTML_PATTERN = r"<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});"
+URL_PATTERN = (
     # WEB URL matching pattern retrieved from https://gist.github.com/gruber/8891611
     r"(?i)\b((?:https?:(?:/{1,3}|[a-z0-9%])|[a-z0-9.\-]+[.](?:com|net|org|edu|gov|mil|aero|asia"
     + r"|biz|cat|coop|info|int|jobs|mobi|museum|name|post|pro|tel|travel|xxx|ac|ad|ae|af|ag|ai|al|"
@@ -54,18 +64,11 @@ URL_PATTERN = re.compile(
     + r"ng|ni|nl|no|np|nr|nu|nz|om|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|ps|pt|pw|py|qa|re|ro|rs|ru|rw|sa|"
     + r"sb|sc|sd|se|sg|sh|si|sj|Ja|sk|sl|sm|sn|so|sr|ss|st|su|sv|sx|sy|sz|tc|td|tf|tg|th|tj|tk|tl|"
     + r"tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw)"
-    + r"\b/?(?!@)))",
-    flags=re.IGNORECASE,
+    + r"\b/?(?!@)))"
 )
-SLANG_PATTERN = re.compile(
-    "(%s)" % "|".join(map(lambda x: rf"\b{x}\b", SLANG_DATA.keys())),
-    flags=re.IGNORECASE,
-)
-STOPWORDS_PATTERN = re.compile(
-    "(%s)" % "|".join(map(lambda x: rf"\b{x}\b", STOPWORDS)),
-    flags=re.IGNORECASE,
-)
-WE_PATTERN = re.compile(r"\b\w*([a-zA-Z])(\1{1,})\w*\b")
+SLANG_PATTERN = rf"\b({'|'.join(SLANG_DATA.keys())})\b"
+STOPWORDS_PATTERN = rf"\b({'|'.join(STOPWORDS)})\b"
+WE_PATTERN = r"\b\w*([a-zA-Z])(\1{1,})\b"
 
 
 def remove_html(text: str) -> str:
@@ -77,7 +80,7 @@ def remove_html(text: str) -> str:
     Returns:
         str: cleaned text
     """
-    return HTML_PATTERN.sub("", text).strip()
+    return re.sub(HTML_PATTERN, "", text, flags=re.IGNORECASE).strip()
 
 
 def remove_url(text: str) -> str:
@@ -89,7 +92,7 @@ def remove_url(text: str) -> str:
     Returns:
         str: cleaned text
     """
-    return URL_PATTERN.sub("", text).strip()
+    return re.sub(URL_PATTERN, "", text, flags=re.IGNORECASE).strip()
 
 
 def remove_stopwords(text: str) -> str:
@@ -101,7 +104,7 @@ def remove_stopwords(text: str) -> str:
     Returns:
         str: text after
     """
-    return STOPWORDS_PATTERN.sub("", text).strip()
+    return re.sub(STOPWORDS_PATTERN, "", text, flags=re.IGNORECASE).strip()
 
 
 def replace_slang(text: str) -> str:
@@ -114,9 +117,12 @@ def replace_slang(text: str) -> str:
         str: text after
     """
     # https://stackoverflow.com/a/15175239
-    return SLANG_PATTERN.sub(
-        lambda mo: SLANG_DATA[mo.string[mo.start() : mo.end()].lower()], text
-    ).strip()
+    return re.sub(
+        SLANG_PATTERN,
+        lambda mo: SLANG_DATA[mo.group(0).lower()],
+        text,
+        flags=re.IGNORECASE,
+    )
 
 
 def replace_word_elongation(text: str) -> str:
@@ -128,9 +134,12 @@ def replace_word_elongation(text: str) -> str:
     Returns:
         str: text after
     """
-    return WE_PATTERN.sub(
-        lambda mo: re.sub(r"(?i)([a-zA-Z])(\1{1,})", r"\1", mo.string[mo.start() : mo.end()]), text
-    ).strip()
+    return re.sub(
+        WE_PATTERN,
+        lambda mo: re.sub(r"(?i)([a-zA-Z])(\1{1,})", r"\1", mo.group(0)),
+        text,
+        flags=re.IGNORECASE,
+    )
 
 
 def pipeline(pipe: Sequence[Callable[[Any], Any]]) -> Callable[[Any], Any]:
@@ -149,3 +158,69 @@ def pipeline(pipe: Sequence[Callable[[Any], Any]]) -> Callable[[Any], Any]:
         return value
 
     return _run
+
+
+def emoji_to_words(
+    text: str,
+    lang: str = "id",
+    use_alias: bool = False,
+    delimiter: Sequence[Tuple[str, str]] = ("!", "!"),
+) -> str:
+    """Transform emoji to words
+
+    Args:
+        text (str): emoji included text.
+        lang (str, optional): language code. available "en" and "id". Defaults to "id".
+        use_alias (bool, optional): use alias translation. Only supported when lang == "id". \
+            Defaults to False.
+        delimiter (Sequence[Tuple[str, str]], optional): delimiter on emoji translation.
+        Defaults to ("!", "!").
+    
+    Returns:
+        str: transformed text.
+    """
+
+    def _get_emoji_translation(mo) -> str:
+        """get emoji translation"""
+        _emoji = EMOJI_DATA[mo.group(0)]
+        if use_alias:
+            assert lang == "id", "use_alias only support Indonesian language"
+            return delimiter[0] + _emoji["alias"] + delimiter[1]
+        return delimiter[0] + _emoji[lang] + delimiter[1]
+
+    assert lang in ["en", "id"], "Only supported English (en) and Indonesian (id) language"
+    return re.sub(EMOJI_PATTERN, _get_emoji_translation, text, flags=re.UNICODE)
+
+
+def words_to_emoji(
+    text: str,
+    lang: str = "id",
+    use_alias: bool = False,
+    delimiter: Sequence[Tuple[str, str]] = ("!", "!"),
+) -> str:
+    """Transform words to emoji
+
+    Args:
+        text (str): emoji code included text
+        lang (str, optional): language code. available "en" and "id". Defaults to "id".
+        use_alias (bool, optional): use alias translation. Only supported when lang == "id". \
+            Defaults to False.
+        delimiter (Sequence[Tuple[str, str]], optional): delimiter on emoji translation.
+        Defaults to ("!", "!").
+    
+    Returns:
+        str: transformed text.
+    """
+
+    def _get_emoji(mo) -> str:
+        """get emoji from words"""
+        keyword = re.search(rf"{delimiter[0]}(.*?){delimiter[1]}", mo.group(0))
+        _emoji = WORDS_EMOJI_DATA["alias" if use_alias else lang][keyword.group(1)]
+        return _emoji
+
+    assert lang in ["en", "id"], "Only supported English (en) and Indonesian (id) language"
+    pattern = EN_WORDS_EMOJI_PATTERN if lang == "en" else ID_WORDS_EMOJI_PATTERN
+    if use_alias:
+        assert lang == "id", "use_alias only support Indonesian language"
+        pattern = ALIAS_WORDS_EMOJI_PATTERN
+    return re.sub(rf"{delimiter[0]}{pattern}{delimiter[1]}", _get_emoji, text)

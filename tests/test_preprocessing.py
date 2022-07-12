@@ -34,6 +34,7 @@ def test_replace_word_elongation():
     assert replace_word_elongation("kenapaaa?") == "kenapa?"
     assert replace_word_elongation("kenapaaaa?") == "kenapa?"
     assert replace_word_elongation("KENAPAAA?") == "KENAPA?"
+    assert replace_word_elongation("insha Allah") == "insha Allah"
 
 
 def test_pipeline():
@@ -47,3 +48,18 @@ def test_duplicate_slang():
     for slang in SLANG_DATA.keys():
         assert slang not in slangs
         slangs.append(slang)
+
+
+def test_emoji_to_words():
+    assert emoji_to_words("emoji 😀") == "emoji !wajah_gembira!"
+    assert emoji_to_words("emoji 😀😁") == "emoji !wajah_gembira!!wajah_gembira_dengan_mata_bahagia!"
+    assert emoji_to_words("emoji 😀", use_alias=True) == "emoji !wajah_gembira_bahagia_muka_senang!"
+    assert emoji_to_words("emoji 😀", lang="en") == "emoji !grinning_face!"
+    assert emoji_to_words("emoji 😀", delimiter=("<", "!")) == "emoji <wajah_gembira!"
+    assert emoji_to_words("emoji ⛹🏼‍♂️") == "emoji !pria_memantulkan_bola_warna_kulit_cerah-sedang!"
+
+
+def test_words_to_emoji():
+    assert words_to_emoji("emoji !wajah_gembira!") == "emoji 😀"
+    assert words_to_emoji("emoji !wajah_gembira_bahagia_muka_senang!", use_alias=True) == "emoji 😀"
+    assert words_to_emoji("emoji !pria_memantulkan_bola_warna_kulit_cerah-sedang!") == "emoji ⛹🏼‍♂️"
