@@ -2,6 +2,16 @@
 
 [Bahasa](https://github.com/Hyuto/indo-nlp/blob/master/README.md) | English
 
+---
+
+[![PyPI version](https://badge.fury.io/py/indoNLP.svg)](https://badge.fury.io/py/indoNLP)
+![Python Version](https://img.shields.io/badge/python-≥3.7-blue?logo=python)
+![Test](https://github.com/Hyuto/indo-nlp/actions/workflows/testing.yaml/badge.svg)
+![Lint](https://github.com/Hyuto/indo-nlp/actions/workflows/linting.yaml/badge.svg)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
+---
+
 indoNLP is a simple python library to make your Indonesian NLP project easier.
 
 ## Installation
