@@ -1,5 +1,7 @@
 import os
+
 import tomli
+
 import indoNLP
 
 file_directory = os.path.dirname(__file__)

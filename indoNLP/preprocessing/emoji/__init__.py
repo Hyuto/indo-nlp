@@ -1,4 +1,5 @@
 from typing import Dict
+
 from indoNLP.preprocessing.emoji.emoji_data import EMOJI_DATA
 
 __all__ = [
@@ -13,13 +14,18 @@ __all__ = [
 ]
 
 
-def _generate_words_to_emoji_mapper(emoji_data: Dict[str, str]) -> Dict[str, Dict[str, str]]:
+def _generate_words_to_emoji_mapper(
+    emoji_data: Dict[str, Dict[str, str]]
+) -> Dict[str, Dict[str, str]]:
     """Generate words to emoji mapper
+
+    Args:
+        emoji_data (Dict[str, Dict[str, str]]): emoji data
 
     Returns:
         Dict[str, Dict[str, str]]: words to emoji mapper
     """
-    result = {"en": {}, "id": {}, "alias": {}}
+    result = {"en": {}, "id": {}, "alias": {}}  # type: Dict[str, Dict[str, str]]
     for emoji, values in emoji_data.items():
         result["en"][values["en"]] = emoji
         result["id"][values["id"]] = emoji

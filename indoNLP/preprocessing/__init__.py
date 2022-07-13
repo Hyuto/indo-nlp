@@ -1,5 +1,5 @@
 import re
-from typing import Any, Callable, Sequence, Tuple
+from typing import Callable, Match, Sequence, Tuple
 
 from indoNLP.preprocessing.emoji import *
 from indoNLP.preprocessing.slang_data import SLANG_DATA
@@ -142,7 +142,7 @@ def replace_word_elongation(text: str) -> str:
     )
 
 
-def pipeline(pipe: Sequence[Callable[[Any], Any]]) -> Callable[[Any], Any]:
+def pipeline(pipe: Sequence[Callable[[str], str]]) -> Callable[[str], str]:
     """Pipelining multiple of functions
 
     Args:
@@ -152,7 +152,7 @@ def pipeline(pipe: Sequence[Callable[[Any], Any]]) -> Callable[[Any], Any]:
         Callable[[Any], Any]: Callable pipeline function
     """
     # https://stackoverflow.com/a/57763458
-    def _run(value: Any):
+    def _run(value: str) -> str:
         for step in pipe:
             value = step(value)
         return value
@@ -164,7 +164,7 @@ def emoji_to_words(
     text: str,
     lang: str = "id",
     use_alias: bool = False,
-    delimiter: Sequence[Tuple[str, str]] = ("!", "!"),
+    delimiter: Tuple[str, str] = ("!", "!"),
 ) -> str:
     """Transform emoji to words
 
@@ -173,14 +173,14 @@ def emoji_to_words(
         lang (str, optional): language code. available "en" and "id". Defaults to "id".
         use_alias (bool, optional): use alias translation. Only supported when lang == "id". \
             Defaults to False.
-        delimiter (Sequence[Tuple[str, str]], optional): delimiter on emoji translation.
-        Defaults to ("!", "!").
+        delimiter (Tuple[str, str], optional): delimiter on emoji translation. \
+            Defaults to ("!", "!").
     
     Returns:
         str: transformed text.
     """
 
-    def _get_emoji_translation(mo) -> str:
+    def _get_emoji_translation(mo: Match[str]) -> str:
         """get emoji translation"""
         _emoji = EMOJI_DATA[mo.group(0)]
         if use_alias:
@@ -196,7 +196,7 @@ def words_to_emoji(
     text: str,
     lang: str = "id",
     use_alias: bool = False,
-    delimiter: Sequence[Tuple[str, str]] = ("!", "!"),
+    delimiter: Tuple[str, str] = ("!", "!"),
 ) -> str:
     """Transform words to emoji
 
@@ -205,18 +205,18 @@ def words_to_emoji(
         lang (str, optional): language code. available "en" and "id". Defaults to "id".
         use_alias (bool, optional): use alias translation. Only supported when lang == "id". \
             Defaults to False.
-        delimiter (Sequence[Tuple[str, str]], optional): delimiter on emoji translation.
-        Defaults to ("!", "!").
+        delimiter (Tuple[str, str], optional): delimiter on emoji translation. \
+            Defaults to ("!", "!").
     
     Returns:
         str: transformed text.
     """
 
-    def _get_emoji(mo) -> str:
+    def _get_emoji(mo: Match[str]) -> str:
         """get emoji from words"""
         keyword = re.search(rf"{delimiter[0]}(.*?){delimiter[1]}", mo.group(0))
-        _emoji = WORDS_EMOJI_DATA["alias" if use_alias else lang][keyword.group(1)]
-        return _emoji
+        assert keyword is not None  # ensure type
+        return WORDS_EMOJI_DATA["alias" if use_alias else lang][keyword.group(1)]
 
     assert lang in ["en", "id"], "Only supported English (en) and Indonesian (id) language"
     pattern = EN_WORDS_EMOJI_PATTERN if lang == "en" else ID_WORDS_EMOJI_PATTERN
