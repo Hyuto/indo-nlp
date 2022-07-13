@@ -1,7 +1,7 @@
 import logging
+
 import requests
 from bs4 import BeautifulSoup
-
 from utils import format_unicode, normalizer, write_python_file
 
 # Setup logging
