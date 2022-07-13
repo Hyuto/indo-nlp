@@ -1,10 +1,10 @@
 format:
-	poetry run isort .
 	poetry run black .
+	poetry run isort .
 
 format-check:
-	poetry run isort . --check-only
 	poetry run black . --check 
+	poetry run isort . --check-only
 
 typecheck:
 	poetry run mypy -p indoNLP --no-incremental

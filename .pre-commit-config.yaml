@@ -10,20 +10,21 @@ repos:
       - id: check-docstring-first
       - id: check-merge-conflict
       - id: check-toml
+      - id: check-yaml
       - id: end-of-file-fixer
       - id: mixed-line-ending
       - id: check-vcs-permalinks
   - repo: local
     hooks:
-      - id: isort
-        name: isort imports
-        language: system
-        entry: isort --check-only
-        types: [python]
       - id: black
         name: black formatting
         language: system
         entry: black --check
+        types: [python]
+      - id: isort
+        name: isort imports
+        language: system
+        entry: isort --check-only
         types: [python]
       - id: mypy
         name: typechecking using mypy

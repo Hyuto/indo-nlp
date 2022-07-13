@@ -5,40 +5,22 @@ from indoNLP.preprocessing.emoji import *
 from indoNLP.preprocessing.slang_data import SLANG_DATA
 from indoNLP.preprocessing.stopwords_data import STOPWORDS
 
-# TODO
-# 1. support case sensitive
-# 2. make pipeline
-# 3. vectorization
-
+# fmt: off
 __all__ = [
     # main functions
-    "remove_html",
-    "remove_url",
-    "remove_stopwords",
-    "replace_slang",
-    "replace_word_elongation",
-    "pipeline",
-    "emoji_to_words",
-    "words_to_emoji",
+    "remove_html", "remove_url", "remove_stopwords", "replace_slang", 
+    "replace_word_elongation", "pipeline", "emoji_to_words", "words_to_emoji",
+
     # data
-    "EMOJI_DATA",
-    "WORDS_EMOJI_DATA",
-    "SLANG_DATA",
-    "STOPWORDS",
+    "EMOJI_DATA", "WORDS_EMOJI_DATA", "SLANG_DATA", "STOPWORDS",
+
     # regex patterns
-    "HTML_PATTERN",
-    "URL_PATTERN",
-    "SLANG_PATTERN",
-    "STOPWORDS_PATTERN",
-    "WE_PATTERN",
-    "EMOJI_PATTERN",
-    "EN_WORDS_EMOJI_PATTERN",
-    "ID_WORDS_EMOJI_PATTERN",
-    "ALIAS_WORDS_EMOJI_PATTERN",
+    "HTML_PATTERN", "URL_PATTERN", "SLANG_PATTERN", "STOPWORDS_PATTERN",
+    "WE_PATTERN", "EMOJI_PATTERN", "EN_WORDS_EMOJI_PATTERN", 
+    "ID_WORDS_EMOJI_PATTERN", "ALIAS_WORDS_EMOJI_PATTERN",
 ]
 
-
-# patterns
+# fmt: on
 HTML_PATTERN = r"<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});"
 URL_PATTERN = (
     # WEB URL matching pattern retrieved from https://gist.github.com/gruber/8891611

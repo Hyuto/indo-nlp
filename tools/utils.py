@@ -42,7 +42,7 @@ def write_python_file(emoji_data: dict) -> None:
     template += '   and https://unicode.org/Public/emoji/14.0/emoji-test.txt"""\n\n'
     template += '__all__ = ["EMOJI_DATA"]\n\n'
     template += "EMOJI_DATA = {\n"
-    template += ",\n".join([f'    u"{x}" : {json.dumps(emoji_data[x])}' for x in emoji_data])
+    template += ",\n".join([f'    "{x}" : {json.dumps(emoji_data[x])}' for x in emoji_data])
     template += "\n}"
 
     with open("emoji_data.py", "w") as writer:

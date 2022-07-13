@@ -2,18 +2,17 @@ from typing import Dict
 
 from indoNLP.preprocessing.emoji.emoji_data import EMOJI_DATA
 
+# fmt: off
 __all__ = [
     # data
-    "EMOJI_DATA",
-    "WORDS_EMOJI_DATA",
+    "EMOJI_DATA", "WORDS_EMOJI_DATA",
+
     # regex patterns
-    "EMOJI_PATTERN",
-    "EN_WORDS_EMOJI_PATTERN",
-    "ID_WORDS_EMOJI_PATTERN",
-    "ALIAS_WORDS_EMOJI_PATTERN",
+    "EMOJI_PATTERN", "EN_WORDS_EMOJI_PATTERN",
+    "ID_WORDS_EMOJI_PATTERN", "ALIAS_WORDS_EMOJI_PATTERN",
 ]
 
-
+# fmt: on
 def _generate_words_to_emoji_mapper(
     emoji_data: Dict[str, Dict[str, str]]
 ) -> Dict[str, Dict[str, str]]:

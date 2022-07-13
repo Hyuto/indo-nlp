@@ -18,24 +18,24 @@ python = '^3.7'
 pytest = '^7.1.2'
 black = '^22.3.0'
 isort = '^5.10.1'
-pytest-cov = "^3.0.0"
-tomli = "^2.0.1"
-mypy = "^0.961"
-coverage = "^6.4.2"
-pre-commit = "^2.20.0"
+pytest-cov = '^3.0.0'
+tomli = '^2.0.1'
+mypy = '^0.961'
+coverage = '^6.4.2'
+pre-commit = '^2.20.0'
 
 [build-system]
 requires = ['poetry-core>=1.0.0']
 build-backend = 'poetry.core.masonry.api'
 
 [tool.mypy]
-files = ["indoNLP"]
+files = ['indoNLP']
 show_error_codes = true
 strict = true
 
 [tool.black]
+target_version = ['py37', 'py38', 'py39', 'py310']
 line-length = 100
-skip-string-normalization = true
 include = '\.pyi?$'
 extend-exclude = '''
 /(
