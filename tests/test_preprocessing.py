@@ -50,6 +50,23 @@ def test_duplicate_slang():
         slangs.append(slang)
 
 
+def test_duplicate_emoji():
+    title = {"en": [], "id": [], "alias": []}
+    for emoji in EMOJI_DATA.values():
+        assert emoji["en"] not in title["en"]
+        title["en"].append(emoji["en"])
+
+        if emoji["id"] in title["id"]:
+            assert (
+                emoji.get("alias") is not None
+                and emoji.get("alias") not in title["id"] + title["alias"]
+            )
+
+        title["id"].append(emoji["id"])
+        if emoji.get("alias") is not None:
+            title["alias"].append(emoji["alias"])
+
+
 def test_emoji_to_words():
     assert emoji_to_words("emoji 😀") == "emoji !wajah_gembira!"
     assert emoji_to_words("emoji 😀😁") == "emoji !wajah_gembira!!wajah_gembira_dengan_mata_bahagia!"
@@ -61,5 +78,11 @@ def test_emoji_to_words():
 
 def test_words_to_emoji():
     assert words_to_emoji("emoji !wajah_gembira!") == "emoji 😀"
+    assert words_to_emoji("emoji !grinning_face!", lang="en") == "emoji 😀"
+    assert words_to_emoji("emoji <wajah_gembira!", delimiter=("<", "!")) == "emoji 😀"
     assert words_to_emoji("emoji !wajah_gembira_bahagia_muka_senang!", use_alias=True) == "emoji 😀"
     assert words_to_emoji("emoji !pria_memantulkan_bola_warna_kulit_cerah-sedang!") == "emoji ⛹🏼‍♂️"
+    assert (
+        words_to_emoji("sedang on!api! banget nih kayaknya!lengan_berotot!!lengan_berotot!")
+        == "sedang on🔥 banget nih kayaknya💪💪"
+    )

@@ -1,16 +1,15 @@
 # indoNLP
 
-Bahasa | [English](https://github.com/Hyuto/indo-nlp/blob/master/README.en.md)
-
----
-
 [![PyPI version](https://badge.fury.io/py/indoNLP.svg)](https://badge.fury.io/py/indoNLP)
-![Python Version](https://img.shields.io/badge/python-≥3.7-blue?logo=python)
-![Test](https://github.com/Hyuto/indo-nlp/actions/workflows/testing.yaml/badge.svg)
-![Lint](https://github.com/Hyuto/indo-nlp/actions/workflows/linting.yaml/badge.svg)
+[![Python Version](https://img.shields.io/badge/python-≥3.7-blue?logo=python)](https://python.org)
+[![Test](https://github.com/Hyuto/indo-nlp/actions/workflows/testing.yaml/badge.svg)](https://github.com/Hyuto/indo-nlp/actions/workflows/testing.yaml)
+[![Lint](https://github.com/Hyuto/indo-nlp/actions/workflows/linting.yaml/badge.svg)](https://github.com/Hyuto/indo-nlp/actions/workflows/linting.yaml)
+[![codecov](https://codecov.io/gh/Hyuto/indo-nlp/branch/master/graph/badge.svg?token=094QNPJ3X4)](https://codecov.io/gh/Hyuto/indo-nlp)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 ---
+
+Bahasa | [English](https://github.com/Hyuto/indo-nlp/blob/master/README.en.md)
 
 indoNLP adalah library python sederhana yang bertujuan untuk memudahkan proyek NLP anda.
 
@@ -19,13 +18,15 @@ indoNLP adalah library python sederhana yang bertujuan untuk memudahkan proyek N
 indoNLP dapat diinstall dengan mudah dengan menggunakan `pip`:
 
 ```bash
-pip install indoNLP
+$ pip install indoNLP
 ```
 
 ## Preprocessing
 
 Modul `indoNLP.preprocessing` menyediakan beberapa fungsi umum untuk menyiapkan dan melakukan
 transformasi terhadap data teks mentah untuk digunakan pada konteks tertentu.
+
+**Generics**
 
 1. `remove_html`
 
@@ -85,7 +86,32 @@ transformasi terhadap data teks mentah untuk digunakan pada konteks tertentu.
    >>> "kenapa?"
    ```
 
-**pipelining**
+**Emoji**
+
+Preproses teks yang mengandung emoji.
+
+1. `emoji_to_words`
+
+   Mengubah emoji yang berada dalam sebuah teks menjadi kata - kata yang sesuai dengan emoji
+   tersebut.
+
+   ```python
+   >>> from indoNLP.preprocessing import emoji_to_words
+   >>> emoji_to_words("emoji 😀😁")
+   >>> "emoji !wajah_gembira!!wajah_gembira_dengan_mata_bahagia!"
+   ```
+
+2. `words_to_emoji`
+
+   Mengubah kata - kata dengan kode emoji menjadi emoji.
+
+   ```python
+   >>> from indoNLP.preprocessing import words_to_emoji
+   >>> words_to_emoji("emoji !wajah_gembira!")
+   >>> "emoji 😀"
+   ```
+
+**Pipelining**
 
 Membuat pipeline dari sequance fungsi preprocessing
 

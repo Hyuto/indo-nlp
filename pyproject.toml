@@ -1,6 +1,6 @@
 [tool.poetry]
 name = 'indoNLP'
-version = '0.1.1'
+version = '0.2.0'
 description = 'Simple library to make your Indonesian NLP project easier.'
 authors = ['Wahyu Setianto <wahyusetianto19@gmail.com>']
 license = 'MIT'
