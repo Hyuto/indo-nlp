@@ -2,6 +2,7 @@
 
 [![PyPI version](https://badge.fury.io/py/indoNLP.svg)](https://badge.fury.io/py/indoNLP)
 [![Python Version](https://img.shields.io/badge/python-≥3.7-blue?logo=python)](https://python.org)
+[![Pypy Version](https://img.shields.io/badge/pypy-≥3.7-blue?logo=pypy)](https://www.pypy.org/)
 [![Test](https://github.com/Hyuto/indo-nlp/actions/workflows/testing.yaml/badge.svg)](https://github.com/Hyuto/indo-nlp/actions/workflows/testing.yaml)
 [![Lint](https://github.com/Hyuto/indo-nlp/actions/workflows/linting.yaml/badge.svg)](https://github.com/Hyuto/indo-nlp/actions/workflows/linting.yaml)
 [![codecov](https://codecov.io/gh/Hyuto/indo-nlp/branch/master/graph/badge.svg?token=094QNPJ3X4)](https://codecov.io/gh/Hyuto/indo-nlp)

@@ -31,8 +31,3 @@ repos:
         language: system
         entry: mypy -p indoNLP --no-incremental
         pass_filenames: false
-      - id: pytest
-        name: unit testing
-        language: system
-        entry: pytest --cov=indoNLP/ -v
-        pass_filenames: false

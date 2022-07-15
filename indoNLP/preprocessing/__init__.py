@@ -116,6 +116,7 @@ def replace_word_elongation(text: str) -> str:
     Returns:
         str: text after
     """
+    # TODO: implement validation with wordlist using get_close_matches
     return re.sub(
         WE_PATTERN,
         lambda mo: re.sub(r"(?i)([a-zA-Z])(\1{1,})", r"\1", mo.group(0)),
@@ -128,10 +129,10 @@ def pipeline(pipe: Sequence[Callable[[str], str]]) -> Callable[[str], str]:
     """Pipelining multiple of functions
 
     Args:
-        pipe (Sequence[Callable[[Any], Any]]): Sequence of functions
+        pipe (Sequence[Callable[[str], str]]): Sequence of functions
 
     Returns:
-        Callable[[Any], Any]: Callable pipeline function
+        Callable[[str], str]: Callable pipeline function
     """
     # https://stackoverflow.com/a/57763458
     def _run(value: str) -> str:
@@ -153,11 +154,11 @@ def emoji_to_words(
     Args:
         text (str): emoji included text.
         lang (str, optional): language code. available "en" and "id". Defaults to "id".
-        use_alias (bool, optional): use alias translation. Only supported when lang == "id". \
+        use_alias (bool, optional): use alias translation. Only supported when lang == "id".
             Defaults to False.
-        delimiter (Tuple[str, str], optional): delimiter on emoji translation. \
+        delimiter (Tuple[str, str], optional): delimiter on emoji translation.
             Defaults to ("!", "!").
-    
+
     Returns:
         str: transformed text.
     """
@@ -185,11 +186,11 @@ def words_to_emoji(
     Args:
         text (str): emoji code included text
         lang (str, optional): language code. available "en" and "id". Defaults to "id".
-        use_alias (bool, optional): use alias translation. Only supported when lang == "id". \
+        use_alias (bool, optional): use alias translation. Only supported when lang == "id".
             Defaults to False.
-        delimiter (Tuple[str, str], optional): delimiter on emoji translation. \
+        delimiter (Tuple[str, str], optional): delimiter on emoji translation.
             Defaults to ("!", "!").
-    
+
     Returns:
         str: transformed text.
     """

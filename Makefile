@@ -1,3 +1,7 @@
+setup:
+	poetry install
+	poetry run pre-commit install
+	
 format:
 	poetry run black .
 	poetry run isort .

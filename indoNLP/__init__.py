@@ -1,4 +1,4 @@
-""" Indonesian NLP written in python """
+""" Indonesian NLP library written in python """
 
 from indoNLP.preprocessing import *
 
