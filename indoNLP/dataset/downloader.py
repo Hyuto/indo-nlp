@@ -1,38 +1,36 @@
 import os
-import sys
 from cgi import parse_header
 from datetime import datetime
-from shutil import get_terminal_size
-from typing import Any, Dict, Optional, Tuple, Union
+from typing import Any, Dict, List, Optional, Union
 from urllib.error import HTTPError
 from urllib.parse import urlparse
 from urllib.request import urlopen
 
-from indoNLP.dataset.list import DATASETS
-from indoNLP.dataset.utils import DatasetDirectoryHandler, logger, sizeof_fmt
+from indoNLP.dataset.utils import DatasetDirectoryHandler, _progress_bar, _progress_text, logger
 
 
 class DataDownloader:
-    """Download dataset
-
-    Args:
-        name (str): dataset name
-        dataset_dir (Union[str, DatasetDirectoryHandler]): dataset main directory
-    """
-
-    def __init__(self, name: str, dataset_dir: Union[None, str, DatasetDirectoryHandler]) -> None:
+    def __init__(
+        self,
+        name: str,
+        files: List[Dict[str, str]],
+        download_dir: Optional[Union[str, DatasetDirectoryHandler]] = None,
+    ) -> None:
         self.dataset_name = name
-        self.info = DATASETS.get(name)
+        self.dataset_files = files
 
-        if type(dataset_dir) == DatasetDirectoryHandler:
-            self.file = dataset_dir
-        elif type(dataset_dir) == str:
-            self.file = DatasetDirectoryHandler(dataset_dir)
+        if type(download_dir) == DatasetDirectoryHandler:
+            self.file = download_dir
+        elif type(download_dir) == str or download_dir is None:
+            self.file = DatasetDirectoryHandler(download_dir)
         else:
-            raise TypeError("Unacceptable dataset_dir type!")
+            raise TypeError("Unacceptable download_dir type!")
 
-    def _check_config(self) -> bool:
-        """Check status dataset in config"""
+        self.dataset_dir = os.path.join(self.file.download_dir, self.dataset_name)
+        os.makedirs(self.dataset_dir, exist_ok=True)
+
+    def _is_downloaded(self) -> bool:
+        """Check dataset in config"""
         if self.file.handler_config.get(self.dataset_name) is not None:
             if self.file.handler_config[self.dataset_name]["status"] == "completed":
                 return True
@@ -53,118 +51,72 @@ class DataDownloader:
         filesize = int(filesize) if filesize is not None else None
         return filesize
 
-    def _progress_text(self, downloaded: int, last: bool = False) -> None:
-        """Text progressing while downloading dataset
-
-        Args:
-            downloaded (int): downloaded buffer
-            last (bool, optional): last print. Defaults to False.
-        """
-        simplified_downloaded = sizeof_fmt(downloaded)
-        template = f"   Downloading : {self.dataset_name} [{simplified_downloaded}]"
-        if not last:
-            print(template, end="\r", file=sys.stdout, flush=True)
-        if last:
-            terminal_width, _ = get_terminal_size((80, 20))
-            print(" " * terminal_width, end="\r", file=sys.stdout, flush=True)
-            print(f"   📖 {self.dataset_name} saved [{simplified_downloaded}]")
-
-    def _progress_bar(self, downloaded: int, total_size: int) -> None:
-        """Bar progressing while downloading dataset
-
-        Args:
-            downloaded (int): downloaded buffer
-            total_size (int): filesize
-        """
-        simplified_downloaded = sizeof_fmt(downloaded)
-        simplified_total_size = sizeof_fmt(total_size)
-
-        # get progressbar width
-        terminal_width, _ = get_terminal_size((80, 20))
-        width = terminal_width - (len(self.dataset_name) + len(simplified_total_size) * 2 + 23)
-        width = width if width <= 70 else 70
-
-        progress = int(width * downloaded / total_size)
-        template = (
-            f"   Downloading : {self.dataset_name} "
-            + f"[{'█' * progress}{('.' * (width - progress))}]"
-            + f" {simplified_downloaded}/{simplified_total_size}  "
-        )
-
-        # out
-        if downloaded < total_size:
-            print(template, end="\r", file=sys.stdout, flush=True)
-        else:
-            print(" " * terminal_width, end="\r", file=sys.stdout, flush=True)
-            print(f"   📖 {self.dataset_name} saved [{simplified_downloaded}]")
-
-    def check(self, url: Optional[str] = None) -> Dict[str, Union[str, int]]:
-        """Check if data available
-
-        Args:
-            url (Optional[str]): dataset url, no need to specify for supported dataset however
-                for non-supported dataset it's a must. Defaults to None.
-
-        Returns:
-            Dict[str, str]: Dataset availability
-        """
-        if self.info is not None:
-            url = self.info["url"]
-        assert url is not None, "Please specify url endpoint to download dataset"
-        try:
-            with urlopen(url) as response:
-                pass
-            return {"available": True, "status": response.status}
-        except HTTPError as e:
-            logger.error(e)
-            return {"available": True, "status": e.code}
-
-    def download(self, url: Optional[str] = None) -> None:
-        """Download dataset
-
-        Args:
-            url (Optional[str]): dataset url, no need to specify for supported dataset however
-                for non-supported dataset it's a must. Defaults to None.
-        """
-        if self.info is not None:
-            url = self.info["url"]
-        assert url is not None, "Please specify url endpoint to download dataset"
-        complete = self._check_config()
-        if not complete:
-            self.file.handler_config[self.dataset_name] = {"status": "downloading", "path": None}
+    def check(self) -> List[Dict[str, Union[str, int]]]:
+        urls = [(x["filename"], x["url"]) for x in self.dataset_files]
+        results = []
+        for filename, url in urls:
             try:
                 with urlopen(url) as response:
-                    filename = self._get_filename(response, url)
-                    filesize = self._get_filesize(response)
-                    filename = os.path.join(self.file.dataset_dir, filename)
-                    with open(filename, "wb") as writer:
-                        blocksize = 1000000
-                        if filesize is not None:
-                            blocksize = max(4096, filesize // 20)
-
-                        size = 0
-                        while True:
-                            buffer = response.read(blocksize)
-                            if not buffer:
-                                if filesize is None:
-                                    self._progress_text(size, True)
-                                break
-                            writer.write(buffer)
-                            size += len(buffer)
-                            if filesize is not None:
-                                self._progress_bar(size, filesize)
-                            else:
-                                self._progress_text(size)
-
-                    self.file.handler_config[self.dataset_name] = {
-                        "status": "completed",
-                        "path": filename,
-                        "date": datetime.now().isoformat(),
-                        "size": os.path.getsize(filename),
-                    }
+                    pass
+                results.append({"filename": filename, "available": True, "status": response.status})
             except HTTPError as e:
                 logger.error(e)
-            finally:
-                self.file._update_config()
-        else:
-            logger.info(f"Dataset {self.dataset_name} is already downloaded!")
+                results.append({"filename": filename, "available": False, "status": e.code})
+        return results
+
+    def _download(self, index: int) -> None:
+        file_ = self.file.handler_config[self.dataset_name]["files"][index]
+        try:
+            with urlopen(file_["url"]) as response:
+                filesize = self._get_filesize(response)
+                filename = os.path.join(self.dataset_dir, file_["filename"])
+                with open(filename, "wb") as writer:
+                    blocksize = 1000000  # default blocksize
+                    if filesize is not None:
+                        blocksize = max(4096, filesize // 20)
+                    downloaded_size = 0
+                    while True:
+                        buffer = response.read(blocksize)
+                        if not buffer:
+                            if filesize is None:
+                                _progress_text(file_["filename"], downloaded_size, True)
+                            break
+                        writer.write(buffer)
+                        downloaded_size += len(buffer)
+                        if filesize is not None:
+                            _progress_bar(file_["filename"], downloaded_size, filesize)
+                        else:
+                            _progress_text(file_["filename"], downloaded_size)
+
+                self.file.handler_config[self.dataset_name]["files"][index] = {
+                    **self.file.handler_config[self.dataset_name]["files"][index],
+                    "status": "completed",
+                    "date": datetime.now().isoformat(),
+                    "size": os.path.getsize(filename),
+                }
+        except HTTPError as e:
+            logger.error(e)
+        finally:
+            self.file._update_config()
+
+    def download(self) -> None:
+        if not self._is_downloaded():
+            if self.file.handler_config.get(self.dataset_name) is None:
+                self.file.handler_config[self.dataset_name] = {
+                    "status": "downloading",
+                    "path": self.dataset_dir,
+                    "files": self.dataset_files,
+                }
+            self.file._update_config()
+            for i, file_ in enumerate(self.file.handler_config[self.dataset_name]["files"]):
+                status = file_.get("status")
+                if status is not None or status == "completed":
+                    continue
+                elif status is None:
+                    self.file.handler_config[self.dataset_name]["files"][i][
+                        "status"
+                    ] = "downloading"
+                self._download(i)
+            self.file.handler_config[self.dataset_name]["status"] = "completed"
+            self.file._update_config()
+            print(f" ✅ {self.dataset_name} downloaded")

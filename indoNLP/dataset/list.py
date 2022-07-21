@@ -15,16 +15,21 @@ DATASETS: Dict[str, Dict[str, Any]] = {
             "homepage": "https://github.com/Wikidepia/indonesian_datasets/tree/master/crawl/twitter-puisi",
             "tags": {"unlabeled"},
         },
-        "urls": [
+        "files": [
             {
                 "filename": "pelangipuisi.jsonl",
                 "url": "https://raw.githubusercontent.com/Wikidepia/indonesian_datasets/master/crawl/twitter-puisi/data/pelangipuisi.jsonl",
                 "is_large": False,
-                "extract": False,
+                "extract": True,
             }
         ],
-        "files": {
-            "pelangipuisi.jsonl": {"is_table": True, "reader": jsonl_table_reader, "tag": "main"}
+        "reader": {
+            "main": {
+                "filename": "pelangipuisi.jsonl",
+                "path": "pelangipuisi.jsonl",
+                "is_table": True,
+                "reader": jsonl_table_reader,
+            }
         },
     }
 }
