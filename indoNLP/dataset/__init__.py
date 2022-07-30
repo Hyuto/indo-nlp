@@ -6,11 +6,12 @@ from indoNLP.dataset.list import DATASETS
 from indoNLP.dataset.utils import DatasetDirectoryHandler
 
 
-def get_supported_dataset_list(filter_tags: Optional[Sequence[str]] = None) -> None:
+def get_supported_dataset_list(filter_tags: Optional[Union[str, Sequence[str]]] = None) -> None:
     """Listing all indoNLP supported dataset
 
     Args:
-        filter_tags (Optional[Sequence[str]]): filter dataset based on tags. Defaults to None.
+        filter_tags (Optional[Union[str, Sequence[str]]]): filter dataset based on tags.
+            Defaults to None.
     """
     print("Supported Datasets")
     print("-----------------")
@@ -19,8 +20,9 @@ def get_supported_dataset_list(filter_tags: Optional[Sequence[str]] = None) -> N
         info = values["info"]
 
         if filter_tags is not None:
-            assert type(info["tags"]) == set  # ensure type
-            if len(info["tags"].intersection(filter_tags)) > 0:
+            if type(filter_tags) == str:
+                filter_tags = [filter_tags]
+            if not any([tag.lower() in info["tags"] for tag in filter_tags]):
                 continue
 
         count += 1
@@ -28,8 +30,8 @@ def get_supported_dataset_list(filter_tags: Optional[Sequence[str]] = None) -> N
 
         header = (
             f"{count}. {dataset}"
-            + (f" - {info['author']}" if info["author"] is not None else "")
-            + (f" - {info['year']}" if info["year"] is not None else "")
+            + (f", {info['author']}" if info["author"] != "unknown" else "")
+            + (f", {info['year']}" if info["year"] != "unknown" else "")
         )
         print(header)
         print(f"{tab} {info['description']}")
@@ -51,7 +53,7 @@ def get_supported_dataset_info(name: str) -> None:
                 v = ", ".join(v)
             print(f" * {k} : {v}")
     else:
-        print("Dataset not found!")
+        raise KeyError("Dataset not found!")
 
 
 class Dataset:
@@ -76,11 +78,12 @@ class Dataset:
             self.downloader.download()
 
     def _read_file(self, tag: str) -> Any:
+        handler = self.dataset_config["reader"][tag]
         path = os.path.join(
             self.file.handler_config[self.dataset_name]["path"],
-            self.dataset_config["reader"][tag]["path"],
+            handler["path"],
         )
-        return self.dataset_config["reader"][tag]["reader"](path)
+        return handler["reader"](path, **handler["args"])
 
     def get_info(self) -> None:
         """Get supported dataset info"""

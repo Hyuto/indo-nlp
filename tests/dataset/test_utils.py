@@ -1,0 +1,21 @@
+from indoNLP.dataset.utils import *
+
+
+def test_logger(caplog):
+    logger.info("test info!")
+    logger.warning("test warning!")
+    logger.error("test error!")
+
+    info, warning, error = [
+        list(filter(lambda y: y != "", x.split(" "))) for x in caplog.text.split("\n") if x != ""
+    ]
+
+    assert info == ["INFO", "indoNLP:test_utils.py:5", "test", "info!"]
+    assert warning == ["WARNING", "indoNLP:test_utils.py:6", "test", "warning!"]
+    assert error == ["ERROR", "indoNLP:test_utils.py:7", "test", "error!"]
+
+
+def test_sizeof_fmt():
+    assert sizeof_fmt(24) == "24.00 B"
+    assert sizeof_fmt(1024) == "1.00 KiB"
+    assert sizeof_fmt(2**80) == "1.00 YiB"

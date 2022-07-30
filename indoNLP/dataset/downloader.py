@@ -51,19 +51,6 @@ class DataDownloader:
         filesize = int(filesize) if filesize is not None else None
         return filesize
 
-    def check(self) -> List[Dict[str, Union[str, int]]]:
-        urls = [(x["filename"], x["url"]) for x in self.dataset_files]
-        results = []
-        for filename, url in urls:
-            try:
-                with urlopen(url) as response:
-                    pass
-                results.append({"filename": filename, "available": True, "status": response.status})
-            except HTTPError as e:
-                logger.error(e)
-                results.append({"filename": filename, "available": False, "status": e.code})
-        return results
-
     def _download(self, index: int) -> None:
         file_ = self.file.handler_config[self.dataset_name]["files"][index]
         try:
@@ -98,6 +85,19 @@ class DataDownloader:
             logger.error(e)
         finally:
             self.file._update_config()
+
+    def check(self) -> List[Dict[str, Union[str, int]]]:
+        urls = [(x["filename"], x["url"]) for x in self.dataset_files]
+        results = []
+        for filename, url in urls:
+            try:
+                with urlopen(url) as response:
+                    pass
+                results.append({"filename": filename, "available": True, "status": response.status})
+            except HTTPError as e:
+                logger.error(e)
+                results.append({"filename": filename, "available": False, "status": e.code})
+        return results
 
     def download(self) -> None:
         if not self._is_downloaded():
