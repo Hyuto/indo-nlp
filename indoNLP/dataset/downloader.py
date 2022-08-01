@@ -1,10 +1,9 @@
 import os
-from cgi import parse_header
+import shutil
+import urllib.request
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Union
 from urllib.error import HTTPError
-from urllib.parse import urlparse
-from urllib.request import urlopen
 
 from indoNLP.dataset.utils import DatasetDirectoryHandler, _progress_bar, _progress_text, logger
 
@@ -24,26 +23,17 @@ class DataDownloader:
         elif type(download_dir) == str or download_dir is None:
             self.file = DatasetDirectoryHandler(download_dir)
         else:
-            raise TypeError("Unacceptable download_dir type!")
+            raise TypeError("Unacceptable download_dir type!")  # pragma: no cover
 
         self.dataset_dir = os.path.join(self.file.download_dir, self.dataset_name)
         os.makedirs(self.dataset_dir, exist_ok=True)
 
-    def _is_downloaded(self) -> bool:
+    def _is_completed(self) -> bool:
         """Check dataset in config"""
         if self.file.handler_config.get(self.dataset_name) is not None:
             if self.file.handler_config[self.dataset_name]["status"] == "completed":
                 return True
         return False
-
-    def _get_filename(self, response: Any, url: str) -> str:
-        """Get filename from url"""
-        content = response.getheader("Content-Disposition")
-        if content is not None:
-            _, params = parse_header(content)
-            return params["filename"]
-        path = urlparse(url).path
-        return os.path.basename(path)
 
     def _get_filesize(self, response: Any) -> Union[int, None]:
         """Get filesize from url"""
@@ -53,8 +43,9 @@ class DataDownloader:
 
     def _download(self, index: int) -> None:
         file_ = self.file.handler_config[self.dataset_name]["files"][index]
+        file_["status"] = "downloading"
         try:
-            with urlopen(file_["url"]) as response:
+            with urllib.request.urlopen(file_["url"]) as response:
                 filesize = self._get_filesize(response)
                 filename = os.path.join(self.dataset_dir, file_["filename"])
                 with open(filename, "wb") as writer:
@@ -77,11 +68,23 @@ class DataDownloader:
 
                 self.file.handler_config[self.dataset_name]["files"][index] = {
                     **self.file.handler_config[self.dataset_name]["files"][index],
-                    "status": "completed",
+                    "status": "downloaded",
                     "date": datetime.now().isoformat(),
                     "size": os.path.getsize(filename),
                 }
-        except HTTPError as e:
+        except HTTPError as e:  # pragma: no cover
+            logger.error(e)
+        finally:
+            self.file._update_config()
+
+    def _extract_file(self, index: int) -> None:
+        file_ = self.file.handler_config[self.dataset_name]["files"][index]
+        file_["status"] = "extracting"
+        try:
+            filename = os.path.join(self.dataset_dir, file_["filename"])
+            shutil.unpack_archive(filename, self.dataset_dir)
+            self.file.handler_config[self.dataset_name]["files"][index]["status"] = "extracted"
+        except Exception as e:
             logger.error(e)
         finally:
             self.file._update_config()
@@ -91,32 +94,35 @@ class DataDownloader:
         results = []
         for filename, url in urls:
             try:
-                with urlopen(url) as response:
+                with urllib.request.urlopen(url) as response:
                     pass
                 results.append({"filename": filename, "available": True, "status": response.status})
-            except HTTPError as e:
+            except HTTPError as e:  # pragma: no cover
                 logger.error(e)
                 results.append({"filename": filename, "available": False, "status": e.code})
         return results
 
     def download(self) -> None:
-        if not self._is_downloaded():
+        if not self._is_completed():
             if self.file.handler_config.get(self.dataset_name) is None:
                 self.file.handler_config[self.dataset_name] = {
                     "status": "downloading",
                     "path": self.dataset_dir,
                     "files": self.dataset_files,
                 }
-            self.file._update_config()
+                self.file._update_config()
             for i, file_ in enumerate(self.file.handler_config[self.dataset_name]["files"]):
                 status = file_.get("status")
-                if status is not None or status == "completed":
+                if status == "completed":
+                    continue  # pragma: no cover
+                elif status == "extracting" and file_["extract"]:
+                    self._extract_file(i)
+                    self.file.handler_config[self.dataset_name]["files"][i]["status"] = "completed"
                     continue
-                elif status is None:
-                    self.file.handler_config[self.dataset_name]["files"][i][
-                        "status"
-                    ] = "downloading"
                 self._download(i)
+                if file_["extract"]:
+                    self._extract_file(i)
+                self.file.handler_config[self.dataset_name]["files"][i]["status"] = "completed"
             self.file.handler_config[self.dataset_name]["status"] = "completed"
             self.file._update_config()
-            print(f" ✅ {self.dataset_name} downloaded")
+            print(f" ✅ {self.dataset_name} ready")

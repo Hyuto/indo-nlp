@@ -1,5 +1,5 @@
 import os
-from typing import Any, Dict, Optional, Sequence, Tuple, Union
+from typing import Any, Optional, Sequence, Tuple, Union
 
 from indoNLP.dataset.downloader import DataDownloader
 from indoNLP.dataset.list import DATASETS
@@ -87,7 +87,7 @@ class Dataset:
 
     def get_info(self) -> None:
         """Get supported dataset info"""
-        get_supported_dataset_info(self.dataset_name)
+        get_supported_dataset_info(self.dataset_name)  # pragma: no cover
 
     def read(self, get: Union[str, Tuple[str]] = "all") -> Union[Any, Tuple[Any]]:
         assert (

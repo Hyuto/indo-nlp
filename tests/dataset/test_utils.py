@@ -19,3 +19,14 @@ def test_sizeof_fmt():
     assert sizeof_fmt(24) == "24.00 B"
     assert sizeof_fmt(1024) == "1.00 KiB"
     assert sizeof_fmt(2**80) == "1.00 YiB"
+
+
+def test_progress_text(capsys):
+    filename = "test"
+    _progress_text(filename, 100, False)
+    _progress_text(filename, 200, True)
+
+    out, _ = capsys.readouterr()
+    out = [x for x in out.split("\r") if x != ""]
+    assert out[0].strip() == f"Downloading : {filename} [{sizeof_fmt(100)}]"
+    assert out[-1].strip() == f"📖 {filename} saved [{sizeof_fmt(200)}]"

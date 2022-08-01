@@ -5,7 +5,7 @@ import sys
 from shutil import get_terminal_size
 from typing import Any, Dict, Optional
 
-__all__ = ["logger", "sizeof_fmt", "DatasetDirectoryHandler"]
+__all__ = ["logger", "sizeof_fmt", "_progress_bar", "_progress_text", "DatasetDirectoryHandler"]
 
 
 def _setup_logger() -> logging.Logger:

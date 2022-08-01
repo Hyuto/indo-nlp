@@ -39,38 +39,55 @@ def test_get_supported_dataset_info(capfd):
         assert e == "Dataset not found!"
 
 
-def test_Dataset():
-    data = Dataset("twitter-puisi")
-    assert os.path.exists(os.path.join(data.file.download_dir, "twitter-puisi"))
-    shutil.rmtree(data.file.download_dir)  # clean up
+class TestDataset:
+    def test_supported_Dataset_available(self):
+        for dataset in DATASETS.keys():
+            data = Dataset(dataset, auto_download=False)
+            for check in data.downloader.check():
+                assert check["available"], f"{check['filename']} - {check['status']}"
 
-    data = Dataset(
-        "id-multi-label-hate-speech-and-abusive-language-detection",
-        dataset_dir="./temp",
-    )
-    assert os.path.exists(
-        os.path.join(
-            data.file.download_dir,
-            "id-multi-label-hate-speech-and-abusive-language-detection",
+    @pytest.mark.slow
+    def test_supported_Dataset_download(self):
+        data = Dataset("twitter-puisi")
+        assert os.path.exists(os.path.join(data.file.download_dir, "twitter-puisi"))
+        assert data.downloader._is_completed()
+        shutil.rmtree(data.file.download_dir)  # clean up
+
+        data = Dataset("id-abusive-language-detection", dataset_dir="./temp")
+        assert os.path.exists(
+            os.path.join(
+                data.file.download_dir,
+                "id-abusive-language-detection",
+            )
         )
-    )
-    dataset = data.read()
-    assert [*dataset.keys()] == [
-        "Tweet",
-        "HS",
-        "Abusive",
-        "HS_Individual",
-        "HS_Group",
-        "HS_Religion",
-        "HS_Race",
-        "HS_Physical",
-        "HS_Gender",
-        "HS_Other",
-        "HS_Weak",
-        "HS_Moderate",
-        "HS_Strong",
-    ]
-    shutil.rmtree(data.file.download_dir)  # clean up
+        dataset = data.read()
+        assert len(dataset) == 2
+        assert [*dataset[0].keys()] == ["Label", "Tweet"]
+        assert dataset[1] == data.read("three-labels")
+        shutil.rmtree(data.file.download_dir)  # clean up
 
-    with pytest.raises(KeyError):
-        Dataset("test")
+        with pytest.raises(KeyError):
+            Dataset("test")
+
+    def test_unsupported_Dataset_download(self):
+        downloader = DataDownloader(
+            "msa-all-tab",
+            files=[
+                {
+                    "filename": "Bahasa-Wordnet-master.zip",
+                    "url": "https://codeload.github.com/limaginaire/Bahasa-Wordnet/zip/refs/heads/master",
+                    "is_large": True,
+                    "extract": True,
+                }
+            ],
+            download_dir="./temp",
+        )
+        downloader.download()
+        assert os.path.exists(downloader.dataset_dir)
+        assert all(
+            [
+                x in ["LICENSE", "Readme", "wn-ind-def.tab", "wn-msa-all.tab"]
+                for x in os.listdir(os.path.join(downloader.dataset_dir, "Bahasa-Wordnet-master"))
+            ]
+        )
+        shutil.rmtree(downloader.file.download_dir)

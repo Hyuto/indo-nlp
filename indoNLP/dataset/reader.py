@@ -29,6 +29,39 @@ def csv_reader(
     return data
 
 
+def txt_table_reader(
+    path: str,
+    header: bool = True,
+    delimiter: str = "\t",
+    fd_kwargs: Dict[str, Any] = {},
+) -> Dict[str, List[Any]]:
+    r"""txt file reader where returned data can be read into pandas.DataFrame
+
+    Args:
+        path (str): path to csv file
+        header (bool, optional): is header included?. Defaults to True
+        delimiter (str, optional): delimiter. Defaults to '\t'
+        fd_kwargs (Dict[str, Any], optional): file opener kwargs. Defaults to {}.
+
+    Returns:
+        Dict[str, List[Any]]: dataset
+    """
+    with open(path, **fd_kwargs) as fd:
+        read_data = fd.readlines()
+    if header:
+        head = read_data.pop(0)[:-1].split(delimiter)
+    else:
+        head = read_data[0][:-1].split(delimiter)
+        head = list(range(len(head)))
+
+    data: Dict[str, List[Any]] = {c: [] for c in head}
+    for row in read_data:
+        row_data = row[:-1].split(delimiter)
+        for k, v in zip(head, row_data):
+            data[k].append(v)
+    return data
+
+
 def jsonl_table_reader(
     path: str,
     fd_kwargs: Dict[str, Any] = {},
