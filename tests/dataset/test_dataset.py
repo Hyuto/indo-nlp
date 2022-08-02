@@ -3,6 +3,7 @@ import shutil
 import pytest
 
 from indoNLP.dataset import *
+from indoNLP.dataset import downloader
 
 
 def test_get_supported_dataset_list(capfd):
@@ -53,11 +54,11 @@ class TestDataset:
         assert data.downloader._is_completed()
         shutil.rmtree(data.file.download_dir)  # clean up
 
-        data = Dataset("id-abusive-language-detection", dataset_dir="./temp")
-        assert os.path.exists(
-            os.path.join(
-                data.file.download_dir,
-                "id-abusive-language-detection",
+        data = Dataset("id-abusive-language-detection", dataset_dir="temp")
+        assert all(
+            map(
+                lambda x: x in ["re_dataset_two_labels.csv", "re_dataset_three_labels.csv"],
+                os.listdir(os.path.join(data.file.download_dir, "id-abusive-language-detection")),
             )
         )
         dataset = data.read()
@@ -80,14 +81,14 @@ class TestDataset:
                     "extract": True,
                 }
             ],
-            download_dir="./temp",
+            download_dir="temp",
         )
         downloader.download()
         assert os.path.exists(downloader.dataset_dir)
         assert all(
-            [
-                x in ["LICENSE", "Readme", "wn-ind-def.tab", "wn-msa-all.tab"]
-                for x in os.listdir(os.path.join(downloader.dataset_dir, "Bahasa-Wordnet-master"))
-            ]
+            map(
+                lambda x: x in ["LICENSE", "Readme", "wn-ind-def.tab", "wn-msa-all.tab"],
+                os.listdir(os.path.join(downloader.dataset_dir, "Bahasa-Wordnet-master")),
+            )
         )
         shutil.rmtree(downloader.file.download_dir)

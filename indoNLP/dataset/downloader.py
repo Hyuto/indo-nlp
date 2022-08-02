@@ -113,9 +113,9 @@ class DataDownloader:
                 self.file._update_config()
             for i, file_ in enumerate(self.file.handler_config[self.dataset_name]["files"]):
                 status = file_.get("status")
-                if status == "completed":
-                    continue  # pragma: no cover
-                elif status == "extracting" and file_["extract"]:
+                if status == "completed":  # pragma: no cover
+                    continue
+                elif status == "extracting" and file_["extract"]:  # pragma: no cover
                     self._extract_file(i)
                     self.file.handler_config[self.dataset_name]["files"][i]["status"] = "completed"
                     continue
