@@ -2,7 +2,6 @@
 
 [![PyPI version](https://badge.fury.io/py/indoNLP.svg)](https://badge.fury.io/py/indoNLP)
 [![Python Version](https://img.shields.io/badge/python-≥3.7-blue?logo=python)](https://python.org)
-[![Pypy Version](https://img.shields.io/badge/pypy-≥3.7-blue?logo=pypy)](https://www.pypy.org/)
 [![Test](https://github.com/Hyuto/indo-nlp/actions/workflows/testing.yaml/badge.svg)](https://github.com/Hyuto/indo-nlp/actions/workflows/testing.yaml)
 [![Lint](https://github.com/Hyuto/indo-nlp/actions/workflows/linting.yaml/badge.svg)](https://github.com/Hyuto/indo-nlp/actions/workflows/linting.yaml)
 [![codecov](https://codecov.io/gh/Hyuto/indo-nlp/branch/master/graph/badge.svg?token=094QNPJ3X4)](https://codecov.io/gh/Hyuto/indo-nlp)
@@ -36,7 +35,7 @@ preparing raw text data for use in a specific context.
    ```python
    >>> from indoNLP.preprocessing import remove_html
    >>> remove_html("website <a href='https://google.com'>google</a>")
-   >>> "website google"
+   "website google"
    ```
 
 2. `remove_url`
@@ -46,7 +45,7 @@ preparing raw text data for use in a specific context.
    ```python
    >>> from indoNLP.preprocessing import remove_url
    >>> remove_url("retrieved from https://gist.github.com/gruber/8891611")
-   >>> "retrieved from "
+   "retrieved from"
    ```
 
 3. `remove_stopwords`
@@ -57,7 +56,7 @@ preparing raw text data for use in a specific context.
    ```python
    >>> from indoNLP.preprocessing import remove_stopwords
    >>> remove_stopwords("siapa yang suruh makan?!!")
-   >>> "  suruh makan?!!"
+   "suruh makan?!!"
    ```
 
 4. `replace_slang`
@@ -70,7 +69,7 @@ preparing raw text data for use in a specific context.
    ```python
    >>> from indoNLP.preprocessing import replace_slang
    >>> replace_slang("emg siapa yg nanya?")
-   >>> "memang siapa yang bertanya?"
+   "memang siapa yang bertanya?"
    ```
 
 5. `replace_word_elongation`
@@ -82,7 +81,7 @@ preparing raw text data for use in a specific context.
    ```python
    >>> from indoNLP.preprocessing import replace_word_elongation
    >>> replace_word_elongation("kenapaaa?")
-   >>> "kenapa?"
+   "kenapa?"
    ```
 
 **Emoji**
@@ -96,7 +95,7 @@ Preprocessing emoji containing text.
    ```python
    >>> from indoNLP.preprocessing import emoji_to_words
    >>> emoji_to_words("emoji 😀😁")
-   >>> "emoji !wajah_gembira!!wajah_gembira_dengan_mata_bahagia!"
+   "emoji !wajah_gembira!!wajah_gembira_dengan_mata_bahagia!"
    ```
 
 2. `words_to_emoji`
@@ -106,7 +105,7 @@ Preprocessing emoji containing text.
    ```python
    >>> from indoNLP.preprocessing import words_to_emoji
    >>> words_to_emoji("emoji !wajah_gembira!")
-   >>> "emoji 😀"
+   "emoji 😀"
    ```
 
 **Pipelining**
@@ -117,5 +116,13 @@ Create pipeline from sequence of preprocessing functions
 >>> from indoNLP.preprocessing import pipeline, replace_word_elongation, replace_slang
 >>> pipe = pipeline([replace_word_elongation, replace_slang])
 >>> pipe("Knp emg gk mw makan kenapaaa???")
->>> "kenapa memang enggak mau makan kenapa???"
+"kenapa memang enggak mau makan kenapa???"
+```
+
+## Development
+
+Setup local dev environment.
+
+```bash
+make setup-dev
 ```

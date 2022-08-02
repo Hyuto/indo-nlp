@@ -8,12 +8,14 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10", "pypy3.7", "pypy3.8", "pypy3.9"]
+        os: [ubuntu-latest, windows-latest]
+        python-version: ["3.7", "3.8", "3.9", "3.10"]
     env:
+      OS: ${{ matrix.os }}
       PYTHON: ${{ matrix.python-version }}
     steps:
       - uses: actions/checkout@v3
@@ -35,4 +37,4 @@ jobs:
           file: ./coverage.xml
           name: indoNLP
           flags: unittests
-          env_vars: PYTHON
+          env_vars: OS,PYTHON
