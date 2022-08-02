@@ -1,2 +1,5 @@
 [report]
 show_missing = true
+exclude_lines =
+    pragma: no cover
+    except Exception as e:
