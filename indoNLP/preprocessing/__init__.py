@@ -57,10 +57,16 @@ def remove_html(text: str) -> str:
     """Remove HTML tags from text.
 
     Args:
-        text (str): text that have html tags on
+        text (str): Text that have html tags on
 
     Returns:
-        str: cleaned text
+        str: Cleaned text
+
+    Examples:
+        Removing all html tags inside of a string.
+
+        >>> indoNLP.preprocessing.remove_html("website <a href='https://google.com'>google</a>")
+        "website google"
     """
     return re.sub(HTML_PATTERN, "", text, flags=re.IGNORECASE).strip()
 
@@ -69,10 +75,16 @@ def remove_url(text: str) -> str:
     """Remove URL from text.
 
     Args:
-        text (str): text that have url on
+        text (str): Text that have url on
 
     Returns:
-        str: cleaned text
+        str: Cleaned text
+
+    Examples:
+        Removing all urls inside of a string.
+
+        >>> indoNLP.preprocessing.remove_url("retrieved from https://gist.github.com/gruber/8891611")
+        "retrieved from"
     """
     return re.sub(URL_PATTERN, "", text, flags=re.IGNORECASE).strip()
 
@@ -81,10 +93,16 @@ def remove_stopwords(text: str) -> str:
     """Remove stopwords from text.
 
     Args:
-        text (str): text/sentence
+        text (str): Text/sentence
 
     Returns:
-        str: text after
+        str: Text after
+
+    Examples:
+        Removing stopwords inside of a string.
+
+        >>> indoNLP.preprocessing.remove_stopwords("siapa yang suruh makan?!!")
+        "suruh makan?!!"
     """
     return re.sub(STOPWORDS_PATTERN, "", text, flags=re.IGNORECASE).strip()
 
@@ -93,10 +111,16 @@ def replace_slang(text: str) -> str:
     """Replace slang words in sentence
 
     Args:
-        text (str): text/sentence
+        text (str): Text/sentence
 
     Returns:
-        str: text after
+        str: Text after
+
+    Examples:
+        Replacing all slang words in a string to formal words.
+
+        >>> indoNLP.preprocessing.replace_slang("emg siapa yg nanya?")
+        "memang siapa yang bertanya?"
     """
     # https://stackoverflow.com/a/15175239
     return re.sub(
@@ -111,10 +135,16 @@ def replace_word_elongation(text: str) -> str:
     """Replace word elongation inside text
 
     Args:
-        text (str): text/sentence
+        text (str): Text/sentence
 
     Returns:
-        str: text after
+        str: Text after
+
+    Examples:
+        Replacing word elongation.
+
+        >>> indoNLP.preprocessing.replace_word_elongation("kenapaaa?")
+        "kenapa?"
     """
     # TODO: implement validation with wordlist using get_close_matches
     return re.sub(
@@ -126,13 +156,21 @@ def replace_word_elongation(text: str) -> str:
 
 
 def pipeline(pipe: Sequence[Callable[[str], str]]) -> Callable[[str], str]:
-    """Pipelining multiple of functions
+    """Pipelining multiple preprocessing functions
 
     Args:
         pipe (Sequence[Callable[[str], str]]): Sequence of functions
 
     Returns:
         Callable[[str], str]: Callable pipeline function
+
+    Examples:
+        Pipelining preprocessing functions
+
+        >>> from indoNLP.preprocessing import pipeline, replace_word_elongation, replace_slang
+        >>> pipe = pipeline([replace_word_elongation, replace_slang])
+        >>> pipe("Knp emg gk mw makan kenapaaa???")
+        "kenapa memang enggak mau makan kenapa???"
     """
     # https://stackoverflow.com/a/57763458
     def _run(value: str) -> str:
@@ -152,19 +190,40 @@ def emoji_to_words(
     """Transform emoji to words
 
     Args:
-        text (str): emoji included text.
-        lang (str, optional): language code. available "en" and "id". Defaults to "id".
-        use_alias (bool, optional): use alias translation. Only supported when lang == "id".
+        text (str): Emoji included text.
+        lang (str, optional): Language code. available "en" and "id". Defaults to "id".
+        use_alias (bool, optional): Use alias translation. Only supported when lang == "id".
             Defaults to False.
-        delimiter (Tuple[str, str], optional): delimiter on emoji translation.
+        delimiter (Tuple[str, str], optional): Delimiter on emoji translation.
             Defaults to ("!", "!").
 
     Returns:
-        str: transformed text.
+        str: Transformed text.
+
+    Examples:
+        Translate emoji to bahasa
+
+        >>> indoNLP.preprocessing.emoji_to_words("emoji 😀😁")
+        "emoji !wajah_gembira!!wajah_gembira_dengan_mata_bahagia!"
+
+        Translate emoji to english
+
+        >>> indoNLP.preprocessing.emoji_to_words("emoji 😀😁", lang="en")
+        "emoji !grinning_face!!beaming_face_with_smiling_eyes!"
+
+        Using alias. Only works on ``lang == "id"``
+
+        >>> indoNLP.preprocessing.emoji_to_words("emoji 😀", use_alias=True)
+        "emoji !wajah_gembira_bahagia_muka_senang!"
+
+        Using custom delimiter
+
+        >>> indoNLP.preprocessing.emoji_to_words("emoji 😁", delimiter=("^","$"))
+        "emoji ^wajah_gembira_dengan_mata_bahagia$"
     """
 
     def _get_emoji_translation(mo: Match[str]) -> str:
-        """get emoji translation"""
+        """Get emoji translation"""
         _emoji = EMOJI_DATA[mo.group(0)]
         if use_alias:
             assert lang == "id", "use_alias only support Indonesian language"
@@ -184,19 +243,40 @@ def words_to_emoji(
     """Transform words to emoji
 
     Args:
-        text (str): emoji code included text
-        lang (str, optional): language code. available "en" and "id". Defaults to "id".
-        use_alias (bool, optional): use alias translation. Only supported when lang == "id".
+        text (str): Emoji code included text
+        lang (str, optional): Language code. available "en" and "id". Defaults to "id".
+        use_alias (bool, optional): Use alias translation. Only supported when lang == "id".
             Defaults to False.
-        delimiter (Tuple[str, str], optional): delimiter on emoji translation.
+        delimiter (Tuple[str, str], optional): Delimiter on emoji translation.
             Defaults to ("!", "!").
 
     Returns:
-        str: transformed text.
+        str: Transformed text.
+
+    Examples:
+        Transform words to emoji
+
+        >>> indoNLP.preprocessing.emoji_to_words("emoji !wajah_gembira!!wajah_gembira_dengan_mata_bahagia!")
+        "emoji 😀😁"
+
+        Transform english words to emoji
+
+        >>> indoNLP.preprocessing.emoji_to_words("emoji !beaming_face_with_smiling_eyes!", lang="en")
+        "emoji 😁"
+
+        Using alias. Only works on ``lang == "id"``
+
+        >>> indoNLP.preprocessing.emoji_to_words("emoji !wajah_gembira_bahagia_muka_senang!", use_alias=True)
+        "emoji 😀"
+
+        Using custom delimiter
+
+        >>> indoNLP.preprocessing.emoji_to_words("emoji ^wajah_gembira_dengan_mata_bahagia$", delimiter=("^","$"))
+        "emoji 😁"
     """
 
     def _get_emoji(mo: Match[str]) -> str:
-        """get emoji from words"""
+        """Get emoji from words"""
         keyword = re.search(rf"{delimiter[0]}(.*?){delimiter[1]}", mo.group(0))
         assert keyword is not None  # ensure type
         return WORDS_EMOJI_DATA["alias" if use_alias else lang][keyword.group(1)]

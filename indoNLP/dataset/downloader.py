@@ -7,8 +7,43 @@ from urllib.error import HTTPError
 
 from indoNLP.dataset.utils import DatasetDirectoryHandler, _progress_bar, _progress_text, logger
 
+__all__ = ["DataDownloader"]
+
 
 class DataDownloader:
+    """Dataset downloader
+
+    Args:
+        name (str): Dataset name
+        files (List[Dict[str, str]]): Files included inside the dataset
+        download_dir (Union[str, DatasetDirectoryHandler], optional): indoNLP downloaded dataset
+            directory handler. Defaults to None.
+
+    Attributes:
+        dataset_name (str): Dataset name
+        dataset_files (List[Dict[str, str]]): Files included inside the dataset
+        file (DatasetDirectoryHandler): indoNLP dataset download directory handler
+        dataset_dir (str): Dataset download directory
+
+    Examples:
+        Downloading unsupported dataset
+
+        >>> downloader = indoNLP.dataset.downloader.DataDownloader(
+            "msa-all-tab",
+            files=[
+                {
+                    "filename": "Bahasa-Wordnet-master.zip",
+                    "url": "https://codeload.github.com/limaginaire/Bahasa-Wordnet/zip/refs/heads/master",
+                    "is_large": True,
+                    "extract": True,
+                }
+            ],
+            download_dir="temp",
+        )
+        >>> downloader.download()
+        ...
+    """
+
     def __init__(
         self,
         name: str,
@@ -42,6 +77,11 @@ class DataDownloader:
         return filesize
 
     def _download(self, index: int) -> None:
+        """Download single file from URL
+
+        Args:
+            index (int): File index in dataset files
+        """
         file_ = self.file.handler_config[self.dataset_name]["files"][index]
         file_["status"] = "downloading"
         try:
@@ -78,6 +118,11 @@ class DataDownloader:
             self.file._update_config()
 
     def _extract_file(self, index: int) -> None:
+        """Extract downloaded file, if the file dictionary contain `extract=True`
+
+        Args:
+            index (int): File index in dataset files
+        """
         file_ = self.file.handler_config[self.dataset_name]["files"][index]
         file_["status"] = "extracting"
         try:
@@ -90,6 +135,29 @@ class DataDownloader:
             self.file._update_config()
 
     def check(self) -> List[Dict[str, Union[str, int]]]:
+        """Check if dataset is available
+
+        Returns:
+            List[Dict[str, Union[str, int]]]: List of dataset file status and status code
+
+        Examples:
+            Check unsupported dataset status over the internet
+
+            >>> downloader = indoNLP.dataset.downloader.DataDownloader(
+                "msa-all-tab",
+                files=[
+                    {
+                        "filename": "Bahasa-Wordnet-master.zip",
+                        "url": "https://codeload.github.com/limaginaire/Bahasa-Wordnet/zip/refs/heads/master",
+                        "is_large": True,
+                        "extract": True,
+                    }
+                ],
+                download_dir="temp",
+            )
+            >>> downloader.check()
+            [{"filename": "Bahasa-Wordnet-master.zip", "available": True, "status": 200}]
+        """
         urls = [(x["filename"], x["url"]) for x in self.dataset_files]
         results = []
         for filename, url in urls:
@@ -103,6 +171,10 @@ class DataDownloader:
         return results
 
     def download(self) -> None:
+        """Download dataset. Iterate over all files in dataset and download it.
+        This process include extracting file if `extract=True` is specified in
+        `files` parameter.
+        """
         if not self._is_completed():
             if self.file.handler_config.get(self.dataset_name) is None:
                 self.file.handler_config[self.dataset_name] = {

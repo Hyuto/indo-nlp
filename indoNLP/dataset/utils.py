@@ -28,10 +28,10 @@ def sizeof_fmt(num: int) -> str:
     """Make readable filesize
 
     Args:
-        num (int): filesize in Bytes
+        num (int): Filesize in Bytes
 
     Returns:
-        str: readable filesize
+        str: Readable filesize
     """
     for unit in ["", "Ki", "Mi", "Gi", "Ti", "Pi", "Ei", "Zi"]:
         if abs(num) < 1024:
@@ -44,9 +44,9 @@ def _progress_text(filename: str, downloaded: int, last: bool = False) -> None:
     """Text progressing while downloading dataset
 
     Args:
-        filename (str): filename
-        downloaded (int): downloaded buffer
-        last (bool, optional): last print. Defaults to False.
+        filename (str): Filename
+        downloaded (int): Downloaded buffer
+        last (bool, optional): Last print. Defaults to False.
     """
     simplified_downloaded = sizeof_fmt(downloaded)
     template = f"   Downloading : {filename} [{simplified_downloaded}]"
@@ -62,9 +62,9 @@ def _progress_bar(filename: str, downloaded: int, total_size: int) -> None:
     """Bar progressing while downloading dataset
 
     Args:
-        filename (str): filename
-        downloaded (int): downloaded buffer
-        total_size (int): filesize
+        filename (str): Filename
+        downloaded (int): Downloaded buffer
+        total_size (int): Filesize
     """
     simplified_downloaded = sizeof_fmt(downloaded)
     simplified_total_size = sizeof_fmt(total_size)
@@ -93,15 +93,20 @@ class DatasetDirectoryHandler:
     """Handler dataset directory
 
     Args:
-        download_dir (Optional[str]): path to main dataset directory. Defaults to None.
+        download_dir (str, optional): Path to main dataset directory. Defaults to None.
             if None is given dataset directory is set to ~/.cache/indoNLP
+
+    Attributes:
+        download_dir (str): indoNLP downloaded dataset directory
+        config_path (str): Configuration file path
+        handler_config (Dict[str, Dict[str, Any]]): indoNLP dataset configuration
     """
 
     download_dir: str = os.path.join(os.path.expanduser("~"), ".cache", "indoNLP")
 
     def __init__(self, download_dir: Optional[str] = None) -> None:
         self.download_dir = download_dir if download_dir is not None else self.download_dir
-        self.config_dir = os.path.join(self.download_dir, "config.json")
+        self.config_path = os.path.join(self.download_dir, "config.json")
         os.makedirs(self.download_dir, exist_ok=True)
 
         self.handler_config = self._get_config()  # config
@@ -109,13 +114,13 @@ class DatasetDirectoryHandler:
 
     def _get_config(self) -> Dict[str, Dict[str, Any]]:
         """Get configuration from file"""
-        if os.path.exists(self.config_dir):
-            with open(self.config_dir) as reader:
+        if os.path.exists(self.config_path):
+            with open(self.config_path) as reader:
                 config: Dict[str, Dict[str, Any]] = json.load(reader)
             return config
         return {}
 
     def _update_config(self) -> None:
         """Update configuration file"""
-        with open(self.config_dir, "w") as writer:
+        with open(self.config_path, "w") as writer:
             writer.write(json.dumps(self.handler_config, indent=4))

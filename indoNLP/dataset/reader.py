@@ -2,6 +2,8 @@ import csv
 import json
 from typing import Any, Dict, List
 
+__all__ = ["csv_reader", "txt_table_reader", "jsonl_table_reader"]
+
 
 def csv_reader(
     path: str,
@@ -11,12 +13,12 @@ def csv_reader(
     """csv file reader where returned data can be read into pandas.DataFrame
 
     Args:
-        path (str): path to csv file
-        fd_kwargs (Dict[str, Any], optional): file opener kwargs. Defaults to {}.
-        reader_kwargs (Dict[str, Any], optional): reader kwargs. Defaults to {}.
+        path (str): Path to csv file
+        fd_kwargs (Dict[str, Any], optional): File opener kwargs. Defaults to {}.
+        reader_kwargs (Dict[str, Any], optional): Reader kwargs. Defaults to {}.
 
     Returns:
-        Dict[str, List[Any]]: dataset
+        Dict[str, List[Any]]: Ready to use dataset
     """
     with open(path, **fd_kwargs) as fd:
         reader = csv.DictReader(fd, **reader_kwargs)
@@ -38,13 +40,13 @@ def txt_table_reader(
     r"""txt file reader where returned data can be read into pandas.DataFrame
 
     Args:
-        path (str): path to csv file
-        header (bool, optional): is header included?. Defaults to True
-        delimiter (str, optional): delimiter. Defaults to '\t'
-        fd_kwargs (Dict[str, Any], optional): file opener kwargs. Defaults to {}.
+        path (str): Path to csv file
+        header (bool, optional): Is header included?. Defaults to True
+        delimiter (str, optional): Delimiter. Defaults to '\t'
+        fd_kwargs (Dict[str, Any], optional): File opener kwargs. Defaults to {}.
 
     Returns:
-        Dict[str, List[Any]]: dataset
+        Dict[str, List[Any]]: Ready to use dataset
     """
     with open(path, **fd_kwargs) as fd:
         read_data = fd.readlines()
@@ -70,12 +72,12 @@ def jsonl_table_reader(
     """Symmetric jsonl file reader where returned data can be read into pandas.DataFrame
 
     Args:
-        path (str): path to jsonl file
-        fd_kwargs (Dict[str, Any], optional): file opener kwargs. Defaults to {}.
-        reader_kwargs (Dict[str, Any], optional): reader kwargs. Defaults to {}.
+        path (str): Path to jsonl file
+        fd_kwargs (Dict[str, Any], optional): File opener kwargs. Defaults to {}.
+        reader_kwargs (Dict[str, Any], optional): Reader kwargs. Defaults to {}.
 
     Returns:
-        Dict[str, List[Any]]: dataset
+        Dict[str, List[Any]]: Ready to use dataset
     """
     with open(path, **fd_kwargs) as reader:
         data = reader.read().splitlines()

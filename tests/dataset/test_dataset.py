@@ -1,9 +1,11 @@
+import os
 import shutil
 
 import pytest
 
 from indoNLP.dataset import *
-from indoNLP.dataset import downloader
+from indoNLP.dataset.downloader import DataDownloader
+from indoNLP.dataset.list import DATASETS
 
 
 def test_get_supported_dataset_list(capfd):

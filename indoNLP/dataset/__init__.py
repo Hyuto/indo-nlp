@@ -5,12 +5,14 @@ from indoNLP.dataset.downloader import DataDownloader
 from indoNLP.dataset.list import DATASETS
 from indoNLP.dataset.utils import DatasetDirectoryHandler
 
+__all__ = ["get_supported_dataset_list", "get_supported_dataset_info", "Dataset"]
+
 
 def get_supported_dataset_list(filter_tags: Optional[Union[str, Sequence[str]]] = None) -> None:
     """Listing all indoNLP supported dataset
 
     Args:
-        filter_tags (Optional[Union[str, Sequence[str]]]): filter dataset based on tags.
+        filter_tags (Union[str, Sequence[str]], optional): Filter dataset based on tags.
             Defaults to None.
     """
     print("Supported Datasets")
@@ -42,7 +44,10 @@ def get_supported_dataset_info(name: str) -> None:
     """Get supported dataset info
 
     Args:
-        name (str): dataset name
+        name (str): Dataset name
+
+    Raises:
+        KeyError: Dataset not found (not supported dataset)
     """
     dataset = DATASETS.get(name)
     if dataset is not None:
@@ -52,11 +57,36 @@ def get_supported_dataset_info(name: str) -> None:
             if k == "tags":
                 v = ", ".join(v)
             print(f" * {k} : {v}")
+        print(f" * files :")
+        for k in dataset["reader"].keys():
+            print(f"  - {k}")
     else:
         raise KeyError("Dataset not found!")
 
 
 class Dataset:
+    """Supported dataset handler
+
+    Args:
+        name (str): Supported dataset name
+        dataset_dir (str, optional): indoNLP dataset download directory. Defaults to None.
+        auto_download (bool, optional): Auto download dataset when class initiated.
+            Defaults to True.
+
+    Attributes:
+        dataset_name (str): Supported dataset name
+        dataset_config (Dict[str, Any]): Dataset configurations
+        file (DatasetDirectoryHandler): indoNLP dataset download directory handler
+        downloader (DataDownloader): indoNLP dataset downloader
+
+    Examples:
+        Download and Load supported dataset
+
+        >>> data_handler = indoNLP.dataset.Dataset("twitter-puisi")
+        >>> data_handler.read()
+        ...
+    """
+
     def __init__(
         self,
         name: str,
@@ -78,6 +108,7 @@ class Dataset:
             self.downloader.download()
 
     def _read_file(self, tag: str) -> Any:
+        """Read dataset file"""
         handler = self.dataset_config["reader"][tag]
         path = os.path.join(
             self.file.handler_config[self.dataset_name]["path"],
@@ -90,6 +121,22 @@ class Dataset:
         get_supported_dataset_info(self.dataset_name)  # pragma: no cover
 
     def read(self, get: Union[str, Tuple[str]] = "all") -> Union[Any, Tuple[Any]]:
+        """Read supported dataset.
+
+        Args:
+            get (Union[str, Tuple[str]], optional): File to read, if "all" is set then all files in
+                the dataset will be read and returned as tuple. Defaults to "all".
+
+        Returns:
+            Union[Any, Tuple[Any]]: Dataset, it can be a tuple if multiple file is returned.
+
+        Examples:
+            Read multiple files
+
+            >>> data_handler = indoNLP.dataset.Dataset("asian-language-treebank-parallel-corpus")
+            >>> data_id, data_ja = data_handler.read(get=("id", "ja"))
+            ...
+        """
         assert (
             self.file.handler_config[self.dataset_name]["status"] == "completed"
         ), "Dataset isn't downloaded yet!"

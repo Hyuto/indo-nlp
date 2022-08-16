@@ -16,15 +16,8 @@ __all__ = [
 def _generate_words_to_emoji_mapper(
     emoji_data: Dict[str, Dict[str, str]]
 ) -> Dict[str, Dict[str, str]]:
-    """Generate words to emoji mapper
-
-    Args:
-        emoji_data (Dict[str, Dict[str, str]]): emoji data
-
-    Returns:
-        Dict[str, Dict[str, str]]: words to emoji mapper
-    """
-    result = {"en": {}, "id": {}, "alias": {}}  # type: Dict[str, Dict[str, str]]
+    """Generate words to emoji mapper"""
+    result: Dict[str, Dict[str, str]] = {"en": {}, "id": {}, "alias": {}}
     for emoji, values in emoji_data.items():
         result["en"][values["en"]] = emoji
         result["id"][values["id"]] = emoji
