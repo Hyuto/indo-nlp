@@ -1,0 +1,26 @@
+site_name: indoNLP
+site_url: https://hyuto.github.io/indoNLP/
+site_author: Wahyu Setianto
+site_description: library python sederhana yang bertujuan untuk memudahkan proyek NLP anda
+repo_url: https://github.com/Hyuto/indo-nlp
+theme: 
+  name: material
+nav:
+  - Home: index.md
+  - Docs: reference.md
+  - Supported Dataset: sup-dataset.md
+plugins:
+  - search
+  - gen-files:
+      scripts:
+        - tools/mkdocs-gen-ref-pages.py
+        - tools/mkdocs-gen-sup-dataset.py
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          options:
+            show_source: false
+watch:
+  - indoNLP
+  - tools

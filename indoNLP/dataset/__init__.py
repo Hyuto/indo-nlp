@@ -84,7 +84,6 @@ class Dataset:
 
         >>> data_handler = indoNLP.dataset.Dataset("twitter-puisi")
         >>> data_handler.read()
-        ...
     """
 
     def __init__(
@@ -128,14 +127,13 @@ class Dataset:
                 the dataset will be read and returned as tuple. Defaults to "all".
 
         Returns:
-            Union[Any, Tuple[Any]]: Dataset, it can be a tuple if multiple file is returned.
+            Dataset, it can be a tuple if multiple file is returned.
 
         Examples:
             Read multiple files
 
             >>> data_handler = indoNLP.dataset.Dataset("asian-language-treebank-parallel-corpus")
             >>> data_id, data_ja = data_handler.read(get=("id", "ja"))
-            ...
         """
         assert (
             self.file.handler_config[self.dataset_name]["status"] == "completed"

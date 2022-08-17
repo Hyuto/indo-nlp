@@ -46,7 +46,7 @@ def get_emoji_data_emojiterra(url: str) -> dict:
         url (str): url
 
     Returns:
-        dict: emoji data
+        emoji data
     """
     page = requests.get(url)
     soup = BeautifulSoup(page.content, "html.parser")

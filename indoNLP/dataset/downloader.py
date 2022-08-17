@@ -29,19 +29,18 @@ class DataDownloader:
         Downloading unsupported dataset
 
         >>> downloader = indoNLP.dataset.downloader.DataDownloader(
-            "msa-all-tab",
-            files=[
-                {
-                    "filename": "Bahasa-Wordnet-master.zip",
-                    "url": "https://codeload.github.com/limaginaire/Bahasa-Wordnet/zip/refs/heads/master",
-                    "is_large": True,
-                    "extract": True,
-                }
-            ],
-            download_dir="temp",
-        )
+        ...    "msa-all-tab",
+        ...    files=[
+        ...        {
+        ...            "filename": "Bahasa-Wordnet-master.zip",
+        ...            "url": "https://codeload.github.com/limaginaire/Bahasa-Wordnet/zip/refs/heads/master",
+        ...            "is_large": True,
+        ...            "extract": True,
+        ...        }
+        ...    ],
+        ...    download_dir="temp",
+        ...)
         >>> downloader.download()
-        ...
     """
 
     def __init__(
@@ -138,23 +137,23 @@ class DataDownloader:
         """Check if dataset is available
 
         Returns:
-            List[Dict[str, Union[str, int]]]: List of dataset file status and status code
+            List of dataset file status and status code
 
         Examples:
             Check unsupported dataset status over the internet
 
             >>> downloader = indoNLP.dataset.downloader.DataDownloader(
-                "msa-all-tab",
-                files=[
-                    {
-                        "filename": "Bahasa-Wordnet-master.zip",
-                        "url": "https://codeload.github.com/limaginaire/Bahasa-Wordnet/zip/refs/heads/master",
-                        "is_large": True,
-                        "extract": True,
-                    }
-                ],
-                download_dir="temp",
-            )
+            ...    "msa-all-tab",
+            ...    files=[
+            ...        {
+            ...            "filename": "Bahasa-Wordnet-master.zip",
+            ...            "url": "https://codeload.github.com/limaginaire/Bahasa-Wordnet/zip/refs/heads/master",
+            ...            "is_large": True,
+            ...            "extract": True,
+            ...        }
+            ...    ],
+            ...    download_dir="temp",
+            ...)
             >>> downloader.check()
             [{"filename": "Bahasa-Wordnet-master.zip", "available": True, "status": 200}]
         """

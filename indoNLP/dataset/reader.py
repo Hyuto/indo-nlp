@@ -18,7 +18,7 @@ def csv_reader(
         reader_kwargs (Dict[str, Any], optional): Reader kwargs. Defaults to {}.
 
     Returns:
-        Dict[str, List[Any]]: Ready to use dataset
+        Ready to use dataset
     """
     with open(path, **fd_kwargs) as fd:
         reader = csv.DictReader(fd, **reader_kwargs)
@@ -46,7 +46,7 @@ def txt_table_reader(
         fd_kwargs (Dict[str, Any], optional): File opener kwargs. Defaults to {}.
 
     Returns:
-        Dict[str, List[Any]]: Ready to use dataset
+        Ready to use dataset
     """
     with open(path, **fd_kwargs) as fd:
         read_data = fd.readlines()
@@ -77,7 +77,7 @@ def jsonl_table_reader(
         reader_kwargs (Dict[str, Any], optional): Reader kwargs. Defaults to {}.
 
     Returns:
-        Dict[str, List[Any]]: Ready to use dataset
+        Ready to use dataset
     """
     with open(path, **fd_kwargs) as reader:
         data = reader.read().splitlines()

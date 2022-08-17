@@ -10,7 +10,7 @@ def normalizer(text: str) -> str:
         text (str): raw text
 
     Returns:
-        str: cleaned text
+        cleaned text
     """
     text = unicodedata.normalize("NFKD", text.lower()).encode("ascii", "ignore").decode("ascii")
     text = re.sub("[:,]", "", text)
@@ -24,7 +24,7 @@ def format_unicode(text: str) -> str:
         text (str): unicode string
 
     Returns:
-        str: formated unicode string
+        formated unicode string
     """
     return "".join(
         ["\\U0000" + code if len(code) == 4 else "\\U000" + code for code in text.split()]

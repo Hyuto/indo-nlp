@@ -60,7 +60,7 @@ def remove_html(text: str) -> str:
         text (str): Text that have html tags on
 
     Returns:
-        str: Cleaned text
+        Cleaned text
 
     Examples:
         Removing all html tags inside of a string.
@@ -78,7 +78,7 @@ def remove_url(text: str) -> str:
         text (str): Text that have url on
 
     Returns:
-        str: Cleaned text
+        Cleaned text
 
     Examples:
         Removing all urls inside of a string.
@@ -96,7 +96,7 @@ def remove_stopwords(text: str) -> str:
         text (str): Text/sentence
 
     Returns:
-        str: Text after
+        Text after
 
     Examples:
         Removing stopwords inside of a string.
@@ -114,7 +114,7 @@ def replace_slang(text: str) -> str:
         text (str): Text/sentence
 
     Returns:
-        str: Text after
+        Text after
 
     Examples:
         Replacing all slang words in a string to formal words.
@@ -138,7 +138,7 @@ def replace_word_elongation(text: str) -> str:
         text (str): Text/sentence
 
     Returns:
-        str: Text after
+        Text after
 
     Examples:
         Replacing word elongation.
@@ -162,7 +162,7 @@ def pipeline(pipe: Sequence[Callable[[str], str]]) -> Callable[[str], str]:
         pipe (Sequence[Callable[[str], str]]): Sequence of functions
 
     Returns:
-        Callable[[str], str]: Callable pipeline function
+        Callable pipeline function
 
     Examples:
         Pipelining preprocessing functions
@@ -198,7 +198,7 @@ def emoji_to_words(
             Defaults to ("!", "!").
 
     Returns:
-        str: Transformed text.
+        Transformed text.
 
     Examples:
         Translate emoji to bahasa
@@ -251,7 +251,7 @@ def words_to_emoji(
             Defaults to ("!", "!").
 
     Returns:
-        str: Transformed text.
+        Transformed text.
 
     Examples:
         Transform words to emoji

@@ -9,23 +9,12 @@
 
 ---
 
-[Bahasa](https://github.com/Hyuto/indo-nlp/blob/master/README.md) | English
+indoNLP adalah library python sederhana yang bertujuan untuk memudahkan proyek NLP anda.
 
-indoNLP is a simple python library to make your Indonesian NLP project easier.
+## Installasi
 
-## Installation
-
-The easiest way to install indoNLP is using `pip`:
+indoNLP dapat diinstall dengan mudah dengan menggunakan `pip`:
 
 ```bash
 $ pip install indoNLP
-```
-
-## Development
-
-Setup local dev environment. `indoNLP` uses [python-poetry](https://python-poetry.org/)
-for packaging dan management dependencies.
-
-```bash
-make setup-dev
 ```

@@ -31,7 +31,7 @@ def sizeof_fmt(num: int) -> str:
         num (int): Filesize in Bytes
 
     Returns:
-        str: Readable filesize
+        Readable filesize
     """
     for unit in ["", "Ki", "Mi", "Gi", "Ti", "Pi", "Ei", "Zi"]:
         if abs(num) < 1024:
