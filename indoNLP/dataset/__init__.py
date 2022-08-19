@@ -171,7 +171,7 @@ class Dataset:
         if get == "all":
             get = tuple(self.dataset_config["reader"].keys())  # type: ignore
         if type(get) == str or len(get) <= 1:
-            get = get[0] if type(get) == tuple else get
+            get = get if type(get) == str else get[0]
             assert type(get) == str  # ensure type
             return self._read_file(get)
         return tuple(self._read_file(x) for x in get)

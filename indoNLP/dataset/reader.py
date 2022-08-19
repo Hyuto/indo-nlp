@@ -51,20 +51,16 @@ def txt_table_reader(
     Returns:
         Data yang siap digunakan.
     """
+
+    if header:
+        return csv_reader(path, fd_kwargs, reader_kwargs={"delimiter": delimiter})
+
     with open(path, **fd_kwargs) as fd:
         read_data = fd.readlines()
-    if header:
-        head = read_data.pop(0)[:-1].split(delimiter)
-    else:
         head = read_data[0][:-1].split(delimiter)
         head = list(range(len(head)))
 
-    data: Dict[str, List[Any]] = {c: [] for c in head}
-    for row in read_data:
-        row_data = row[:-1].split(delimiter)
-        for k, v in zip(head, row_data):
-            data[k].append(v)
-    return data
+    return csv_reader(path, fd_kwargs, reader_kwargs={"fieldnames": head, "delimiter": delimiter})
 
 
 def jsonl_table_reader(
