@@ -10,15 +10,16 @@ def csv_reader(
     fd_kwargs: Dict[str, Any] = {},
     reader_kwargs: Dict[str, Any] = {},
 ) -> Dict[str, List[Any]]:
-    """csv file reader where returned data can be read into pandas.DataFrame
+    """csv file reader dimana data yang dikembalikan dapat langsung di pass kedalam
+    `pandas.DataFrame` untuk melihat data dalam versi tablenya.
 
     Args:
-        path (str): Path to csv file
-        fd_kwargs (Dict[str, Any], optional): File opener kwargs. Defaults to {}.
-        reader_kwargs (Dict[str, Any], optional): Reader kwargs. Defaults to {}.
+        path (str): Path ke file csv.
+        fd_kwargs (Dict[str, Any], optional): File opener kwargs.
+        reader_kwargs (Dict[str, Any], optional): Reader kwargs.
 
     Returns:
-        Dict[str, List[Any]]: Ready to use dataset
+        Data yang siap digunakan.
     """
     with open(path, **fd_kwargs) as fd:
         reader = csv.DictReader(fd, **reader_kwargs)
@@ -37,16 +38,18 @@ def txt_table_reader(
     delimiter: str = "\t",
     fd_kwargs: Dict[str, Any] = {},
 ) -> Dict[str, List[Any]]:
-    r"""txt file reader where returned data can be read into pandas.DataFrame
+    r"""txt file reader dimana data yang dikembalikan dapat langsung di pass kedalam
+    `pandas.DataFrame` untuk melihat data dalam versi tablenya.
 
     Args:
-        path (str): Path to csv file
-        header (bool, optional): Is header included?. Defaults to True
-        delimiter (str, optional): Delimiter. Defaults to '\t'
-        fd_kwargs (Dict[str, Any], optional): File opener kwargs. Defaults to {}.
+        path (str): Path ke file txt.
+        header (bool, optional): Apakah data memiliki header, jika `True` diberikan maka baris
+            pertama dari data akan dianggap sebagai header.
+        delimiter (str, optional): Delimiter (pemisah).
+        fd_kwargs (Dict[str, Any], optional): File opener kwargs.
 
     Returns:
-        Dict[str, List[Any]]: Ready to use dataset
+        Data yang siap digunakan.
     """
     with open(path, **fd_kwargs) as fd:
         read_data = fd.readlines()
@@ -69,15 +72,16 @@ def jsonl_table_reader(
     fd_kwargs: Dict[str, Any] = {},
     reader_kwargs: Dict[str, Any] = {},
 ) -> Dict[str, List[Any]]:
-    """Symmetric jsonl file reader where returned data can be read into pandas.DataFrame
+    """Symmetric jsonl file reader dimana data yang dikembalikan dapat langsung di pass kedalam
+    `pandas.DataFrame` untuk melihat data dalam versi tablenya.
 
     Args:
-        path (str): Path to jsonl file
-        fd_kwargs (Dict[str, Any], optional): File opener kwargs. Defaults to {}.
-        reader_kwargs (Dict[str, Any], optional): Reader kwargs. Defaults to {}.
+        path (str): Path ke jsonl file.
+        fd_kwargs (Dict[str, Any], optional): File opener kwargs.
+        reader_kwargs (Dict[str, Any], optional): Reader kwargs.
 
     Returns:
-        Dict[str, List[Any]]: Ready to use dataset
+        Data yang siap digunakan.
     """
     with open(path, **fd_kwargs) as reader:
         data = reader.read().splitlines()

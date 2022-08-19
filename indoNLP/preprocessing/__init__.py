@@ -1,3 +1,6 @@
+"""`indoNLP.preprocessing` adalah modul yang bertujuan untuk memudahkan proses preprocessing data
+teks dengan menggunakan beberapa fungsi yang siap digunakan."""
+
 import re
 from typing import Callable, Match, Sequence, Tuple
 
@@ -54,16 +57,16 @@ WE_PATTERN = r"\b\w*([a-zA-Z])(\1{1,})\b"
 
 
 def remove_html(text: str) -> str:
-    """Remove HTML tags from text.
+    """Menghapus tag - tag html yang terdapat dalam sebuah teks.
 
     Args:
-        text (str): Text that have html tags on
+        text (str): Teks yang memiliki html tag di dalamnya.
 
     Returns:
-        str: Cleaned text
+        Teks yang telah dibersihkan (tanpa tag - tag HTML di dalamnya).
 
     Examples:
-        Removing all html tags inside of a string.
+        Menghapus semua tag HTML yang terdapat di dalam teks.
 
         >>> indoNLP.preprocessing.remove_html("website <a href='https://google.com'>google</a>")
         "website google"
@@ -72,16 +75,16 @@ def remove_html(text: str) -> str:
 
 
 def remove_url(text: str) -> str:
-    """Remove URL from text.
+    """Menghapus URL yang terdapat dalam sebuah teks.
 
     Args:
-        text (str): Text that have url on
+        text (str): Teks yang terdapat URL di dalamnya.
 
     Returns:
-        str: Cleaned text
+        Teks yang telah dibersihkan (tanpa URL di dalamnya).
 
     Examples:
-        Removing all urls inside of a string.
+        Menghapus semua URL yang ada di dalam teks.
 
         >>> indoNLP.preprocessing.remove_url("retrieved from https://gist.github.com/gruber/8891611")
         "retrieved from"
@@ -90,16 +93,24 @@ def remove_url(text: str) -> str:
 
 
 def remove_stopwords(text: str) -> str:
-    """Remove stopwords from text.
+    """Menghapus stopwords yang terdapat dalam sebuah teks.
+
+    !!! abstract "Definisi"
+        *Stopwords* adalah kata umum (*common words*) yang biasanya muncul dalam jumlah
+        besar dan dianggap tidak memiliki makna.
+
+    !!! cite
+        List stopwords Bahasa Indonesia yang digunakan diperoleh dari
+        [stopwords.net](https://stopwords.net/indonesian-id/)
 
     Args:
-        text (str): Text/sentence
+        text (str): Teks yang terdapat stopwords di dalamnya.
 
     Returns:
-        str: Text after
+        Teks yang telah dibersihkan (tanpa stopwords di dalamnya).
 
     Examples:
-        Removing stopwords inside of a string.
+        Menghapus semua stopwords yang terdapat di dalam sebuah teks.
 
         >>> indoNLP.preprocessing.remove_stopwords("siapa yang suruh makan?!!")
         "suruh makan?!!"
@@ -108,16 +119,25 @@ def remove_stopwords(text: str) -> str:
 
 
 def replace_slang(text: str) -> str:
-    """Replace slang words in sentence
+    """Menghapus *slang words* (kata gaul) yang terdapat dalam sebuah teks. Kata gaul dapat juga
+    berupa singkatan yang sering digunakan dalam kehidupan sehari - hari seperti:
+
+    - "yg" -> "yang"
+    - "mkn" -> "makan"
+
+    !!! cite
+        Mapper untuk *slang words* yang digunakan didapatkan dari
+        [Kamus Alay - Colloquial Indonesian Lexicon](https://github.com/nasalsabila/kamus-alay)
+        oleh Salsabila, Ali, Yosef, dan Ade.
 
     Args:
-        text (str): Text/sentence
+        text (str): Teks yang terdapat *slang words* di dalamnya.
 
     Returns:
-        str: Text after
+        Teks yang telah dimodifikasi (tanpa *slang words* di dalamnya).
 
     Examples:
-        Replacing all slang words in a string to formal words.
+        Mengganti setiap *slang words* yang ada di dalam teks menjadi bentuk yang lebih formal.
 
         >>> indoNLP.preprocessing.replace_slang("emg siapa yg nanya?")
         "memang siapa yang bertanya?"
@@ -132,16 +152,20 @@ def replace_slang(text: str) -> str:
 
 
 def replace_word_elongation(text: str) -> str:
-    """Replace word elongation inside text
+    """Mengganti *word elongation* yang terdapat pada sebuah teks.
+
+    !!! abstract "Definisi"
+        *Word elongation* adalah tindakan menambahkan huruf tambahan ke kata, biasanya terdapat
+        di akhir kata, hal ini biasanya dilakukan agar terdengar lebih ceria, ramah, dan imut.
 
     Args:
-        text (str): Text/sentence
+        text (str): Teks yang terdapat *word elongation* di dalamnya.
 
     Returns:
-        str: Text after
+        Teks yang telah ditransformasi (tanpa *word elongation*).
 
     Examples:
-        Replacing word elongation.
+        Mengganti setiap *word elongation* yang terdapat pada sebuah teks.
 
         >>> indoNLP.preprocessing.replace_word_elongation("kenapaaa?")
         "kenapa?"
@@ -156,16 +180,17 @@ def replace_word_elongation(text: str) -> str:
 
 
 def pipeline(pipe: Sequence[Callable[[str], str]]) -> Callable[[str], str]:
-    """Pipelining multiple preprocessing functions
+    """Pipelining fungsi preprocessing.
 
     Args:
-        pipe (Sequence[Callable[[str], str]]): Sequence of functions
+        pipe (Sequence[Callable[[str], str]]): Sequence dari fungsi - fungsi preprocessing
+            `indoNLP`.
 
     Returns:
-        Callable[[str], str]: Callable pipeline function
+        Callable pipeline.
 
     Examples:
-        Pipelining preprocessing functions
+        Pipelining beberapa fungsi preprocessing.
 
         >>> from indoNLP.preprocessing import pipeline, replace_word_elongation, replace_slang
         >>> pipe = pipeline([replace_word_elongation, replace_slang])
@@ -187,50 +212,57 @@ def emoji_to_words(
     use_alias: bool = False,
     delimiter: Tuple[str, str] = ("!", "!"),
 ) -> str:
-    """Transform emoji to words
+    """Transformasi emoji yang ada di dalam teks menjadi kata - kata yang sesuai dengan emoji
+    tersebut dalam Bahasa Indonesia.
 
     Args:
-        text (str): Emoji included text.
-        lang (str, optional): Language code. available "en" and "id". Defaults to "id".
-        use_alias (bool, optional): Use alias translation. Only supported when lang == "id".
-            Defaults to False.
-        delimiter (Tuple[str, str], optional): Delimiter on emoji translation.
-            Defaults to ("!", "!").
+        text (str): Teks yang terdapat emoji di dalamnya.
+        lang (str, optional): Kode bahasa, bahasa yang tersedia yaitu "en" (English) dan "id"
+            (Bahasa Indonesia).
+        use_alias (bool, optional): Menggunakan alias translation, alias adalah terjemahan yang
+            lebih spesifik terhadap emoji tersebut. Tidak setiap emoji memiliki alias dan `use_alias`
+            hanya didukung untuk Bahasa Indonesia `lang="id"`.
+        delimiter (Tuple[str, str], optional): Delimiter (pembatas) pada terjemahan emoji, berupa
+            tupple dengan dua element string sebagai pembatas awal dan akhir.
+
+    !!! warning
+        Jika `use_alias == True` and `lang != "id"` maka akan terjadi error.
 
     Returns:
-        str: Transformed text.
+        Teks yang telah di transformasi atau tidak terdapat emoji di dalamnya dan telah digantikan
+        dengan kata - kata yang mengekspresikan emoji tersebut.
 
     Examples:
-        Translate emoji to bahasa
+        Mentransformasi emoji kedalam Bahasa Indonesia.
 
         >>> indoNLP.preprocessing.emoji_to_words("emoji 😀😁")
         "emoji !wajah_gembira!!wajah_gembira_dengan_mata_bahagia!"
 
-        Translate emoji to english
+        Mentransformasi emoji kebahasa Ingris.
 
         >>> indoNLP.preprocessing.emoji_to_words("emoji 😀😁", lang="en")
         "emoji !grinning_face!!beaming_face_with_smiling_eyes!"
 
-        Using alias. Only works on ``lang == "id"``
+        Menggunakan alias.
 
         >>> indoNLP.preprocessing.emoji_to_words("emoji 😀", use_alias=True)
         "emoji !wajah_gembira_bahagia_muka_senang!"
 
-        Using custom delimiter
+        Menggunakan custom delimiter.
 
         >>> indoNLP.preprocessing.emoji_to_words("emoji 😁", delimiter=("^","$"))
         "emoji ^wajah_gembira_dengan_mata_bahagia$"
     """
 
     def _get_emoji_translation(mo: Match[str]) -> str:
-        """Get emoji translation"""
+        """Mendapatkan terjemahan emoji."""
         _emoji = EMOJI_DATA[mo.group(0)]
         if use_alias:
-            assert lang == "id", "use_alias only support Indonesian language"
+            assert lang == "id", "use_alias hanya bekerja untuk Bahasa Indonesia `lang='id'`"
             return delimiter[0] + _emoji["alias"] + delimiter[1]
         return delimiter[0] + _emoji[lang] + delimiter[1]
 
-    assert lang in ["en", "id"], "Only supported English (en) and Indonesian (id) language"
+    assert lang in ["en", "id"], "Bahasa yang disupport hanya English (en) dan Indonesia (id)"
     return re.sub(EMOJI_PATTERN, _get_emoji_translation, text, flags=re.UNICODE)
 
 
@@ -240,21 +272,24 @@ def words_to_emoji(
     use_alias: bool = False,
     delimiter: Tuple[str, str] = ("!", "!"),
 ) -> str:
-    """Transform words to emoji
+    """Transformasi kata - kata dengan kode emoji menjadi emoji.
 
     Args:
-        text (str): Emoji code included text
-        lang (str, optional): Language code. available "en" and "id". Defaults to "id".
-        use_alias (bool, optional): Use alias translation. Only supported when lang == "id".
-            Defaults to False.
-        delimiter (Tuple[str, str], optional): Delimiter on emoji translation.
-            Defaults to ("!", "!").
+        text (str): Teks yang terdapat kata - kata dengan kode emoji di dalamnya.
+        lang (str, optional): Kode bahasa, bahasa yang tersedia yaitu "en" (English) dan "id"
+            (Bahasa Indonesia).
+        use_alias (bool, optional): Menggunakan alias translation, alias adalah terjemahan yang
+            lebih spesifik terhadap emoji tersebut. Tidak setiap emoji memiliki alias dan `use_alias`
+            hanya didukung untuk Bahasa Indonesia `lang="id"`.
+        delimiter (Tuple[str, str], optional): Delimiter (pembatas) pada kata - kata kode emoji,
+            berupa tupple dengan dua element string sebagai pembatas awal dan akhir.
 
     Returns:
-        str: Transformed text.
+        Teks yang telah di transformasi atau kata - kata yang mengandung kode emoji di dalam teks
+        telah diubah menjadi emooji.
 
     Examples:
-        Transform words to emoji
+        Transformasi kata - kata kode emoji di dalam teks menjadi emoji.
 
         >>> indoNLP.preprocessing.emoji_to_words("emoji !wajah_gembira!!wajah_gembira_dengan_mata_bahagia!")
         "emoji 😀😁"
@@ -276,14 +311,14 @@ def words_to_emoji(
     """
 
     def _get_emoji(mo: Match[str]) -> str:
-        """Get emoji from words"""
+        """Mendapatkan emoji berdasarkan kata - kata kode emoji."""
         keyword = re.search(rf"{delimiter[0]}(.*?){delimiter[1]}", mo.group(0))
         assert keyword is not None  # ensure type
         return WORDS_EMOJI_DATA["alias" if use_alias else lang][keyword.group(1)]
 
-    assert lang in ["en", "id"], "Only supported English (en) and Indonesian (id) language"
+    assert lang in ["en", "id"], "Bahasa yang disupport hanya English (en) dan Indonesia (id)"
     pattern = EN_WORDS_EMOJI_PATTERN if lang == "en" else ID_WORDS_EMOJI_PATTERN
     if use_alias:
-        assert lang == "id", "use_alias only support Indonesian language"
+        assert lang == "id", "use_alias hanya bekerja untuk Bahasa Indonesia `lang='id'`"
         pattern = ALIAS_WORDS_EMOJI_PATTERN
     return re.sub(rf"{delimiter[0]}{pattern}{delimiter[1]}", _get_emoji, text)

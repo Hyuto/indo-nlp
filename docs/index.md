@@ -9,9 +9,8 @@
 
 ---
 
-Bahasa | [English](https://github.com/Hyuto/indo-nlp/blob/master/README.en.md)
-
-indoNLP adalah library python sederhana yang bertujuan untuk memudahkan proyek NLP anda.
+indoNLP adalah library python sederhana tanpa dependency tambahan yang bertujuan untuk memudahkan
+proyek NLP anda.
 
 ## Installasi
 
@@ -21,11 +20,35 @@ indoNLP dapat diinstall dengan mudah dengan menggunakan `pip`:
 $ pip install indoNLP
 ```
 
-## Development
+## Quick Start
 
-Setup local dev environment. `indoNLP` menggunakan [python-poetry](https://python-poetry.org/)
-untuk packaging dan management dependencies.
+**Mengakses Indonesian NLP Open Dataset**
 
-```bash
-make setup-dev
+Mengakses Indonesian NLP Open Dataset dengan cepat dan mudah.
+
+```python
+from indoNLP.dataset import Dataset
+
+handler = Dataset("id-multi-label-hate-speech-and-abusive-language-detection")
+data = handler.read()
+```
+
+Jika data bersifat simetrik maka data ditabelisasi menggunakan `pandas.DataFrame`
+
+```python
+import pandas as pd
+
+df = pd.DataFrame(data)
+```
+
+**Preprocessing Data Teks**
+
+Menerjemahkan emoji dan mengganti kata gaul (_slang words_)
+
+```python
+from indoNLP.preprocessing import emoji_to_words, replace_slang, pipeline
+
+pipe = pipeline([emoji_to_words, replace_slang])
+pipe("library yg membara 🔥")
+# "library yang membara !api!"
 ```

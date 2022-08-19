@@ -16,9 +16,9 @@ def test_logger(caplog):
 
 
 def test_sizeof_fmt():
-    assert sizeof_fmt(24) == "24.00 B"
-    assert sizeof_fmt(1024) == "1.00 KiB"
-    assert sizeof_fmt(2**80) == "1.00 YiB"
+    assert _sizeof_fmt(24) == "24.00 B"
+    assert _sizeof_fmt(1024) == "1.00 KiB"
+    assert _sizeof_fmt(2**80) == "1.00 YiB"
 
 
 def test_progress_text(capsys):
@@ -28,5 +28,5 @@ def test_progress_text(capsys):
 
     out, _ = capsys.readouterr()
     out = [x for x in out.split("\r") if x != ""]
-    assert out[0].strip() == f"Downloading : {filename} [{sizeof_fmt(100)}]"
-    assert out[-1].strip() == f"📖 {filename} saved [{sizeof_fmt(200)}]"
+    assert out[0].strip() == f"Downloading : {filename} [{_sizeof_fmt(100)}]"
+    assert out[-1].strip() == f"📖 {filename} saved [{_sizeof_fmt(200)}]"
