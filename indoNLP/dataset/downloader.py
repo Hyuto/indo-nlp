@@ -11,22 +11,26 @@ __all__ = ["DataDownloader"]
 
 
 class DataDownloader:
-    """Dataset downloader
+    """Dataset downloader, berfungsi untuk mendownload dan mengekstrak data secara langsung.
+    Dapat digunakan untuk mendownload data yang tidak disupport oleh `indoNLP` dengan beberapa
+    konfigurasi tambahan.
 
     Args:
-        name (str): Dataset name
-        files (List[Dict[str, str]]): Files included inside the dataset
-        download_dir (Union[str, DatasetDirectoryHandler], optional): indoNLP downloaded dataset
-            directory handler. Defaults to None.
+        name (str): Nama dataset.
+        files (List[Dict[str, str]]): List dari file - file yang terdapat pada dataset. Dictionary
+            data harus mengandung elemen "filename" (str), "url" (str), dan "extract" (bool) agar
+            proses dapat berjalan dengan baik.
+        download_dir (Union[str, DatasetDirectoryHandler], optional): indoNLP dataset download
+            direktori handler.
 
     Attributes:
-        dataset_name (str): Dataset name
-        dataset_files (List[Dict[str, str]]): Files included inside the dataset
-        file (DatasetDirectoryHandler): indoNLP dataset download directory handler
-        dataset_dir (str): Dataset download directory
+        dataset_name (str): Nama dataset.
+        dataset_files (List[Dict[str, str]]): List dari file - file yang terdapat pada dataset.
+        file (DatasetDirectoryHandler): indoNLP dataset download direktori handler.
+        dataset_dir (str): Direktori tempat dataset didownload.
 
     Examples:
-        Downloading unsupported dataset
+        Mendownload data yang tidak disupport oleh `indoNLP`.
 
         >>> downloader = indoNLP.dataset.downloader.DataDownloader(
         ...    "msa-all-tab",
@@ -63,23 +67,23 @@ class DataDownloader:
         os.makedirs(self.dataset_dir, exist_ok=True)
 
     def _is_completed(self) -> bool:
-        """Check dataset in config"""
+        """Mengecek konfigurasi dataset"""
         if self.file.handler_config.get(self.dataset_name) is not None:
             if self.file.handler_config[self.dataset_name]["status"] == "completed":
                 return True
         return False
 
     def _get_filesize(self, response: Any) -> Union[int, None]:
-        """Get filesize from url"""
+        """Mendapatkan ukuran file dari endpoint url"""
         filesize: Union[int, None] = response.getheader("content-length")
         filesize = int(filesize) if filesize is not None else None
         return filesize
 
     def _download(self, index: int) -> None:
-        """Download single file from URL
+        """Mendownload sebuah file.
 
         Args:
-            index (int): File index in dataset files
+            index (int): Index file tersebut pada dataset files.
         """
         file_ = self.file.handler_config[self.dataset_name]["files"][index]
         file_["status"] = "downloading"
@@ -117,10 +121,14 @@ class DataDownloader:
             self.file._update_config()
 
     def _extract_file(self, index: int) -> None:
-        """Extract downloaded file, if the file dictionary contain `extract=True`
+        """Ekstraksi file yang telah didownload.
 
         Args:
-            index (int): File index in dataset files
+            index (int): Index file tersebut pada dataset files.
+
+        Note:
+            Proses ini hanya akan berlangsung jika `extract=True` diberikan pada dataset dictionary
+            di parameter `files`.
         """
         file_ = self.file.handler_config[self.dataset_name]["files"][index]
         file_["status"] = "extracting"
@@ -134,13 +142,13 @@ class DataDownloader:
             self.file._update_config()
 
     def check(self) -> List[Dict[str, Union[str, int]]]:
-        """Check if dataset is available
+        """Melakukan pengecekan apakah dataset masih tersedia pada url yang diberikan.
 
         Returns:
-            List of dataset file status and status code
+            List status ketersediaan dari file - file di dataset. (status code)
 
         Examples:
-            Check unsupported dataset status over the internet
+            Mengecek ketersediaan dataset yang tidak disupport `indoNLP` di internet.
 
             >>> downloader = indoNLP.dataset.downloader.DataDownloader(
             ...    "msa-all-tab",
@@ -170,9 +178,14 @@ class DataDownloader:
         return results
 
     def download(self) -> None:
-        """Download dataset. Iterate over all files in dataset and download it.
-        This process include extracting file if `extract=True` is specified in
-        `files` parameter.
+        """Mendownload dataset, proses ini dilakukan dengan mengiterasi setiap file yang ada
+        di dalam dataset untuk di download. Proses ini termasuk dengan proses ekstraksi ketika
+        file telah selesai di download dan `extract=True` terdapat pada dataset dictionary di
+        parameter `files`
+
+        !!! note
+            Proses ini hanya akan berjalan jika file - file dalam dataset belum pernah didownload
+            sebelumnya.
         """
         if not self._is_completed():
             if self.file.handler_config.get(self.dataset_name) is None:

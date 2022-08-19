@@ -39,7 +39,7 @@ def test_get_supported_dataset_info(capfd):
     with pytest.raises(KeyError) as e:
         get_supported_dataset_info("test")
 
-        assert e == "Dataset not found!"
+        assert e == "Dataset tidak ditemukan!"
 
 
 class TestDataset:

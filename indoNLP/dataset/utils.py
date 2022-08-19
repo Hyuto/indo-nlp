@@ -5,7 +5,7 @@ import sys
 from shutil import get_terminal_size
 from typing import Any, Dict, Optional
 
-__all__ = ["logger", "sizeof_fmt", "_progress_bar", "_progress_text", "DatasetDirectoryHandler"]
+__all__ = ["logger", "_sizeof_fmt", "_progress_bar", "_progress_text", "DatasetDirectoryHandler"]
 
 
 def _setup_logger() -> logging.Logger:
@@ -24,14 +24,14 @@ def _setup_logger() -> logging.Logger:
 logger = _setup_logger()
 
 
-def sizeof_fmt(num: int) -> str:
-    """Make readable filesize
+def _sizeof_fmt(num: int) -> str:
+    """Mendapatkan besar file dengan satuan yang lebih mudah untuk dibaca.
 
     Args:
-        num (int): Filesize in Bytes
+        num (int): Besar file dalam satuan Bytes.
 
     Returns:
-        Readable filesize
+        Besar file dalam satuan yang lebih mudah untuk dibaca.
     """
     for unit in ["", "Ki", "Mi", "Gi", "Ti", "Pi", "Ei", "Zi"]:
         if abs(num) < 1024:
@@ -41,14 +41,17 @@ def sizeof_fmt(num: int) -> str:
 
 
 def _progress_text(filename: str, downloaded: int, last: bool = False) -> None:
-    """Text progressing while downloading dataset
+    """Text progressing ketika proses mendownload dataset.
 
     Args:
-        filename (str): Filename
-        downloaded (int): Downloaded buffer
-        last (bool, optional): Last print. Defaults to False.
+        filename (str): Nama file.
+        downloaded (int): Jumlah Buffer yang telah didownload.
+        last (bool, optional): Last print.
+
+    Note:
+        Digunakan ketika filesize (besar file) tidak diketahui.
     """
-    simplified_downloaded = sizeof_fmt(downloaded)
+    simplified_downloaded = _sizeof_fmt(downloaded)
     template = f"   Downloading : {filename} [{simplified_downloaded}]"
     if not last:
         print(template, end="\r", file=sys.stdout, flush=True)
@@ -59,15 +62,19 @@ def _progress_text(filename: str, downloaded: int, last: bool = False) -> None:
 
 
 def _progress_bar(filename: str, downloaded: int, total_size: int) -> None:
-    """Bar progressing while downloading dataset
+    """Bar progressing ketika proses mendownload dataset.
 
     Args:
-        filename (str): Filename
-        downloaded (int): Downloaded buffer
-        total_size (int): Filesize
+        filename (str): Nama file.
+        downloaded (int): Jumlah Buffer yang telah didownload.
+        total_size (int): Total filesize (besar file).
+
+    Note:
+        Hanya dapat digunakan ketika filesize (besar file) diketahui, jika filesize tidak
+        diketahui gunakan _progress_text.
     """
-    simplified_downloaded = sizeof_fmt(downloaded)
-    simplified_total_size = sizeof_fmt(total_size)
+    simplified_downloaded = _sizeof_fmt(downloaded)
+    simplified_total_size = _sizeof_fmt(total_size)
 
     # get progressbar width
     terminal_width, _ = get_terminal_size((80, 20))
@@ -90,16 +97,17 @@ def _progress_bar(filename: str, downloaded: int, total_size: int) -> None:
 
 
 class DatasetDirectoryHandler:
-    """Handler dataset directory
+    """Dataset directory handler, berfungsi untuk menghandle `indoNLP` main direktori untuk dataset.
+    Secara otomatis data akan ditempatkan pada ~/.cache/indoNLP.
 
     Args:
-        download_dir (str, optional): Path to main dataset directory. Defaults to None.
-            if None is given dataset directory is set to ~/.cache/indoNLP
+        download_dir (str, optional): Path ke main direktori untuk dataset. Jika None diset maka
+            main direktori akan diarakan ke default yaitu ~/.cache/indoNLP.
 
     Attributes:
-        download_dir (str): indoNLP downloaded dataset directory
-        config_path (str): Configuration file path
-        handler_config (Dict[str, Dict[str, Any]]): indoNLP dataset configuration
+        download_dir (str): Direktori indoNLP downloaded dataset.
+        config_path (str): Konfigurasi file path.
+        handler_config (Dict[str, Dict[str, Any]]): indoNLP dataset configuration.
     """
 
     download_dir: str = os.path.join(os.path.expanduser("~"), ".cache", "indoNLP")

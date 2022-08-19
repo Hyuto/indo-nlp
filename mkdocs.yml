@@ -1,26 +1,71 @@
 site_name: indoNLP
-site_url: https://hyuto.github.io/indoNLP/
+site_url: https://hyuto.github.io/indo-nlp/
 site_author: Wahyu Setianto
 site_description: library python sederhana yang bertujuan untuk memudahkan proyek NLP anda
+copyright: Copyright &copy; 2022 Wahyu Setianto
+repo_name: Hyuto/indo-nlp
 repo_url: https://github.com/Hyuto/indo-nlp
+edit_uri: "blob/master/docs/"
 theme: 
   name: material
+  language: id
+  icon:
+    logo: material/comment-bookmark
+  features:
+    - content.code.annotate
+    - navigation.tabs
+    - navigation.indexes
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Ganti ke dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: green
+      toggle:
+        icon: material/weather-night
+        name: Ganti ke light mode
 nav:
-  - Home: index.md
-  - Docs: reference.md
-  - Supported Dataset: sup-dataset.md
+  - Home: 
+    - index.md
+    - Development: development.md
+  - Docs: 
+    - api/index.md
+    - Dataset: 
+        - Dataset: api/dataset/index.md
+        - Supported Dataset: api/dataset/sup-dataset.md
+    - Preprocessing: api/preprocessing/index.md
 plugins:
   - search
+  - autorefs
   - gen-files:
       scripts:
-        - tools/mkdocs-gen-ref-pages.py
-        - tools/mkdocs-gen-sup-dataset.py
+        - docs/gen-ref-pages.py
+        - docs/gen-sup-dataset.py
   - mkdocstrings:
-      default_handler: python
       handlers:
         python:
+          import:
+            - https://docs.python.org/3/objects.inv
           options:
             show_source: false
+            docstring_style: google
+            docstring_options:
+              ignore_init_summary: yes
+            merge_init_into_class: yes
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Hyuto
+      name: Hyuto on Github
 watch:
   - indoNLP
   - tools
