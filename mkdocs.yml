@@ -1,7 +1,7 @@
 site_name: indoNLP
+site_description: library python sederhana yang bertujuan untuk memudahkan proyek NLP anda
 site_url: https://hyuto.github.io/indo-nlp/
 site_author: Wahyu Setianto
-site_description: library python sederhana yang bertujuan untuk memudahkan proyek NLP anda
 copyright: Copyright &copy; 2022 Wahyu Setianto
 repo_name: Hyuto/indo-nlp
 repo_url: https://github.com/Hyuto/indo-nlp
@@ -11,6 +11,7 @@ theme:
   language: id
   icon:
     logo: material/comment-bookmark
+    repo: fontawesome/brands/github
   features:
     - content.code.annotate
     - navigation.tabs
@@ -32,20 +33,23 @@ theme:
 nav:
   - Home: 
     - index.md
-    - Development: development.md
+    - Quick Start: quickstart.md
   - Docs: 
     - api/index.md
     - Dataset: 
         - Dataset: api/dataset/index.md
         - Supported Dataset: api/dataset/sup-dataset.md
     - Preprocessing: api/preprocessing/index.md
+  - Development: 
+    - development/index.md
+    - Penambahan Supported Dataset: development/new-sup-dataset.md
 plugins:
   - search
   - autorefs
   - gen-files:
       scripts:
-        - docs/gen-ref-pages.py
-        - docs/gen-sup-dataset.py
+        - docs/scripts/gen-ref-pages.py
+        - docs/scripts/gen-sup-dataset.py
   - mkdocstrings:
       handlers:
         python:

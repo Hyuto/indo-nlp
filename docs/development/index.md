@@ -35,8 +35,8 @@ Code coverage yang ditargetkan pada `indoNLP` adalah lebih dari 95%.
 
 ## `pre-commit`
 
-Sebelum melakukan `commit` pastikan code lolos `format-check` dan `typecheck` karena akan diujikan
-oleh `pre-commit`, jika tidak lolos maka proses commit akan ditolak.
+Sebelum melakukan `commit` pastikan kode lolos `format-check` dan `typecheck` karena akan diujikan
+oleh `pre-commit`, jika tidak lolos maka commit akan ditolak.
 
 !!! note "Perhatian"
     Pastikan anda berada dalam environment poetry saat melakukan _commit_, cara mengaktifkannya

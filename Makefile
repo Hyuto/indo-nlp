@@ -15,3 +15,9 @@ typecheck:
 
 test:
 	poetry run pytest --cov=indoNLP/ -v
+
+serve-doc:
+	poetry run mkdocs serve
+
+build-doc:
+	poetry run mkdocs build
