@@ -69,7 +69,16 @@ extra:
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/Hyuto
-      name: Hyuto on Github
+      name: Author's Github
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/wahyu-setianto/
+      name: Author's Linkedin Profile
+    - icon: material/web
+      link: https://www.hyuto.github.io/
+      name: Author's Website
+  analytics:
+    provider: google
+    property: G-L2769CGXGX
 watch:
   - indoNLP
   - tools
