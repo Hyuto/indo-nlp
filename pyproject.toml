@@ -1,6 +1,6 @@
 [tool.poetry]
 name = 'indoNLP'
-version = '0.3.0'
+version = '0.3.1'
 description = 'Simple python library with zero additional dependencies to make your Indonesian NLP project easier.'
 authors = ['Wahyu Setianto <wahyusetianto19@gmail.com>']
 license = 'MIT'
@@ -8,6 +8,7 @@ readme = 'README.md'
 packages = [{ include = 'indoNLP' }]
 
 [tool.poetry.urls]
+homepage = 'https://Hyuto.github.io/indo-nlp/'
 repository = 'https://github.com/Hyuto/indo-nlp'
 "Bug Tracker" = 'https://github.com/Hyuto/indo-nlp/issues'
 
