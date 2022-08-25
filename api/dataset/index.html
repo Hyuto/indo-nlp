@@ -44,6 +44,8 @@
     
       <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
     
+      <link rel="stylesheet" href="../../extras/extra.css">
+    
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -324,6 +326,8 @@
         
           
         
+          
+        
       
       
         
@@ -354,6 +358,20 @@
     <li class="md-nav__item">
       <a href="../../quickstart/" class="md-nav__link">
         Quick Start
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelog/" class="md-nav__link">
+        Changelog
       </a>
     </li>
   
@@ -626,15 +644,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#indoNLP.dataset.get_supported_dataset_info" class="md-nav__link">
-    get_supported_dataset_info()
+  <a href="#indoNLP.dataset.get_supported_dataset_list" class="md-nav__link">
+    get_supported_dataset_list()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#indoNLP.dataset.get_supported_dataset_list" class="md-nav__link">
-    get_supported_dataset_list()
+  <a href="#indoNLP.dataset.get_supported_dataset_info" class="md-nav__link">
+    get_supported_dataset_info()
   </a>
   
 </li>
@@ -688,15 +706,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#indoNLP.dataset.reader.jsonl_table_reader" class="md-nav__link">
-    jsonl_table_reader()
+  <a href="#indoNLP.dataset.reader.txt_table_reader" class="md-nav__link">
+    txt_table_reader()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#indoNLP.dataset.reader.txt_table_reader" class="md-nav__link">
-    txt_table_reader()
+  <a href="#indoNLP.dataset.reader.jsonl_table_reader" class="md-nav__link">
+    jsonl_table_reader()
   </a>
   
 </li>
@@ -1009,6 +1027,53 @@ dalam dataset.</p></td>
 
 
 
+<h2 id="indoNLP.dataset.get_supported_dataset_list" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_supported_dataset_list</span><span class="p">(</span><span class="n">filter_tags</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Mendapatkan list dataset yang disupport oleh indoNLP</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>filter_tags</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" title="typing.Union" href="https://docs.python.org/3/library/typing.html#typing.Union">Union</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, <a class="autorefs autorefs-external" title="typing.Sequence" href="https://docs.python.org/3/library/typing.html#typing.Sequence">Sequence</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>]]</code>
+          </td>
+          <td><p>Filter dataset berdasarkan tags.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+      <div class="admonition info">
+<p class="admonition-title">Informasi</p>
+<p>Untuk lebih lengkapnya list dataset yang disupport indoNLP dapat dilihat pada
+    <a href="./sup-dataset/">Supported Dataset</a></p>
+</div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
 <h2 id="indoNLP.dataset.get_supported_dataset_info" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">get_supported_dataset_info</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></code>
 
@@ -1060,53 +1125,6 @@ dalam dataset.</p></td>
         </tr>
     </tbody>
   </table>
-
-  </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-
-<h2 id="indoNLP.dataset.get_supported_dataset_list" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_supported_dataset_list</span><span class="p">(</span><span class="n">filter_tags</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
-
-</h2>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Mendapatkan list dataset yang disupport oleh indoNLP</p>
-
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>filter_tags</code></td>
-          <td>
-                <code><a class="autorefs autorefs-external" title="typing.Union" href="https://docs.python.org/3/library/typing.html#typing.Union">Union</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, <a class="autorefs autorefs-external" title="typing.Sequence" href="https://docs.python.org/3/library/typing.html#typing.Sequence">Sequence</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>]]</code>
-          </td>
-          <td><p>Filter dataset berdasarkan tags.</p></td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-      <div class="admonition info">
-<p class="admonition-title">Informasi</p>
-<p>Untuk lebih lengkapnya list dataset yang disupport indoNLP dapat dilihat pada
-    <a href="./sup-dataset/">Supported Dataset</a></p>
-</div>
 
   </div>
 
@@ -1473,87 +1491,6 @@ sebelumnya.</p>
 
 
 
-<h2 id="indoNLP.dataset.reader.jsonl_table_reader" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">jsonl_table_reader</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">fd_kwargs</span><span class="o">=</span><span class="p">{},</span> <span class="n">reader_kwargs</span><span class="o">=</span><span class="p">{})</span></code>
-
-</h2>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Symmetric jsonl file reader dimana data yang dikembalikan dapat langsung di pass kedalam
-<code>pandas.DataFrame</code> untuk melihat data dalam versi tablenya.</p>
-
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>path</code></td>
-          <td>
-                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
-          </td>
-          <td><p>Path ke jsonl file.</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>fd_kwargs</code></td>
-          <td>
-                <code><a class="autorefs autorefs-external" title="typing.Dict" href="https://docs.python.org/3/library/typing.html#typing.Dict">Dict</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, <a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>]</code>
-          </td>
-          <td><p>File opener kwargs.</p></td>
-          <td>
-                <code>{}</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>reader_kwargs</code></td>
-          <td>
-                <code><a class="autorefs autorefs-external" title="typing.Dict" href="https://docs.python.org/3/library/typing.html#typing.Dict">Dict</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, <a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>]</code>
-          </td>
-          <td><p>Reader kwargs.</p></td>
-          <td>
-                <code>{}</code>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-  <p><strong>Returns:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td>
-                <code><a class="autorefs autorefs-external" title="typing.Dict" href="https://docs.python.org/3/library/typing.html#typing.Dict">Dict</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, <a class="autorefs autorefs-external" title="typing.List" href="https://docs.python.org/3/library/typing.html#typing.List">List</a>[<a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>]]</code>
-          </td>
-          <td><p>Data yang siap digunakan.</p></td>
-        </tr>
-    </tbody>
-  </table>
-
-  </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-
 <h2 id="indoNLP.dataset.reader.txt_table_reader" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">txt_table_reader</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fd_kwargs</span><span class="o">=</span><span class="p">{})</span></code>
 
@@ -1613,6 +1550,87 @@ pertama dari data akan dianggap sebagai header.</p></td>
                 <code><a class="autorefs autorefs-external" title="typing.Dict" href="https://docs.python.org/3/library/typing.html#typing.Dict">Dict</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, <a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>]</code>
           </td>
           <td><p>File opener kwargs.</p></td>
+          <td>
+                <code>{}</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-external" title="typing.Dict" href="https://docs.python.org/3/library/typing.html#typing.Dict">Dict</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, <a class="autorefs autorefs-external" title="typing.List" href="https://docs.python.org/3/library/typing.html#typing.List">List</a>[<a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>]]</code>
+          </td>
+          <td><p>Data yang siap digunakan.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="indoNLP.dataset.reader.jsonl_table_reader" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">jsonl_table_reader</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">fd_kwargs</span><span class="o">=</span><span class="p">{},</span> <span class="n">reader_kwargs</span><span class="o">=</span><span class="p">{})</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Symmetric jsonl file reader dimana data yang dikembalikan dapat langsung di pass kedalam
+<code>pandas.DataFrame</code> untuk melihat data dalam versi tablenya.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>path</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+          </td>
+          <td><p>Path ke jsonl file.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>fd_kwargs</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" title="typing.Dict" href="https://docs.python.org/3/library/typing.html#typing.Dict">Dict</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, <a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>]</code>
+          </td>
+          <td><p>File opener kwargs.</p></td>
+          <td>
+                <code>{}</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>reader_kwargs</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" title="typing.Dict" href="https://docs.python.org/3/library/typing.html#typing.Dict">Dict</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, <a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>]</code>
+          </td>
+          <td><p>Reader kwargs.</p></td>
           <td>
                 <code>{}</code>
           </td>

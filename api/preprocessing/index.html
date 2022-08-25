@@ -44,6 +44,8 @@
     
       <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
     
+      <link rel="stylesheet" href="../../extras/extra.css">
+    
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -324,6 +326,8 @@
         
           
         
+          
+        
       
       
         
@@ -354,6 +358,20 @@
     <li class="md-nav__item">
       <a href="../../quickstart/" class="md-nav__link">
         Quick Start
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelog/" class="md-nav__link">
+        Changelog
       </a>
     </li>
   
@@ -526,20 +544,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#indoNLP.preprocessing.emoji_to_words" class="md-nav__link">
-    emoji_to_words()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#indoNLP.preprocessing.pipeline" class="md-nav__link">
-    pipeline()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#indoNLP.preprocessing.remove_html" class="md-nav__link">
     remove_html()
   </a>
@@ -547,15 +551,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#indoNLP.preprocessing.remove_stopwords" class="md-nav__link">
-    remove_stopwords()
+  <a href="#indoNLP.preprocessing.remove_url" class="md-nav__link">
+    remove_url()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#indoNLP.preprocessing.remove_url" class="md-nav__link">
-    remove_url()
+  <a href="#indoNLP.preprocessing.remove_stopwords" class="md-nav__link">
+    remove_stopwords()
   </a>
   
 </li>
@@ -570,6 +574,20 @@
         <li class="md-nav__item">
   <a href="#indoNLP.preprocessing.replace_word_elongation" class="md-nav__link">
     replace_word_elongation()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#indoNLP.preprocessing.pipeline" class="md-nav__link">
+    pipeline()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#indoNLP.preprocessing.emoji_to_words" class="md-nav__link">
+    emoji_to_words()
   </a>
   
 </li>
@@ -694,20 +712,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#indoNLP.preprocessing.emoji_to_words" class="md-nav__link">
-    emoji_to_words()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#indoNLP.preprocessing.pipeline" class="md-nav__link">
-    pipeline()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#indoNLP.preprocessing.remove_html" class="md-nav__link">
     remove_html()
   </a>
@@ -715,15 +719,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#indoNLP.preprocessing.remove_stopwords" class="md-nav__link">
-    remove_stopwords()
+  <a href="#indoNLP.preprocessing.remove_url" class="md-nav__link">
+    remove_url()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#indoNLP.preprocessing.remove_url" class="md-nav__link">
-    remove_url()
+  <a href="#indoNLP.preprocessing.remove_stopwords" class="md-nav__link">
+    remove_stopwords()
   </a>
   
 </li>
@@ -738,6 +742,20 @@
         <li class="md-nav__item">
   <a href="#indoNLP.preprocessing.replace_word_elongation" class="md-nav__link">
     replace_word_elongation()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#indoNLP.preprocessing.pipeline" class="md-nav__link">
+    pipeline()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#indoNLP.preprocessing.emoji_to_words" class="md-nav__link">
+    emoji_to_words()
   </a>
   
 </li>
@@ -786,198 +804,6 @@ teks dengan menggunakan beberapa fungsi yang siap digunakan.</p>
 
 
 
-
-<div class="doc doc-object doc-function">
-
-
-
-<h2 id="indoNLP.preprocessing.emoji_to_words" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">emoji_to_words</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">use_alias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;!&#39;</span><span class="p">,</span> <span class="s1">&#39;!&#39;</span><span class="p">))</span></code>
-
-</h2>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Transformasi emoji yang ada di dalam teks menjadi kata - kata yang sesuai dengan emoji
-tersebut dalam Bahasa Indonesia.</p>
-
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>text</code></td>
-          <td>
-                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
-          </td>
-          <td><p>Teks yang terdapat emoji di dalamnya.</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr>
-          <td><code>lang</code></td>
-          <td>
-                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
-          </td>
-          <td><p>Kode bahasa, bahasa yang tersedia yaitu "en" (English) dan "id"
-(Bahasa Indonesia).</p></td>
-          <td>
-                <code>&#39;id&#39;</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>use_alias</code></td>
-          <td>
-                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
-          </td>
-          <td><p>Menggunakan alias translation, alias adalah terjemahan yang
-lebih spesifik terhadap emoji tersebut. Tidak setiap emoji memiliki alias dan <code>use_alias</code>
-hanya didukung untuk Bahasa Indonesia <code>lang="id"</code>.</p></td>
-          <td>
-                <code>False</code>
-          </td>
-        </tr>
-        <tr>
-          <td><code>delimiter</code></td>
-          <td>
-                <code><a class="autorefs autorefs-external" title="typing.Tuple" href="https://docs.python.org/3/library/typing.html#typing.Tuple">Tuple</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>]</code>
-          </td>
-          <td><p>Delimiter (pembatas) pada terjemahan emoji, berupa
-tupple dengan dua element string sebagai pembatas awal dan akhir.</p></td>
-          <td>
-                <code>(&#39;!&#39;, &#39;!&#39;)</code>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-      <div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Jika <code>use_alias == True</code> and <code>lang != "id"</code> maka akan terjadi error.</p>
-</div>
-
-  <p><strong>Returns:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td>
-                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
-          </td>
-          <td><p>Teks yang telah di transformasi atau tidak terdapat emoji di dalamnya dan telah digantikan</p></td>
-        </tr>
-        <tr>
-          <td>
-                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
-          </td>
-          <td><p>dengan kata - kata yang mengekspresikan emoji tersebut.</p></td>
-        </tr>
-    </tbody>
-  </table>
-
-<p><strong>Examples:</strong></p>
-    <p>Mentransformasi emoji kedalam Bahasa Indonesia.</p>
-    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">indoNLP</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">emoji_to_words</span><span class="p">(</span><span class="s2">&quot;emoji 😀😁&quot;</span><span class="p">)</span>
-<span class="go">&quot;emoji !wajah_gembira!!wajah_gembira_dengan_mata_bahagia!&quot;</span>
-</code></pre></div>
-    <p>Mentransformasi emoji kebahasa Ingris.</p>
-    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">indoNLP</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">emoji_to_words</span><span class="p">(</span><span class="s2">&quot;emoji 😀😁&quot;</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">)</span>
-<span class="go">&quot;emoji !grinning_face!!beaming_face_with_smiling_eyes!&quot;</span>
-</code></pre></div>
-    <p>Menggunakan alias.</p>
-    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">indoNLP</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">emoji_to_words</span><span class="p">(</span><span class="s2">&quot;emoji 😀&quot;</span><span class="p">,</span> <span class="n">use_alias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="go">&quot;emoji !wajah_gembira_bahagia_muka_senang!&quot;</span>
-</code></pre></div>
-    <p>Menggunakan custom delimiter.</p>
-    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">indoNLP</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">emoji_to_words</span><span class="p">(</span><span class="s2">&quot;emoji 😁&quot;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;^&quot;</span><span class="p">,</span><span class="s2">&quot;$&quot;</span><span class="p">))</span>
-<span class="go">&quot;emoji ^wajah_gembira_dengan_mata_bahagia$&quot;</span>
-</code></pre></div>
-
-  </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-
-<h2 id="indoNLP.preprocessing.pipeline" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">pipeline</span><span class="p">(</span><span class="n">pipe</span><span class="p">)</span></code>
-
-</h2>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Pipelining fungsi preprocessing.</p>
-
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>pipe</code></td>
-          <td>
-                <code><a class="autorefs autorefs-external" title="typing.Sequence" href="https://docs.python.org/3/library/typing.html#typing.Sequence">Sequence</a>[<a class="autorefs autorefs-external" title="typing.Callable" href="https://docs.python.org/3/library/typing.html#typing.Callable">Callable</a>[[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>], <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>]]</code>
-          </td>
-          <td><p>Sequence dari fungsi - fungsi preprocessing
-<code>indoNLP</code>.</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-  <p><strong>Returns:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td>
-                <code><a class="autorefs autorefs-external" title="typing.Callable" href="https://docs.python.org/3/library/typing.html#typing.Callable">Callable</a>[[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>], <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>]</code>
-          </td>
-          <td><p>Callable pipeline.</p></td>
-        </tr>
-    </tbody>
-  </table>
-
-<p><strong>Examples:</strong></p>
-    <p>Pipelining beberapa fungsi preprocessing.</p>
-    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">indoNLP.preprocessing</span> <span class="kn">import</span> <span class="n">pipeline</span><span class="p">,</span> <span class="n">replace_word_elongation</span><span class="p">,</span> <span class="n">replace_slang</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pipe</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">([</span><span class="n">replace_word_elongation</span><span class="p">,</span> <span class="n">replace_slang</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pipe</span><span class="p">(</span><span class="s2">&quot;Knp emg gk mw makan kenapaaa???&quot;</span><span class="p">)</span>
-<span class="go">&quot;kenapa memang enggak mau makan kenapa???&quot;</span>
-</code></pre></div>
-
-  </div>
-
-</div>
 
 <div class="doc doc-object doc-function">
 
@@ -1039,6 +865,72 @@ tupple dengan dua element string sebagai pembatas awal dan akhir.</p></td>
     <p>Menghapus semua tag HTML yang terdapat di dalam teks.</p>
     <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">indoNLP</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">remove_html</span><span class="p">(</span><span class="s2">&quot;website &lt;a href=&#39;https://google.com&#39;&gt;google&lt;/a&gt;&quot;</span><span class="p">)</span>
 <span class="go">&quot;website google&quot;</span>
+</code></pre></div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="indoNLP.preprocessing.remove_url" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">remove_url</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Menghapus URL yang terdapat dalam sebuah teks.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>text</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+          </td>
+          <td><p>Teks yang terdapat URL di dalamnya.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+          </td>
+          <td><p>Teks yang telah dibersihkan (tanpa URL di dalamnya).</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+<p><strong>Examples:</strong></p>
+    <p>Menghapus semua URL yang ada di dalam teks.</p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">indoNLP</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">remove_url</span><span class="p">(</span><span class="s2">&quot;retrieved from https://gist.github.com/gruber/8891611&quot;</span><span class="p">)</span>
+<span class="go">&quot;retrieved from&quot;</span>
 </code></pre></div>
 
   </div>
@@ -1115,72 +1007,6 @@ besar dan dianggap tidak memiliki makna.</p>
     <p>Menghapus semua stopwords yang terdapat di dalam sebuah teks.</p>
     <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">indoNLP</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">remove_stopwords</span><span class="p">(</span><span class="s2">&quot;siapa yang suruh makan?!!&quot;</span><span class="p">)</span>
 <span class="go">&quot;suruh makan?!!&quot;</span>
-</code></pre></div>
-
-  </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-
-<h2 id="indoNLP.preprocessing.remove_url" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">remove_url</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></code>
-
-</h2>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Menghapus URL yang terdapat dalam sebuah teks.</p>
-
-  <p><strong>Parameters:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td><code>text</code></td>
-          <td>
-                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
-          </td>
-          <td><p>Teks yang terdapat URL di dalamnya.</p></td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-  <p><strong>Returns:</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td>
-                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
-          </td>
-          <td><p>Teks yang telah dibersihkan (tanpa URL di dalamnya).</p></td>
-        </tr>
-    </tbody>
-  </table>
-
-<p><strong>Examples:</strong></p>
-    <p>Menghapus semua URL yang ada di dalam teks.</p>
-    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">indoNLP</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">remove_url</span><span class="p">(</span><span class="s2">&quot;retrieved from https://gist.github.com/gruber/8891611&quot;</span><span class="p">)</span>
-<span class="go">&quot;retrieved from&quot;</span>
 </code></pre></div>
 
   </div>
@@ -1329,6 +1155,198 @@ di akhir kata, hal ini biasanya dilakukan agar terdengar lebih ceria, ramah, dan
     <p>Mengganti setiap <em>word elongation</em> yang terdapat pada sebuah teks.</p>
     <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">indoNLP</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">replace_word_elongation</span><span class="p">(</span><span class="s2">&quot;kenapaaa?&quot;</span><span class="p">)</span>
 <span class="go">&quot;kenapa?&quot;</span>
+</code></pre></div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="indoNLP.preprocessing.pipeline" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">pipeline</span><span class="p">(</span><span class="n">pipe</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Pipelining fungsi preprocessing.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>pipe</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" title="typing.Sequence" href="https://docs.python.org/3/library/typing.html#typing.Sequence">Sequence</a>[<a class="autorefs autorefs-external" title="typing.Callable" href="https://docs.python.org/3/library/typing.html#typing.Callable">Callable</a>[[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>], <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>]]</code>
+          </td>
+          <td><p>Sequence dari fungsi - fungsi preprocessing
+<code>indoNLP</code>.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-external" title="typing.Callable" href="https://docs.python.org/3/library/typing.html#typing.Callable">Callable</a>[[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>], <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>]</code>
+          </td>
+          <td><p>Callable pipeline.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+<p><strong>Examples:</strong></p>
+    <p>Pipelining beberapa fungsi preprocessing.</p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">indoNLP.preprocessing</span> <span class="kn">import</span> <span class="n">pipeline</span><span class="p">,</span> <span class="n">replace_word_elongation</span><span class="p">,</span> <span class="n">replace_slang</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pipe</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">([</span><span class="n">replace_word_elongation</span><span class="p">,</span> <span class="n">replace_slang</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pipe</span><span class="p">(</span><span class="s2">&quot;Knp emg gk mw makan kenapaaa???&quot;</span><span class="p">)</span>
+<span class="go">&quot;kenapa memang enggak mau makan kenapa???&quot;</span>
+</code></pre></div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="indoNLP.preprocessing.emoji_to_words" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">emoji_to_words</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">use_alias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;!&#39;</span><span class="p">,</span> <span class="s1">&#39;!&#39;</span><span class="p">))</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Transformasi emoji yang ada di dalam teks menjadi kata - kata yang sesuai dengan emoji
+tersebut dalam Bahasa Indonesia.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>text</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+          </td>
+          <td><p>Teks yang terdapat emoji di dalamnya.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>lang</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+          </td>
+          <td><p>Kode bahasa, bahasa yang tersedia yaitu "en" (English) dan "id"
+(Bahasa Indonesia).</p></td>
+          <td>
+                <code>&#39;id&#39;</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>use_alias</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+          </td>
+          <td><p>Menggunakan alias translation, alias adalah terjemahan yang
+lebih spesifik terhadap emoji tersebut. Tidak setiap emoji memiliki alias dan <code>use_alias</code>
+hanya didukung untuk Bahasa Indonesia <code>lang="id"</code>.</p></td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>delimiter</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" title="typing.Tuple" href="https://docs.python.org/3/library/typing.html#typing.Tuple">Tuple</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>]</code>
+          </td>
+          <td><p>Delimiter (pembatas) pada terjemahan emoji, berupa
+tupple dengan dua element string sebagai pembatas awal dan akhir.</p></td>
+          <td>
+                <code>(&#39;!&#39;, &#39;!&#39;)</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+      <div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Jika <code>use_alias == True</code> and <code>lang != "id"</code> maka akan terjadi error.</p>
+</div>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+          </td>
+          <td><p>Teks yang telah di transformasi atau tidak terdapat emoji di dalamnya dan telah digantikan</p></td>
+        </tr>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+          </td>
+          <td><p>dengan kata - kata yang mengekspresikan emoji tersebut.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+<p><strong>Examples:</strong></p>
+    <p>Mentransformasi emoji kedalam Bahasa Indonesia.</p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">indoNLP</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">emoji_to_words</span><span class="p">(</span><span class="s2">&quot;emoji 😀😁&quot;</span><span class="p">)</span>
+<span class="go">&quot;emoji !wajah_gembira!!wajah_gembira_dengan_mata_bahagia!&quot;</span>
+</code></pre></div>
+    <p>Mentransformasi emoji kebahasa Ingris.</p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">indoNLP</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">emoji_to_words</span><span class="p">(</span><span class="s2">&quot;emoji 😀😁&quot;</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">)</span>
+<span class="go">&quot;emoji !grinning_face!!beaming_face_with_smiling_eyes!&quot;</span>
+</code></pre></div>
+    <p>Menggunakan alias.</p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">indoNLP</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">emoji_to_words</span><span class="p">(</span><span class="s2">&quot;emoji 😀&quot;</span><span class="p">,</span> <span class="n">use_alias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">&quot;emoji !wajah_gembira_bahagia_muka_senang!&quot;</span>
+</code></pre></div>
+    <p>Menggunakan custom delimiter.</p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">indoNLP</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">emoji_to_words</span><span class="p">(</span><span class="s2">&quot;emoji 😁&quot;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;^&quot;</span><span class="p">,</span><span class="s2">&quot;$&quot;</span><span class="p">))</span>
+<span class="go">&quot;emoji ^wajah_gembira_dengan_mata_bahagia$&quot;</span>
 </code></pre></div>
 
   </div>

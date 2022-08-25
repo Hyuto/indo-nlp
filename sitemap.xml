@@ -2,42 +2,47 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://hyuto.github.io/indo-nlp/</loc>
-         <lastmod>2022-08-22</lastmod>
+         <lastmod>2022-08-25</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://hyuto.github.io/indo-nlp/changelog/</loc>
+         <lastmod>2022-08-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hyuto.github.io/indo-nlp/quickstart/</loc>
-         <lastmod>2022-08-22</lastmod>
+         <lastmod>2022-08-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hyuto.github.io/indo-nlp/api/</loc>
-         <lastmod>2022-08-22</lastmod>
+         <lastmod>2022-08-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hyuto.github.io/indo-nlp/api/dataset/</loc>
-         <lastmod>2022-08-22</lastmod>
+         <lastmod>2022-08-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hyuto.github.io/indo-nlp/api/dataset/sup-dataset/</loc>
-         <lastmod>2022-08-22</lastmod>
+         <lastmod>2022-08-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hyuto.github.io/indo-nlp/api/preprocessing/</loc>
-         <lastmod>2022-08-22</lastmod>
+         <lastmod>2022-08-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hyuto.github.io/indo-nlp/development/</loc>
-         <lastmod>2022-08-22</lastmod>
+         <lastmod>2022-08-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://hyuto.github.io/indo-nlp/development/new-sup-dataset/</loc>
-         <lastmod>2022-08-22</lastmod>
+         <lastmod>2022-08-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
