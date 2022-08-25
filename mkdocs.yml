@@ -34,6 +34,7 @@ nav:
   - Home: 
     - index.md
     - Quick Start: quickstart.md
+    - Changelog: changelog.md
   - Docs: 
     - api/index.md
     - Dataset: 
@@ -57,14 +58,17 @@ plugins:
             - https://docs.python.org/3/objects.inv
           options:
             show_source: false
-            docstring_style: google
-            docstring_options:
-              ignore_init_summary: yes
             merge_init_into_class: yes
+            members_order: source
 markdown_extensions:
   - admonition
+  - attr_list
+  - md_in_html
   - pymdownx.details
   - pymdownx.superfences
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
 extra:
   social:
     - icon: fontawesome/brands/github
@@ -79,6 +83,8 @@ extra:
   analytics:
     provider: google
     property: G-L2769CGXGX
+extra_css:
+  - extras/extra.css
 watch:
   - indoNLP
   - tools

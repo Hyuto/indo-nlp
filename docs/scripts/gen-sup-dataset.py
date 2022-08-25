@@ -5,27 +5,37 @@ import mkdocs_gen_files
 from indoNLP.dataset.list import DATASETS
 
 
-def md_table(headings, aligins, data):
-    mapper = {"center": ":--:", "left": ":--", "right": "--:"}
-    table = "| " + " | ".join(map(lambda x: x.title(), headings)) + " |\n"
-    table += "| " + " | ".join([mapper[x.lower()] for x in aligins]) + " |\n"
-    for row in data:
-        table += "| " + " | ".join([str(x) for x in row]) + " |\n"
-    return table
+class Formater:
+    def format_title(self, title):
+        return f"## {title}\n\n"
+
+    def format_author_year(self, author, year):
+        text = ""
+        if author != "unknown" and year != "unknown":
+            text = f"{author} - {year}\n\n"
+        elif author != "unknown":
+            text = f"{author}\n\n"
+        elif year != "unknown":
+            text = f"{year}\n\n"
+        return text
+
+    def run(self, title, data):
+        text = self.format_title(title)
+        text += self.format_author_year(data["author"], data["year"])
+        text += f"{data['description']}\n\n"
+        text += f":material-home-circle: [Homepage]({data['homepage']})\n\n"
+        if data["citation"] != "no-citation":
+            text += f"!!! cite\n    {data['citation']}\n\n"
+        text += f":fontawesome-solid-tags: {', '.join(sorted(data['tags']))}\n\n"
+        return text
 
 
 docs = os.path.join("api", "dataset", "sup-dataset.md")
-
-heading = ["name", "description", "author", "year", "homepage", "tags"]
-datas = []
+text = ""
+formater = Formater()
 for name in DATASETS:
-    data = [name]
-    for needed_col in ["description", "author", "year"]:
-        data.append(DATASETS[name]["info"][needed_col])
-    data.append(f'[{name}]({DATASETS[name]["info"]["homepage"]})')
-    data.append(", ".join(DATASETS[name]["info"]["tags"]))
-    datas.append(data)
+    data = DATASETS[name]["info"]
+    text += formater.run(name, data)
 
-table = md_table(heading, ["center", "left", "center", "center", "left", "center"], datas)
 with mkdocs_gen_files.open(docs, "a") as fd:
-    fd.write("\n" + table)
+    fd.write("\n" + text)
