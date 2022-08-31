@@ -2,6 +2,7 @@ import json
 import logging
 import os
 import sys
+from dataclasses import dataclass, field
 from shutil import get_terminal_size
 from typing import Any, Dict, Optional
 
@@ -94,6 +95,48 @@ def _progress_bar(filename: str, downloaded: int, total_size: int) -> None:
     else:
         print(" " * terminal_width, end="\r", file=sys.stdout, flush=True)
         print(f"   📖 {filename} saved [{simplified_downloaded}]")
+
+
+@dataclass
+class Data:
+    """Kelas yang menyimpan data utama setelah dibaca.
+
+    Attributes:
+        name (str): Nama data di dalam dataset.
+        data (Any): Data yang telah dibaca.
+        part_of (str): Dataset utama.
+        table (bool): Apakah data bersifat simetrik?
+    """
+
+    name: str
+    data: Any = field(repr=False)
+    part_of: str
+    table: bool = field(repr=False)
+
+    def is_table(self) -> bool:
+        """Mengetahui apakah data bersifat simetrik.
+
+        !!! info "Informasi"
+            Jika dataset bersifat simetrik maka dataset dapat diload dalam bentuk tabel menggunakan
+            kelas `pandas.DataFrame`.
+
+        Returns:
+            Kesimetrikan data.
+
+        Examples:
+            Melihat kesimetrikan data.
+
+            >>> handler = indoNLP.dataset.Dataset("twitter-puisi")
+            >>> data = handler.read()
+            >>> data.is_table()
+            True
+
+            Loading data menggunakan `pandas.DataFrame`.
+
+            >>> import pandas as pd
+            >>> df = pd.DataFrame(data.data)
+        """
+        return self.table  # pragma: no cover
 
 
 class DatasetDirectoryHandler:

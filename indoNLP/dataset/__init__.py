@@ -6,20 +6,20 @@ from typing import Any, Optional, Sequence, Tuple, Union
 
 from indoNLP.dataset.downloader import DataDownloader
 from indoNLP.dataset.list import DATASETS
-from indoNLP.dataset.utils import DatasetDirectoryHandler
+from indoNLP.dataset.utils import Data, DatasetDirectoryHandler
 
 __all__ = ["get_supported_dataset_list", "get_supported_dataset_info", "Dataset"]
 
 
 def get_supported_dataset_list(filter_tags: Optional[Union[str, Sequence[str]]] = None) -> None:
-    """Mendapatkan list dataset yang disupport oleh indoNLP
+    """Mendapatkan list dataset yang disupport oleh indoNLP.
 
     Args:
         filter_tags (Union[str, Sequence[str]], optional): Filter dataset berdasarkan tags.
 
     !!! info "Informasi"
         Untuk lebih lengkapnya list dataset yang disupport indoNLP dapat dilihat pada
-            [Supported Dataset](./sup-dataset/)
+            [Supported Dataset](./sup-dataset/).
     """
     print("Supported Datasets")
     print("-----------------")
@@ -89,8 +89,13 @@ class Dataset:
     Examples:
         Download dan Loading dataset yang disupport.
 
-        >>> data_handler = indoNLP.dataset.Dataset("twitter-puisi")
-        >>> data_handler.read()
+        >>> handler = indoNLP.dataset.Dataset("twitter-puisi")
+        >>> data = handler.read()
+        >>> data
+
+        Melihat dataset secara keseluruhan.
+
+        >>> data.data
     """
 
     def __init__(
@@ -114,14 +119,29 @@ class Dataset:
         if auto_download:
             self.downloader.download()
 
-    def _read_file(self, tag: str) -> Any:
+    def _read_file(self, tag: str) -> Data:
         """Membaca sebuah file di dalam dataset"""
         handler = self.dataset_config["reader"][tag]
         path = os.path.join(
             self.file.handler_config[self.dataset_name]["path"],
             handler["path"],
         )
-        return handler["reader"](path, **handler["args"])
+        return Data(
+            name=tag,
+            data=handler["reader"](path, **handler["args"]),
+            part_of=self.dataset_name,
+            table=handler["is_table"],
+        )
+
+    def cite(self) -> None:
+        """Mendapatkan cara mengutip dataset.
+
+        Examples:
+            >>> handler = indoNLP.dataset.Dataset("id-abusive-language-detection")
+            >>> handler.cite()
+            Ibrohim, M.O., Budi, I.. A Dataset and Preliminaries Study for Abusive Language Detection in Indonesian Social Media. Procedia Computer Science 2018;135:222-229.
+        """
+        print(self.dataset_config["info"]["citation"])  # pragma: no cover
 
     def get_info(self) -> None:
         """Mendapatkan informasi dari dataset
@@ -131,7 +151,7 @@ class Dataset:
         """
         get_supported_dataset_info(self.dataset_name)  # pragma: no cover
 
-    def read(self, get: Union[str, Tuple[str]] = "all") -> Union[Any, Tuple[Any]]:
+    def read(self, get: Union[str, Tuple[str]] = "all") -> Union[Data, Tuple[Data, ...]]:
         """Membaca file yang terdapat dalam dataset dan meloadnya kedalam memori. Jika data yang
         terdapat dalam file adalah simetric maka data dapat diload dengan menggunakan
         `pandas.DataFrame`.
@@ -143,26 +163,26 @@ class Dataset:
 
         Returns:
             Data dari file yang telah di read. Jika file yang dibaca berjumlah lebih dari 2 maka
-            akan mengembalikan dalam bentuk Tuple sesuai dengan urutan nama file yang
-            dispesifikasikan pada parameter `get`, jika "all" yang diberikan maka urutan data dari
-            file akan sesuai dengan urutan yang ada pada metode `get_info()`.
+                akan mengembalikan dalam bentuk Tuple sesuai dengan urutan nama file yang
+                dispesifikasikan pada parameter `get`, jika "all" yang diberikan maka urutan data dari
+                file akan sesuai dengan urutan yang ada pada metode `get_info()`.
 
         Examples:
-            Membaca dan loading sebuah file
+            Membaca dan loading sebuah file.
 
-            >>> data_handler = indoNLP.dataset.Dataset("twitter-puisi")
-            >>> puisi = data_handler.read()
+            >>> handler = indoNLP.dataset.Dataset("twitter-puisi")
+            >>> puisi = handler.read()
 
             ??? info "twitter-puisi"
-                twitter-puisi dataset hanya memiliki 1 file didalamnya
+                twitter-puisi dataset hanya memiliki 1 file didalamnya.
 
-            Read multiple files
+            Membaca beberapa file.
 
-            >>> data_handler = indoNLP.dataset.Dataset("asian-language-treebank-parallel-corpus")
-            >>> data_id, data_ja = data_handler.read(get=("id", "ja"))
+            >>> handler = indoNLP.dataset.Dataset("asian-language-treebank-parallel-corpus")
+            >>> data_id, data_ja = handler.read(get=("id", "ja"))
 
             ??? info "asian-language-treebank-parallel-corpus"
-                asian-language-treebank-parallel-corpus dataset memiliki banyak file didalamnya
+                asian-language-treebank-parallel-corpus dataset memiliki banyak file didalamnya.
         """
         assert (
             self.file.handler_config[self.dataset_name]["status"] == "completed"

@@ -65,8 +65,8 @@ class TestDataset:
         )
         dataset = data.read()
         assert len(dataset) == 2
-        assert [*dataset[0].keys()] == ["Label", "Tweet"]
-        assert dataset[1] == data.read("three-labels")
+        assert [*dataset[0].data.keys()] == ["Label", "Tweet"]
+        assert dataset[1].data == data.read("three-labels").data
         shutil.rmtree(data.file.download_dir)  # clean up
 
         with pytest.raises(KeyError):
