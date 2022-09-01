@@ -99,7 +99,7 @@ def remove_stopwords(text: str) -> str:
         *Stopwords* adalah kata umum (*common words*) yang biasanya muncul dalam jumlah
         besar dan dianggap tidak memiliki makna.
 
-    !!! cite
+    !!! cite "Sumber"
         List stopwords Bahasa Indonesia yang digunakan diperoleh dari
         [stopwords.net](https://stopwords.net/indonesian-id/)
 
@@ -125,7 +125,7 @@ def replace_slang(text: str) -> str:
     - "yg" -> "yang"
     - "mkn" -> "makan"
 
-    !!! cite
+    !!! cite "Sumber"
         Mapper untuk *slang words* yang digunakan didapatkan dari
         [Kamus Alay - Colloquial Indonesian Lexicon](https://github.com/nasalsabila/kamus-alay)
         oleh Salsabila, Ali, Yosef, dan Ade.

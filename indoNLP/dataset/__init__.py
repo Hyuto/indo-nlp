@@ -1,5 +1,5 @@
 """`indoNLP.dataset` adalah modul yang bertujuan untuk memudahkan mengakses 
-open dataset dalam bidang NLP untuk Bahasa Indonesia"""
+open dataset dalam bidang NLP untuk Bahasa Indonesia."""
 
 import os
 from typing import Any, Optional, Sequence, Tuple, Union
@@ -144,10 +144,10 @@ class Dataset:
         print(self.dataset_config["info"]["citation"])  # pragma: no cover
 
     def get_info(self) -> None:
-        """Mendapatkan informasi dari dataset
+        """Mendapatkan informasi dari dataset.
 
         !!! info "Informasi"
-            menghasilkan output yang sama dengan fungsi `get_supported_dataset_info`
+            Menghasilkan output yang sama dengan fungsi `get_supported_dataset_info`.
         """
         get_supported_dataset_info(self.dataset_name)  # pragma: no cover
 

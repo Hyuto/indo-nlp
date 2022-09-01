@@ -181,7 +181,7 @@ class DataDownloader:
         """Mendownload dataset, proses ini dilakukan dengan mengiterasi setiap file yang ada
         di dalam dataset untuk di download. Proses ini termasuk dengan proses ekstraksi ketika
         file telah selesai di download dan `extract=True` terdapat pada dataset dictionary di
-        parameter `files`
+        parameter `files`.
 
         !!! note
             Proses ini hanya akan berjalan jika file - file dalam dataset belum pernah didownload

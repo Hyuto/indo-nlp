@@ -6,11 +6,22 @@ authors = ['Wahyu Setianto <wahyusetianto19@gmail.com>']
 license = 'MIT'
 readme = 'README.md'
 packages = [{ include = 'indoNLP' }]
+keywords = ["indoNLP", "nlp", "indonesian-language"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Natural Language :: Indonesian",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Topic :: Scientific/Engineering",
+  "Topic :: Software Development :: Libraries",
+  "Typing :: Typed",
+]
 
 [tool.poetry.urls]
 homepage = 'https://Hyuto.github.io/indo-nlp/'
 repository = 'https://github.com/Hyuto/indo-nlp'
-"Bug Tracker" = 'https://github.com/Hyuto/indo-nlp/issues'
 
 [tool.poetry.dependencies]
 python = '^3.7'
@@ -51,3 +62,7 @@ extend-exclude = '''
 [tool.pytest.ini_options]
 testpaths = 'tests'
 markers = ['slow']
+
+[tool.coverage.report]
+show_missing = true
+exclude_lines = ['pragma: no cover', 'except Exception as e:']
