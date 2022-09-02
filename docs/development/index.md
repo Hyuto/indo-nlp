@@ -3,10 +3,9 @@
 Untuk development `indoNLP` menggunakan [python-poetry](https://python-poetry.org/)
 untuk packaging dan management dependencies.
 
-**Install `python-poetry`**
-
-Silahkan kunjungi [installation](https://python-poetry.org/docs/#installation) untuk melihat cara
-installasi dari `python-poetry` berdasarkan OS yang digunakan.
+!!! tip "Install `python-poetry`"
+    Silahkan kunjungi [installation](https://python-poetry.org/docs/#installation) untuk melihat cara
+    installasi dari `python-poetry` berdasarkan OS yang digunakan.
 
 ## Setup
 
@@ -19,7 +18,7 @@ $ make setup-dev
 Command tersebut akan menginstall semua dependencies yang digunakan oleh `indoNLP` dalam tahap
 development.
 
-## Make Commands
+## `Makefile` Commands
 
 Commands yang terdapat pada `Makefile` digunakan untuk memudahkan proses development yaitu:
 
@@ -32,6 +31,14 @@ Commands yang terdapat pada `Makefile` digunakan untuk memudahkan proses develop
 ## Coverage Target
 
 Code coverage yang ditargetkan pada `indoNLP` adalah lebih dari 95%.
+
+[![codecov](https://codecov.io/gh/Hyuto/indo-nlp/branch/master/graph/badge.svg?token=094QNPJ3X4)](https://codecov.io/gh/Hyuto/indo-nlp)
+
+<p align="center">
+  <a href="https://codecov.io/gh/Hyuto/indo-nlp">
+    <img src="https://codecov.io/gh/Hyuto/indo-nlp/branch/master/graphs/sunburst.svg?token=094QNPJ3X4" alt="codecov-sunburst" />
+  </a>
+</p>
 
 ## `pre-commit`
 

@@ -11,8 +11,6 @@ Membuat website dokumentasi untuk `indoNLP` menggunakan [mkdocs](https://www.mkd
 tema [mkdocs-material](https://squidfunk.github.io/mkdocs-material/) dan menggenerasi kode
 referensi secara otomatis menggunakan [mkdocstring](https://mkdocstrings.github.io/).
 
-Kunjungi [`indoNLP` website](https://hyuto.github.io/indo-nlp/)
-
 - Mengubah kode docstring ke Bahasa Indonesia.
 - Merge [#3](https://github.com/Hyuto/indo-nlp/pull/3) ke master dan deploy dokumentasi menggunakan github action.
 

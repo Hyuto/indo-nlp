@@ -78,7 +78,7 @@ extra:
       link: https://www.linkedin.com/in/wahyu-setianto/
       name: Author's Linkedin Profile
     - icon: material/web
-      link: https://www.hyuto.github.io/
+      link: https://hyuto.github.io/
       name: Author's Website
   analytics:
     provider: google
