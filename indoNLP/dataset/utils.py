@@ -106,6 +106,9 @@ class Data:
         data (Any): Data yang telah dibaca.
         part_of (str): Dataset utama.
         table (bool): Apakah data bersifat simetrik?
+    !!! note
+        Jika nama yang diberikan adalah `"main"` maka data tersebut adalah data utama (data tunggal)
+        dari dataset.
     """
 
     name: str

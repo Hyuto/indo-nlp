@@ -9,7 +9,7 @@ __all__ = ["DATASETS"]
 DATASETS: Dict[str, Dict[str, Any]] = {
     "twitter-puisi": {
         "info": {
-            "description": "Loosely filtered poem from various user on Twitter",
+            "description": "Puisi - puisi yang difilter dari beberbagai pengguna di Twitter.",
             "author": "unknown",
             "year": "unknown",
             "citation": "no-citation",
@@ -35,8 +35,8 @@ DATASETS: Dict[str, Dict[str, Any]] = {
     },
     "id-multi-label-hate-speech-and-abusive-language-detection": {
         "info": {
-            "description": "Dataset for multi-label hate speech and abusive language detection in the Indonesian Twitter",
-            "author": "Muhammad Okky Ibrohim and Indra Budi",
+            "description": "Dataset untuk pembelajaran multi-label tentang hate speech dan abusive language detection dari berbagai tweet di Twitter.",
+            "author": "Muhammad Okky Ibrohim dan Indra Budi",
             "year": 2019,
             "citation": "Muhammad Okky Ibrohim and Indra Budi. 2019. Multi-label Hate Speech and Abusive Language Detection in Indonesian Twitter. In ALW3: 3rd Workshop on Abusive Language Online, 46-57.",
             "homepage": "https://github.com/okkyibrohim/id-multi-label-hate-speech-and-abusive-language-detection",
@@ -67,8 +67,8 @@ DATASETS: Dict[str, Dict[str, Any]] = {
     },
     "id-abusive-language-detection": {
         "info": {
-            "description": "Dataset for abusive language detection in the Indonesian language",
-            "author": "Muhammad Okky Ibrohim and Indra Budi",
+            "description": "Dataset untuk pembelajaran multi-label tentang abusive language detection pada Bahasa Indonesia.",
+            "author": "Muhammad Okky Ibrohim dan Indra Budi",
             "year": 2018,
             "citation": "Ibrohim, M.O., Budi, I.. A Dataset and Preliminaries Study for Abusive Language Detection in Indonesian Social Media. Procedia Computer Science 2018;135:222-229.",
             "homepage": "https://github.com/okkyibrohim/id-abusive-language-detection",
@@ -105,8 +105,8 @@ DATASETS: Dict[str, Dict[str, Any]] = {
     },
     "asian-language-treebank-parallel-corpus": {
         "info": {
-            "description": "The ALT project aims to advance the state-of-the-art Asian natural language processing (NLP) techniques through the open collaboration for developing and using ALT, The process of building ALT began with sampling about 20,000 sentences from English Wikinews, and then these sentences were translated into the other languages.",
-            "author": "Muhammad Okky Ibrohim and Indra Budi",
+            "description": "Proyek ALT adalah proyek yang bertujuan untuk memajukan teknik NLP pada bahasa - bahasa di Asia melalui kolaborasi terbuka. Proses membangun ALT dimulai dengan mengambil sampel sekitar 20.000 kalimat dari Wikinews bahasa Inggris, dan kemudian diterjemahkan ke dalam bahasa lain.",
+            "author": "Hammam Riza, Michael Purwoadi, Gunarso, Teduh Uliniansyah, Aw Ai Ti, Sharifah Mahani Aljunied, Luong Chi Mai, Vu Tat Thang, Nguyen Phuong Thai, Vichet Chea, Rapid Sun, Sethserey Sam, Sopheap Seng, Khin Mar Soe, Khin Thandar Nwet, Masao Utiyama, dan Chenchen Ding",
             "year": 2016,
             "citation": "Hammam Riza, Michael Purwoadi, Gunarso, Teduh Uliniansyah, Aw Ai Ti, Sharifah Mahani Aljunied, Luong Chi Mai, Vu Tat Thang, Nguyen Phuong Thai, Vichet Chea, Rapid Sun, Sethserey Sam, Sopheap Seng, Khin Mar Soe, Khin Thandar Nwet, Masao Utiyama, Chenchen Ding. (2016) 'Introduction of the Asian Language Treebank' Oriental COCOSDA.",
             "homepage": "https://www2.nict.go.jp/astrec-att/member/mutiyama/ALT/",
