@@ -692,21 +692,31 @@
 <p>Mengakses Indonesian NLP Open Dataset dengan cepat dan mudah.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">indoNLP.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
 
-<span class="n">handler</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="s2">&quot;id-multi-label-hate-speech-and-abusive-language-detection&quot;</span><span class="p">)</span>
+<span class="n">handler</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="s2">&quot;twitter-puisi&quot;</span><span class="p">)</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="c1"># out: Data(name=&#39;main&#39;, part_of=&#39;twitter-puisi&#39;)</span>
 </code></pre></div>
-<p>Jika data bersifat simetrik maka data dapat ditabelisasi menggunakan <code>pandas.DataFrame</code></p>
+<p>Mengecek kesimetrisan data, jika data bersifat simetrik maka data dapat ditabelisasi menggunakan <code>pandas.DataFrame</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">data</span><span class="o">.</span><span class="n">is_table</span><span class="p">(),</span> <span class="s2">&quot;Data tidak simetris, tidak dapat ditabulasi!&quot;</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="c1"># out:</span>
+<span class="c1">#                                                 text</span>
+<span class="c1"># 0  Hanya karena sapa itu.\nKau tikam rasamu.\nSis...</span>
+<span class="c1"># 1  Sedang di antrian panjang\nPada sebuah penanti...</span>
+<span class="c1"># 2  Jika kau bukan tempat awal untuk berlabuh, mak...</span>
+<span class="c1"># 3  Setiap waktu,\nAku masih mendengar getar dawai...</span>
+<span class="c1"># 4  Sebait rindu yang kau bacakan\nMasih terdengar...</span>
 </code></pre></div>
 <h2 id="preprocessing-data-teks">Preprocessing Data Teks</h2>
-<p>Menerjemahkan emoji dan mengganti kata gaul (<em>slang words</em>)</p>
+<p>Menerjemahkan emoji dan mengganti kata gaul (<em>slang words</em>).</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">indoNLP.preprocessing</span> <span class="kn">import</span> <span class="n">emoji_to_words</span><span class="p">,</span> <span class="n">replace_slang</span><span class="p">,</span> <span class="n">pipeline</span>
 
 <span class="n">pipe</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">([</span><span class="n">emoji_to_words</span><span class="p">,</span> <span class="n">replace_slang</span><span class="p">])</span>
 <span class="n">pipe</span><span class="p">(</span><span class="s2">&quot;library yg membara 🔥&quot;</span><span class="p">)</span>
-<span class="c1"># &quot;library yang membara !api!&quot;</span>
+<span class="c1"># out: &quot;library yang membara !api!&quot;</span>
 </code></pre></div>
 
 
@@ -792,7 +802,7 @@
   
     
     
-    <a href="https://www.hyuto.github.io/" target="_blank" rel="noopener" title="Author&#39;s Website" class="md-social__link">
+    <a href="https://hyuto.github.io/" target="_blank" rel="noopener" title="Author&#39;s Website" class="md-social__link">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2m-5.15 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56M14.34 14H9.66c-.1-.66-.16-1.32-.16-2 0-.68.06-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2M12 19.96c-.83-1.2-1.5-2.53-1.91-3.96h3.82c-.41 1.43-1.08 2.76-1.91 3.96M8 8H5.08A7.923 7.923 0 0 1 9.4 4.44C8.8 5.55 8.35 6.75 8 8m-2.92 8H8c.35 1.25.8 2.45 1.4 3.56A8.008 8.008 0 0 1 5.08 16m-.82-2C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2M12 4.03c.83 1.2 1.5 2.54 1.91 3.97h-3.82c.41-1.43 1.08-2.77 1.91-3.97M18.92 8h-2.95a15.65 15.65 0 0 0-1.38-3.56c1.84.63 3.37 1.9 4.33 3.56M12 2C6.47 2 2 6.5 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z"/></svg>
     </a>
   

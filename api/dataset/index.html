@@ -625,6 +625,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#indoNLP.dataset.Dataset.cite" class="md-nav__link">
+    cite()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#indoNLP.dataset.Dataset.get_info" class="md-nav__link">
     get_info()
   </a>
@@ -727,6 +734,26 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#indoNLP.dataset.utils.Data" class="md-nav__link">
+    Data
+  </a>
+  
+    <nav class="md-nav" aria-label="Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#indoNLP.dataset.utils.Data.is_table" class="md-nav__link">
+    is_table()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#indoNLP.dataset.utils.DatasetDirectoryHandler" class="md-nav__link">
     DatasetDirectoryHandler
   </a>
@@ -757,7 +784,7 @@
   <div class="doc doc-contents first">
   
       <p><code>indoNLP.dataset</code> adalah modul yang bertujuan untuk memudahkan mengakses 
-open dataset dalam bidang NLP untuk Bahasa Indonesia</p>
+open dataset dalam bidang NLP untuk Bahasa Indonesia.</p>
 
   
 
@@ -874,8 +901,12 @@ telah didownload sebelumnya maka proses download akan dilewati secara otomatis.<
 
 <p><strong>Examples:</strong></p>
     <p>Download dan Loading dataset yang disupport.</p>
-    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">data_handler</span> <span class="o">=</span> <span class="n">indoNLP</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="s2">&quot;twitter-puisi&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data_handler</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">handler</span> <span class="o">=</span> <span class="n">indoNLP</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="s2">&quot;twitter-puisi&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span>
+</code></pre></div>
+    <p>Melihat dataset secara keseluruhan.</p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="o">.</span><span class="n">data</span>
 </code></pre></div>
 
 
@@ -896,6 +927,30 @@ telah didownload sebelumnya maka proses download akan dilewati secara otomatis.<
 
 
 
+<h3 id="indoNLP.dataset.Dataset.cite" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">cite</span><span class="p">()</span></code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Mendapatkan cara mengutip dataset.</p>
+
+<p><strong>Examples:</strong></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">handler</span> <span class="o">=</span> <span class="n">indoNLP</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="s2">&quot;id-abusive-language-detection&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">handler</span><span class="o">.</span><span class="n">cite</span><span class="p">()</span>
+<span class="go">Ibrohim, M.O., Budi, I.. A Dataset and Preliminaries Study for Abusive Language Detection in Indonesian Social Media. Procedia Computer Science 2018;135:222-229.</span>
+</code></pre></div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
 <h3 id="indoNLP.dataset.Dataset.get_info" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">get_info</span><span class="p">()</span></code>
 
@@ -904,10 +959,10 @@ telah didownload sebelumnya maka proses download akan dilewati secara otomatis.<
 
   <div class="doc doc-contents ">
   
-      <p>Mendapatkan informasi dari dataset</p>
+      <p>Mendapatkan informasi dari dataset.</p>
 <div class="admonition info">
 <p class="admonition-title">Informasi</p>
-<p>menghasilkan output yang sama dengan fungsi <code>get_supported_dataset_info</code></p>
+<p>Menghasilkan output yang sama dengan fungsi <code>get_supported_dataset_info</code>.</p>
 </div>
 
   </div>
@@ -967,47 +1022,32 @@ dalam dataset.</p></td>
     <tbody>
         <tr>
           <td>
-                <code><a class="autorefs autorefs-external" title="typing.Union" href="https://docs.python.org/3/library/typing.html#typing.Union">Union</a>[<a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>, <a class="autorefs autorefs-external" title="typing.Tuple" href="https://docs.python.org/3/library/typing.html#typing.Tuple">Tuple</a>[<a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>]]</code>
+                <code><a class="autorefs autorefs-external" title="typing.Union" href="https://docs.python.org/3/library/typing.html#typing.Union">Union</a>[<a class="autorefs autorefs-internal" title="indoNLP.dataset.utils.Data" href="#indoNLP.dataset.utils.Data">Data</a>, <a class="autorefs autorefs-external" title="typing.Tuple" href="https://docs.python.org/3/library/typing.html#typing.Tuple">Tuple</a>[<a class="autorefs autorefs-internal" title="indoNLP.dataset.utils.Data" href="#indoNLP.dataset.utils.Data">Data</a>, ...]]</code>
           </td>
-          <td><p>Data dari file yang telah di read. Jika file yang dibaca berjumlah lebih dari 2 maka</p></td>
-        </tr>
-        <tr>
-          <td>
-                <code><a class="autorefs autorefs-external" title="typing.Union" href="https://docs.python.org/3/library/typing.html#typing.Union">Union</a>[<a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>, <a class="autorefs autorefs-external" title="typing.Tuple" href="https://docs.python.org/3/library/typing.html#typing.Tuple">Tuple</a>[<a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>]]</code>
-          </td>
-          <td><p>akan mengembalikan dalam bentuk Tuple sesuai dengan urutan nama file yang</p></td>
-        </tr>
-        <tr>
-          <td>
-                <code><a class="autorefs autorefs-external" title="typing.Union" href="https://docs.python.org/3/library/typing.html#typing.Union">Union</a>[<a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>, <a class="autorefs autorefs-external" title="typing.Tuple" href="https://docs.python.org/3/library/typing.html#typing.Tuple">Tuple</a>[<a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>]]</code>
-          </td>
-          <td><p>dispesifikasikan pada parameter <code>get</code>, jika "all" yang diberikan maka urutan data dari</p></td>
-        </tr>
-        <tr>
-          <td>
-                <code><a class="autorefs autorefs-external" title="typing.Union" href="https://docs.python.org/3/library/typing.html#typing.Union">Union</a>[<a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>, <a class="autorefs autorefs-external" title="typing.Tuple" href="https://docs.python.org/3/library/typing.html#typing.Tuple">Tuple</a>[<a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>]]</code>
-          </td>
-          <td><p>file akan sesuai dengan urutan yang ada pada metode <code>get_info()</code>.</p></td>
+          <td><p>Data dari file yang telah di read. Jika file yang dibaca berjumlah lebih dari 2 maka
+akan mengembalikan dalam bentuk Tuple sesuai dengan urutan nama file yang
+dispesifikasikan pada parameter <code>get</code>, jika "all" yang diberikan maka urutan data dari
+file akan sesuai dengan urutan yang ada pada metode <code>get_info()</code>.</p></td>
         </tr>
     </tbody>
   </table>
 
 <p><strong>Examples:</strong></p>
-    <p>Membaca dan loading sebuah file</p>
-    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">data_handler</span> <span class="o">=</span> <span class="n">indoNLP</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="s2">&quot;twitter-puisi&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">puisi</span> <span class="o">=</span> <span class="n">data_handler</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <p>Membaca dan loading sebuah file.</p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">handler</span> <span class="o">=</span> <span class="n">indoNLP</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="s2">&quot;twitter-puisi&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">puisi</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </code></pre></div>
     <details class="info">
 <summary>twitter-puisi</summary>
-<p>twitter-puisi dataset hanya memiliki 1 file didalamnya</p>
+<p>twitter-puisi dataset hanya memiliki 1 file didalamnya.</p>
 </details>
-<p>Read multiple files</p>
-    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">data_handler</span> <span class="o">=</span> <span class="n">indoNLP</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="s2">&quot;asian-language-treebank-parallel-corpus&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data_id</span><span class="p">,</span> <span class="n">data_ja</span> <span class="o">=</span> <span class="n">data_handler</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">get</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;ja&quot;</span><span class="p">))</span>
+<p>Membaca beberapa file.</p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">handler</span> <span class="o">=</span> <span class="n">indoNLP</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="s2">&quot;asian-language-treebank-parallel-corpus&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data_id</span><span class="p">,</span> <span class="n">data_ja</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">get</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;ja&quot;</span><span class="p">))</span>
 </code></pre></div>
     <details class="info">
 <summary>asian-language-treebank-parallel-corpus</summary>
-<p>asian-language-treebank-parallel-corpus dataset memiliki banyak file didalamnya</p>
+<p>asian-language-treebank-parallel-corpus dataset memiliki banyak file didalamnya.</p>
 </details>
 
   </div>
@@ -1035,7 +1075,7 @@ dalam dataset.</p></td>
 
   <div class="doc doc-contents ">
   
-      <p>Mendapatkan list dataset yang disupport oleh indoNLP</p>
+      <p>Mendapatkan list dataset yang disupport oleh indoNLP.</p>
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -1063,7 +1103,7 @@ dalam dataset.</p></td>
       <div class="admonition info">
 <p class="admonition-title">Informasi</p>
 <p>Untuk lebih lengkapnya list dataset yang disupport indoNLP dapat dilihat pada
-    <a href="./sup-dataset/">Supported Dataset</a></p>
+    <a href="./sup-dataset/">Supported Dataset</a>.</p>
 </div>
 
   </div>
@@ -1360,7 +1400,7 @@ direktori handler.</p></td>
       <p>Mendownload dataset, proses ini dilakukan dengan mengiterasi setiap file yang ada
 di dalam dataset untuk di download. Proses ini termasuk dengan proses ekstraksi ketika
 file telah selesai di download dan <code>extract=True</code> terdapat pada dataset dictionary di
-parameter <code>files</code></p>
+parameter <code>files</code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Proses ini hanya akan berjalan jika file - file dalam dataset belum pernah didownload
@@ -1689,6 +1729,147 @@ pertama dari data akan dianggap sebagai header.</p></td>
 
 
 
+<h2 id="indoNLP.dataset.utils.Data" class="doc doc-heading">
+        <code>Data</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>Kelas yang menyimpan data utama setelah dibaca.</p>
+
+  <p><strong>Attributes:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>name</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+          </td>
+          <td><p>Nama data di dalam dataset.</p></td>
+        </tr>
+        <tr>
+          <td><code>data</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></code>
+          </td>
+          <td><p>Data yang telah dibaca.</p></td>
+        </tr>
+        <tr>
+          <td><code>part_of</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>
+          </td>
+          <td><p>Dataset utama.</p></td>
+        </tr>
+        <tr>
+          <td><code>table</code></td>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+          </td>
+          <td><p>Apakah data bersifat simetrik?</p></td>
+        </tr>
+    </tbody>
+  </table>
+      <div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Jika nama yang diberikan adalah <code>"main"</code> maka data tersebut adalah data utama (data tunggal)
+dari dataset.</p>
+</div>
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="indoNLP.dataset.utils.Data.is_table" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">is_table</span><span class="p">()</span></code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Mengetahui apakah data bersifat simetrik.</p>
+<div class="admonition info">
+<p class="admonition-title">Informasi</p>
+<p>Jika dataset bersifat simetrik maka dataset dapat diload dalam bentuk tabel menggunakan
+kelas <code>pandas.DataFrame</code>.</p>
+</div>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+          </td>
+          <td><p>Kesimetrikan data.</p></td>
+        </tr>
+    </tbody>
+  </table>
+
+<p><strong>Examples:</strong></p>
+    <p>Melihat kesimetrikan data.</p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">handler</span> <span class="o">=</span> <span class="n">indoNLP</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="s2">&quot;twitter-puisi&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="o">.</span><span class="n">is_table</span><span class="p">()</span>
+<span class="go">True</span>
+</code></pre></div>
+    <p>Loading data menggunakan <code>pandas.DataFrame</code>.</p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</code></pre></div>
+
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
 <h2 id="indoNLP.dataset.utils.DatasetDirectoryHandler" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">DatasetDirectoryHandler</span><span class="p">(</span><span class="n">download_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
@@ -1874,7 +2055,7 @@ main direktori akan diarakan ke default yaitu ~/.cache/indoNLP.</p></td>
   
     
     
-    <a href="https://www.hyuto.github.io/" target="_blank" rel="noopener" title="Author&#39;s Website" class="md-social__link">
+    <a href="https://hyuto.github.io/" target="_blank" rel="noopener" title="Author&#39;s Website" class="md-social__link">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2m-5.15 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56M14.34 14H9.66c-.1-.66-.16-1.32-.16-2 0-.68.06-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2M12 19.96c-.83-1.2-1.5-2.53-1.91-3.96h3.82c-.41 1.43-1.08 2.76-1.91 3.96M8 8H5.08A7.923 7.923 0 0 1 9.4 4.44C8.8 5.55 8.35 6.75 8 8m-2.92 8H8c.35 1.25.8 2.45 1.4 3.56A8.008 8.008 0 0 1 5.08 16m-.82-2C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2M12 4.03c.83 1.2 1.5 2.54 1.91 3.97h-3.82c.41-1.43 1.08-2.77 1.91-3.97M18.92 8h-2.95a15.65 15.65 0 0 0-1.38-3.56c1.84.63 3.37 1.9 4.33 3.56M12 2C6.47 2 2 6.5 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z"/></svg>
     </a>
   
