@@ -87,4 +87,3 @@ extra_css:
   - extras/extra.css
 watch:
   - indoNLP
-  - tools

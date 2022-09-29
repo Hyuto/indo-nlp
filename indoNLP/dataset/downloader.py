@@ -98,16 +98,18 @@ class DataDownloader:
                     downloaded_size = 0
                     while True:
                         buffer = response.read(blocksize)
-                        if not buffer:
+                        if not buffer:  # pragma: no cover
                             if filesize is None:
                                 _progress_text(file_["filename"], downloaded_size, True)
                             break
                         writer.write(buffer)
                         downloaded_size += len(buffer)
                         if filesize is not None:
-                            _progress_bar(file_["filename"], downloaded_size, filesize)
+                            _progress_bar(
+                                file_["filename"], downloaded_size, filesize
+                            )  # pragma: no cover
                         else:
-                            _progress_text(file_["filename"], downloaded_size)
+                            _progress_text(file_["filename"], downloaded_size)  # pragma: no cover
 
                 self.file.handler_config[self.dataset_name]["files"][index] = {
                     **self.file.handler_config[self.dataset_name]["files"][index],

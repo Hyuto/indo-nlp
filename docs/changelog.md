@@ -1,5 +1,24 @@
 # Changelog
 
+## v0.3.3 { .changelog-versions }
+
+30 September 2022
+{ .changelog-dates }
+
+**Bug Fixing**
+
+Membenarkan bug pada pattern _slang words_ yang disebabkan oleh common string pada `SLANG_DATA`.
+
+## v0.3.2 { .changelog-versions }
+
+04 September 2022
+{ .changelog-dates }
+
+**Update**
+
+- Mengubah return `Dataset.read` method menjadi dataclass `Data`.
+- Update docstring pada code.
+
 ## v0.3.1 { .changelog-versions }
 
 22 Agustus 2022
