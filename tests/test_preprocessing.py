@@ -24,6 +24,7 @@ def test_remove_stopwords():
 
 def test_replace_slang():
     assert replace_slang("") == ""
+    assert replace_slang("orang gk diapa - apain") == "orang enggak diapa - apai"
     assert replace_slang("gw gk mw makan!!") == "gue enggak mau makan!!"
     assert replace_slang("emg siapa yg nanya?") == "memang siapa yang bertanya?"
 
