@@ -754,7 +754,7 @@ STOPWORDS = {
     "waktunya",
     "walau",
     "walaupun",
-    "(?i)[wk]*(?:wk|kw)[wk]*",  # wkwk pattern
+    "[wk]*(?:wk|kw)[wk]*",  # wkwk pattern
     "wong",
     "yaitu",
     "yakin",

@@ -24,7 +24,7 @@ __all__ = [
 ]
 
 # fmt: on
-HTML_PATTERN = r"<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});"
+HTML_PATTERN = r"(?i)<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});"
 URL_PATTERN = (
     # WEB URL matching pattern retrieved from https://gist.github.com/gruber/8891611
     r"(?i)\b((?:https?:(?:/{1,3}|[a-z0-9%])|[a-z0-9.\-]+[.](?:com|net|org|edu|gov|mil|aero|asia"
@@ -51,9 +51,9 @@ URL_PATTERN = (
     + r"tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw)"
     + r"\b/?(?!@)))"
 )
-SLANG_PATTERN = rf"\b({'|'.join(SLANG_DATA.keys())})\b"
-STOPWORDS_PATTERN = rf"\b({'|'.join(STOPWORDS)})\b"
-WE_PATTERN = r"\b\w*([a-zA-Z])(\1{1,})\b"
+SLANG_PATTERN = rf"(?i)\b({'|'.join(SLANG_DATA.keys())})\b"
+STOPWORDS_PATTERN = rf"(?i)\b({'|'.join(STOPWORDS)})\b"
+WE_PATTERN = r"(?i)\b\w*([a-zA-Z])(\1{1,})\b"
 
 
 def remove_html(text: str) -> str:
@@ -71,7 +71,7 @@ def remove_html(text: str) -> str:
         >>> indoNLP.preprocessing.remove_html("website <a href='https://google.com'>google</a>")
         "website google"
     """
-    return re.sub(HTML_PATTERN, "", text, flags=re.IGNORECASE).strip()
+    return re.sub(HTML_PATTERN, "", text).strip()
 
 
 def remove_url(text: str) -> str:
@@ -89,7 +89,7 @@ def remove_url(text: str) -> str:
         >>> indoNLP.preprocessing.remove_url("retrieved from https://gist.github.com/gruber/8891611")
         "retrieved from"
     """
-    return re.sub(URL_PATTERN, "", text, flags=re.IGNORECASE).strip()
+    return re.sub(URL_PATTERN, "", text).strip()
 
 
 def remove_stopwords(text: str) -> str:
@@ -115,7 +115,7 @@ def remove_stopwords(text: str) -> str:
         >>> indoNLP.preprocessing.remove_stopwords("siapa yang suruh makan?!!")
         "suruh makan?!!"
     """
-    return re.sub(STOPWORDS_PATTERN, "", text, flags=re.IGNORECASE).strip()
+    return re.sub(STOPWORDS_PATTERN, "", text).strip()
 
 
 def replace_slang(text: str) -> str:
@@ -143,12 +143,7 @@ def replace_slang(text: str) -> str:
         "memang siapa yang bertanya?"
     """
     # https://stackoverflow.com/a/15175239
-    return re.sub(
-        SLANG_PATTERN,
-        lambda mo: SLANG_DATA[mo.group(0).lower()],
-        text,
-        flags=re.IGNORECASE,
-    )
+    return re.sub(SLANG_PATTERN, lambda mo: SLANG_DATA[mo.group(0).lower()], text)
 
 
 def replace_word_elongation(text: str) -> str:
@@ -172,10 +167,7 @@ def replace_word_elongation(text: str) -> str:
     """
     # TODO: implement validation with wordlist using get_close_matches
     return re.sub(
-        WE_PATTERN,
-        lambda mo: re.sub(r"(?i)([a-zA-Z])(\1{1,})\b", r"\1", mo.group(0)),
-        text,
-        flags=re.IGNORECASE,
+        WE_PATTERN, lambda mo: re.sub(r"(?i)([a-zA-Z])(\1{1,})\b", r"\1", mo.group(0)), text
     )
 
 
