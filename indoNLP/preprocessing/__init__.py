@@ -173,7 +173,7 @@ def replace_word_elongation(text: str) -> str:
     # TODO: implement validation with wordlist using get_close_matches
     return re.sub(
         WE_PATTERN,
-        lambda mo: re.sub(r"(?i)([a-zA-Z])(\1{1,})", r"\1", mo.group(0)),
+        lambda mo: re.sub(r"(?i)([a-zA-Z])(\1{1,})\b", r"\1", mo.group(0)),
         text,
         flags=re.IGNORECASE,
     )

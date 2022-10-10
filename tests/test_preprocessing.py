@@ -41,6 +41,7 @@ def test_replace_word_elongation():
     assert replace_word_elongation("kenapaaaa?") == "kenapa?"
     assert replace_word_elongation("KENAPAAA?") == "KENAPA?"
     assert replace_word_elongation("insha Allah") == "insha Allah"
+    assert replace_word_elongation("#soasialisasi #tppkk") == "#soasialisasi #tppk"
 
 
 def test_pipeline():
