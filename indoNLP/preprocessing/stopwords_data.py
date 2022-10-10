@@ -1,7 +1,3 @@
-"""Data containing Indonesian stopwords
-   based on: Indonesian Block Word List retrived from https://stopwords.net/indonesian-id/
-"""
-
 __all__ = ["STOPWORDS"]
 
 STOPWORDS = {
@@ -758,6 +754,7 @@ STOPWORDS = {
     "waktunya",
     "walau",
     "walaupun",
+    "(?i)[wk]*(?:wk|kw)[wk]*",  # wkwk pattern
     "wong",
     "yaitu",
     "yakin",

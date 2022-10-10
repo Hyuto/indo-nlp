@@ -20,6 +20,10 @@ def test_remove_url():
 
 def test_remove_stopwords():
     assert remove_stopwords("siapa yang suruh makan?!!") == "suruh makan?!!"
+    assert (
+        remove_stopwords("widi ngapain sih wkwk lagian kgk jelas wkwkwkkwk")
+        == "widi ngapain sih   kgk"
+    )
 
 
 def test_replace_slang():
@@ -27,6 +31,7 @@ def test_replace_slang():
     assert replace_slang("orang gk diapa - apain") == "orang enggak diapa - apai"
     assert replace_slang("gw gk mw makan!!") == "gue enggak mau makan!!"
     assert replace_slang("emg siapa yg nanya?") == "memang siapa yang bertanya?"
+    assert replace_slang("lg sma siapa?") == "lagi sama siapa?"
 
 
 def test_replace_word_elongation():
