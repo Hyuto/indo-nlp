@@ -4,6 +4,6 @@ import indoNLP.dataset
 import indoNLP.preprocessing
 
 __all__ = ["dataset", "preprocessing"]
-__version__ = "0.3.3"
+__version__ = "0.3.4"
 __author__ = "Wahyu Setianto"
 __source__ = "https://github.com/Hyuto/indo-nlp/"

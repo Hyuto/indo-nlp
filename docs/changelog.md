@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.3.4 { .changelog-versions }
+
+16 Oktober 2022
+{ .changelog-dates }
+
+**Bug Fixing**
+
+Memperbaiki dan mengganti inner pattern pada fungsi `replace_word_elongation`.
+
+**Updates**
+
+1. Menambahkan _wkwk_ pattern pada stopwords.
+2. Menggunakan inner flags untuk insensitive case.
+
 ## v0.3.3 { .changelog-versions }
 
 30 September 2022
